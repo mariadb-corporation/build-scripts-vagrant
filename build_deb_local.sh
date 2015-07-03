@@ -22,8 +22,8 @@ wget --retry-connrefused $mariadbd_link
 sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
 
 mkdir _build
-chmod -R a-w .
-chmod u+w _build
+#sudo chmod -R a-w .
+#sudo chmod u+w _build
 cd _build
 cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/
 if [ -d ../coverity ] ; then
@@ -34,8 +34,17 @@ if [ -d ../coverity ] ; then
 else
         make
 fi
+if [ $remove_strip == "yes" ] ; then
+        sudo rm -rf /usr/bin/strip
+        sudo touch /usr/bin/strip
+        sudo chmod a+x /usr/bin/strip
+fi 
 
 sudo make package
+res=$?
+if [ $res != 0 ] ; then
+        exit $res
+fi
 
 rm ../CMakeCache.txt
 rm CMakeCache.txt
@@ -43,10 +52,14 @@ rm CMakeCache.txt
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   cmake ../rabbitmq_consumer/  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/
   sudo make package
+  res=$?
+  if [ $res != 0 ] ; then
+        exit $res
+  fi
 fi
 
 cp _CPack_Packages/Linux/DEB/*.deb ../
 cd ..
-chmod -R u+wr .
+#chmod -R u+wr .
 cp _build/*.deb .
 cp *.deb ..

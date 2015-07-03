@@ -25,13 +25,17 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
 	debian_ver=`cat /etc/debian_version`
 	echo "Debian version: $debina_ver"
 	dist_name=""
-	echo $debian_ver  | grep "6.0.7"
+	echo $debian_ver  | grep "^6\."
 	if [ $? -eq 0 ]; then
 		dist_name="squeeze";
 	fi
-	echo $debian_ver  | grep "7.4"
+	echo $debian_ver  | grep "^7\."
         if [ $? -eq 0 ]; then
                 dist_name="wheezy";
+        fi
+        echo $debian_ver  | grep "^8\."
+        if [ $? -eq 0 ]; then
+                dist_name="jessie";
         fi
 	ubuntu_ver=`cat /etc/os-release | grep "VERSION_ID"`
 	echo $ubuntu_ver | grep "12.04"
@@ -51,14 +55,20 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
         if [ $? -eq 0 ]; then
                 dist_name="utopic";
         fi
+        echo $ubuntu_ver | grep "15.04"
+        if [ $? -eq 0 ]; then
+                dist_name="vivid";
+        fi
+
 
 	if [ -z "$dist_name" ]; then
 		dist_name="unknown"
 	fi
 	mkdir -p dists/$dist_name/main/$arch/
-	cp $sourcedir/* dists/$dist_name/main/$arch/
-	apt-get update
-	apt-get install -y dpkg-dev
+ls -la ~/$sourcedir/
+	cp ~/$sourcedir/* dists/$dist_name/main/$arch/
+	sudo apt-get update
+	sudo apt-get install -y dpkg-dev
 	dpkg-scanpackages dists/$dist_name/main/$arch/  /dev/null | gzip -9c > dists/$dist_name/main/$arch/Packages.gz
 	gunzip -c dists/$dist_name/main/$arch/Packages.gz > dists/$dist_name/main/$arch/Packages
 #	echo "Archive: main" > dists/$dist_name/main/$arch/Release
@@ -84,9 +94,9 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
 	gpg -abs -o  dists/$dist_name/Release.gpg dists/$dist_name/Release 
 else
 # RPM-based system
-	yum install -y createrepo
-	zypper -n remove patterns-openSUSE-minimal_base-conflicts
-	zypper -n install createrepo
+	sudo yum install -y createrepo
+	sudo zypper -n remove patterns-openSUSE-minimal_base-conflicts
+	sudo zypper -n install createrepo
 	echo "%_signature gpg" >> ~/.rpmmacros
 	echo "%_gpg_name  MariaDBManager" >>  ~/.rpmmacros
 	rpm --resign $sourcedir/*.rpm

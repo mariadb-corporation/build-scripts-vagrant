@@ -3,7 +3,8 @@ if [ $? -ne 0 ] ; then
 
   dpkg --version
   if [ $? == 0 ] ; then
-    export libc6_ver=`dpkg -l | awk '$2=="libc6" { print $3 }'`
+    dpkg -l | grep libc6
+    export libc6_ver=`dpkg -l | sed "s/:amd64//g" |awk '$2=="libc6" { print $3 }'`
     dpkg --compare-versions $libc6_ver lt 2.14
     res=$?
   else
@@ -13,6 +14,14 @@ if [ $? -ne 0 ] ; then
        res=0
     else
        res=1
+    fi
+    cat /etc/redhat-release | grep " 5\."
+    if [ $? == 0 ] ; then
+	res=0
+    fi
+    cat /etc/issue | grep "SUSE" | grep " 11 "
+    if [ $? == 0 ] ; then
+        res=0
     fi
   fi
 

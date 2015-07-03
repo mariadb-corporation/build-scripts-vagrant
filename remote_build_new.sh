@@ -30,6 +30,15 @@ if [ "$Coverity" == "yes" ] ; then
 fi
 
 image_type="RPM"
+echo $box | grep -i ubuntu
+if [ $? == 0 ] ; then
+  image_type="DEB"
+fi
+echo $box | grep -i deb
+if [ $? == 0 ] ; then
+  image_type="DEB"
+fi
+
 echo "copying build script to $image machine"
 scp $scpopt  ~/build-scripts/*.sh  $sshuser@$IP:./ 
 if [ $? -ne 0 ] ; then
@@ -46,7 +55,7 @@ else
 fi
 
 echo "run build on $image"
-ssh $sshopt "export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; ./$build_script"
+ssh $sshopt "export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; ./$build_script"
 if [ $? -ne 0 ] ; then
         echo "Error build on $image"
         exit 4

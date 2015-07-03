@@ -38,17 +38,14 @@ if [ $zy != 0 ] ; then
   fi
 
   sudo zypper -n install systemtap-sdt-devel
-  wget $mariadbd_link
-  tar xzvf $mariadbd_file -C /usr/ --strip-components=1
-  cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/ "
 
 else
   sudo yum clean all 
-  sudo yum install -y --skip-broken --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel librabbitmq-devel libedit-devel
-  sudo yum install -y --skip-broken --nogpgcheck libedit-devel
+  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel librabbitmq-devel libedit-devel
+  sudo yum install -y --nogpgcheck libedit-devel
   sudo yum install -y --nogpgcheck libcurl-devel
   sudo yum install -y --nogpgcheck curl-devel
-  sudo yum install -y --skip-broken --nogpgcheck systemtap-sdt-devel
+  sudo yum install -y --nogpgcheck systemtap-sdt-devel
   sudo yum install -y --nogpgcheck rpm-sign
   sudo yum install -y --nogpgcheck gnupg
   sudo yum install -y --nogpgcheck pcre-devel
@@ -61,8 +58,8 @@ else
 fi
 
 mkdir _build
-chmod -R a-w .
-chmod u+w _build
+#sudo chmod -R a-w .
+#sudo chmod u+w _build
 cd _build
 cmake ..  $cmake_flags 
 if [ -d ../coverity ] ; then
@@ -73,8 +70,17 @@ if [ -d ../coverity ] ; then
 else
   make
 fi
- 
+
+if [ $remove_strip == "yes" ] ; then
+	sudo rm -rf /usr/bin/strip
+	sudo touch /usr/bin/strip
+	sudo chmod a+x /usr/bin/strip
+fi 
 sudo make package
+res=$?
+if [ $res != 0 ] ; then
+	exit $res
+fi
 
 rm ../CMakeCache.txt
 rm CMakeCache.txt
@@ -83,9 +89,13 @@ rm CMakeCache.txt
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   cmake ../rabbitmq_consumer/  $cmake_flags 
   sudo make package
+  res=$?
+  if [ $res != 0 ] ; then
+        exit $res
+  fi
 fi
 
 cd ..
-chmod -R u+wr .
+#chmod -R u+wr .
 cp _build/*.rpm .
 
