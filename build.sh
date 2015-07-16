@@ -37,7 +37,7 @@ if [ "$5" != "" ] ; then
   cd $5
 fi
 
-export cmake_flags="$cmake_flags  -DPACKAGE=Y"
+export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$box"
 
 mkdir -p $pre_repo_dir/$3/SRC
 

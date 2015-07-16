@@ -1,0 +1,7 @@
+rm -rf $path_prefix/fedora/21/x86_64/
+mkdir -p $path_prefix/fedora/21/x86_64/
+cp -r ~/repo/$repo_name/fedora21/* $path_prefix/fedora/21/x86_64/
+cd $path_prefix/
+ln -s fedora/21 fedora21
+
+echo "copying done"

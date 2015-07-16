@@ -1,0 +1,3 @@
+rm -rf $path_prefix/sles/11/x86_64/
+mkdir -p $path_prefix/sles/11/x86_64/
+cp -r ~/repo/$repo_name/sles11/* $path_prefix/sles/11/x86_64/

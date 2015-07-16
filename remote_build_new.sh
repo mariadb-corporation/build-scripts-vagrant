@@ -49,9 +49,11 @@ fi
 if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local.sh"
 	files="*.rpm"
+	tars="_build/maxscale*.tar.gz"
 else
 	build_script="build_deb_local.sh"
 	files="../*.deb"
+	tars="_build/maxscale*.tar.gz"
 fi
 
 echo "run build on $image"
@@ -63,6 +65,8 @@ fi
 
 echo "copying repo to the repo/$target/$image"
 scp $scpopt $sshuser@$IP:$work_dir/$files $pre_repo_dir/$target/$image
+scp $scpopt $sshuser@$IP:$work_dir/$tars $pre_repo_dir/$target/$image
+
 
 if [ "$Coverity" == "yes" ] ; then
   scp $scpopt $sshuser@$IP:$work_dir/_build/maxscale.tgz .

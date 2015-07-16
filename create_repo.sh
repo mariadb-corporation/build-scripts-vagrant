@@ -11,7 +11,7 @@ if [ $? -ne 0 ] ; then
 	arch="binary-ppc64el"
 fi
 
-rm -rf $destdir
+#rm -rf $destdir
 mkdir -p  $destdir/
 
 zypper --version
@@ -79,13 +79,15 @@ ls -la ~/$sourcedir/
 	echo "Label: MariaDB Maxscale repository" >> dists/$dist_name/main/$arch/Release
 	uname -m | grep "x86_64"
 	if [ $? -eq 0 ] ; then
- 		echo "Architectures: amd64 i386" >> dists/$dist_name/main/$arch/Release
+# 		echo "Architectures: amd64 i386" >> dists/$dist_name/main/$arch/Release
 		mkdir -p dists/$dist_name/main/binary-i386/
 		dpkg-scanpackages dists/$dist_name/main/binary-i386/  /dev/null | gzip -9c > dists/$dist_name/main/binary-i386/Packages.gz
 	        gunzip -c dists/$dist_name/main/binary-i386/Packages.gz > dists/$dist_name/main/binary-i386/Packages
-	else 
-		 echo "Architectures: ppc64el" >> dists/$dist_name/main/$arch/Release
+#	else 
+#		 echo "Architectures: ppc64el" >> dists/$dist_name/main/$arch/Release
 	fi
+	archs=`ls -1 dists/$dist_name/main | sed "s/binary-//" | tr '\n' ' '`
+	echo "Architectures: $archs" >> dists/$dist_name/main/$arch/Release
 	echo "Description:  MariaDB MaxScale" >> dists/$dist_name/main/$arch/Release
 	cp dists/$dist_name/main/$arch/Release dists/$dist_name/Release
 #	cp dists/$dist_name/main/$arch/Packages.gz dists/$dist_name

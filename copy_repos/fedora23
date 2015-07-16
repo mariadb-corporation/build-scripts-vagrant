@@ -1,0 +1,7 @@
+rm -rf $path_prefix/fedora/23/x86_64/
+mkdir -p $path_prefix/fedora/23/x86_64/
+cp -r ~/repo/$repo_name/fedora23/* $path_prefix/fedora/23/x86_64/
+cd $path_prefix/
+ln -s fedora/23 fedora23
+
+echo "copying done"
