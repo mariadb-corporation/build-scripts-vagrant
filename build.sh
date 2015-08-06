@@ -4,7 +4,7 @@ set -x
 
 export image=$box
 export target=`echo $target | tr -cd "[:print:]" `
-export pre_repo_dir="/home/turenko/pre-repo/"
+export pre_repo_dir="$HOME/pre-repo/"
 
 echo "target $target"
 

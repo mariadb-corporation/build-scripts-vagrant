@@ -62,8 +62,9 @@ export sshuser=`vagrant ssh -c 'whoami' 2> /dev/null`
 cd ..
 
 # get VM info
-export IP=`./mdbci show network build_conf_$box/default --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile build_conf_$box/default --silent 2> /dev/null`
+#mdbci#6373 [kkv] changed name for build machine
+export IP=`./mdbci show network build_conf_$box/build --silent 2> /dev/null`
+export sshkey=`./mdbci show keyfile build_conf_$box/build --silent 2> /dev/null`
 #export sshkey=/home/turenko/mdbci/build_conf_$box/.vagrant/machines/build/virtualbox/private_key
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 export sshopt="$scpopt $sshuser@$IP"
