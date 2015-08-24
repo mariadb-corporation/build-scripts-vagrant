@@ -25,10 +25,10 @@ else
 #kostyl'
 echo "rhel5 rhel6 rhel7 sles11 sles12 centos7 fedora19 fedora20 fedora21 fedora22 fedora23 deb_jessie ubuntu_vivid" | grep $box 
 if [ $? == 0 ] ; then
-	cp ~/mdbci/build.aws.json.template ~/mdbci/install_$box.json
+	cp ~/build-scripts/build.aws.json.template ~/mdbci/install_$box.json
 	provider="--provider=aws"
 else
-	cp ~/mdbci/build.json.template ~/mdbci/install_$box.json
+	cp ~/build-scripts/build.json.template ~/mdbci/install_$box.json
 	provider=""
 fi
 sed -i "s/###box###/$box/g" ~/mdbci/install_$box.json
