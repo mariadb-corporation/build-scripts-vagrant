@@ -4,7 +4,25 @@ cmake .
 make
 sudo make install
 dir=`pwd`
-cp ~/build-scripts/test/template.json ~/mdbci/$name.json
+
+cd ~/mdbci-repository-config/
+./maxscale-ci.sh $target xxx
+cp -r xxx/maxscale ~/mdbci/repo.d/
+
+
+#kostyl'
+echo "rhel5 rhel6 rhel7 sles11 sles12 centos7 fedora19 fedora20 fedora21 fedora22 fedora23 deb_jessie ubuntu_vivid" | grep $box 
+if [ $? == 0 ] ; then
+        provider="--provider=aws"
+	template="template.aws.json"
+else
+        provider=""
+	template="template.json"
+fi
+
+
+
+cp ~/build-scripts/test/$template ~/mdbci/$name.json
 sed -i "s/###version###/$version/g" ~/mdbci/$name.json
 sed -i "s/###product###/$product/g" ~/mdbci/$name.json
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
@@ -28,15 +46,8 @@ do
 done
 touch /home/vagrant/vagrant_lock
 
-#kostyl'
-echo "rhel5 rhel6 rhel7 sles11 sles12 centos7 fedora19 fedora20 fedora21 fedora22 fedora23 deb_jessie ubuntu_vivid" | grep $box 
-if [ $? == 0 ] ; then
-        provider="--provider=aws"
-else
-        provider=""
-fi
-
-vagrant up $provider
+echo "running vagrant up $provider"
+~/build-scripts/vagrant_up 
 
 if [ $? == 0 ] ; then
 rm ~/vagrant_lock
@@ -68,4 +79,4 @@ fi
 echo "done!"
 
 cd ~/mdbci/$name
-vagrant destroy -f
+#vagrant destroy -f
