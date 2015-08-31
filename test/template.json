@@ -3,7 +3,7 @@
   "node0" :
   {
         "hostname" : "node0",
-        "box" : "###box###",
+        "box" : "centos6",
 	"product" : {
       		"name": "###product###",
 		"version": "###version###"
@@ -14,7 +14,7 @@
   "node1" :
   {
         "hostname" : "node1",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -24,7 +24,7 @@
   "node2" :
   {
         "hostname" : "node2",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -34,7 +34,7 @@
   "node3" :
   {
         "hostname" : "node3",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -44,7 +44,7 @@
   "galera0" :
   {
         "hostname" : "galera0",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -54,7 +54,7 @@
   "galera1" :
   {
         "hostname" : "galera1",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -64,7 +64,7 @@
   "galera2" :
   {
         "hostname" : "galera2",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -74,7 +74,7 @@
   "galera3" :
   {
         "hostname" : "galera3",
-        "box" : "###box###",
+        "box" : "centos6",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"

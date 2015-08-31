@@ -13,10 +13,10 @@ cp -r xxx/maxscale ~/mdbci/repo.d/
 #kostyl'
 echo "rhel5 rhel6 rhel7 sles11 sles12 centos7 fedora19 fedora20 fedora21 fedora22 fedora23 deb_jessie ubuntu_vivid" | grep $box 
 if [ $? == 0 ] ; then
-        provider="--provider=aws"
+        export provider="--provider=aws"
 	template="template.aws.json"
 else
-        provider=""
+        export provider=""
 	template="template.json"
 fi
 
@@ -69,6 +69,12 @@ rm ~/vagrant_lock
 
   cd $dir
   ctest -VV -D Nightly -I $test_set
+  date_str=`date +%Y%m%d-%H`
+  logs_dir="/home/vagrant/LOGS/$date_str/$target/"
+  mkdir -p $logs_dir
+  cp -r LOGS/* $logs_dir
+  chmod a+r $logs_dir/*
+
 else
   vagrant destroy -f
   rm ~/vagrant_lock
