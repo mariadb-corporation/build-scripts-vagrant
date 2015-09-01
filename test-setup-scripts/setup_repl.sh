@@ -39,7 +39,7 @@ do
 	server_id=`expr $i + 1`
 	sed "s/###SERVER_ID###/$server_id/"  $scr_dir/server.cnf.template >  ./server.cnf
 
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo sudo sh -c \'echo "!includedir /etc/my.cnf.d" >> /etc/my.cnf\''
+	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo sudo sh -c 'echo !includedir /etc/my.cnf.d >> /etc/my.cnf'"
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mkdir -p $dir"
 	scp -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server.cnf ${vuser[$i]}@${IP[$i]}:./
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo cp ./server.cnf $dir/"
