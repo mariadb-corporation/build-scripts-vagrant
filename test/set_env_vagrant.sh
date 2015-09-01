@@ -38,6 +38,20 @@ export galera_private_002=`vagrant ssh galera2 -c 'curl http://169.254.169.254/l
 export galera_private_003=`vagrant ssh galera3 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
 cd ..
 
+# kostyl
+echo $repl_private_000 | grep "\."
+if [ $? != 0 ] ; then
+	export repl_private_000=$repl_000
+	export repl_private_001=$repl_001
+	export repl_private_002=$repl_002
+	export repl_private_003=$repl_003
+
+	export galera_private_000=$galera_000
+        export galera_private_001=$galera_001
+        export galera_private_002=$galera_002
+        export galera_private_003=$galera_003
+fi
+
 # MariaDB/Mysql port of of Master/Slave replication setup nodes
 export repl_port_000=3306
 export repl_port_001=3306
