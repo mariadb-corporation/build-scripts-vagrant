@@ -1,4 +1,6 @@
 #!/bin/bash
+
+set -x
 rm -rf LOGS
 cmake .
 make
@@ -36,7 +38,7 @@ mkdir -p $name
 cd $name
 vagrant destroy -f
 cd ..
-./mdbci --override --template $name.json --repo-dir=$repodir generate $name
+./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
 cd $name
 
 #sed -i "s/aws do |aws, override|/aws do |aws, override|\noverride.nfs.functional = false/" Vagrantfile
@@ -57,7 +59,7 @@ if [ $? == 0 ] ; then
 rm ~/vagrant_lock
 
   cd ..
-  ./mdbci --repo-dir=$repodir show network $name
+  ./mdbci show network $name
   . ~/build-scripts/test/set_env_vagrant.sh $name
   cd $name
 #  ../setup_root.sh
