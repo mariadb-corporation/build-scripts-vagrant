@@ -5,9 +5,13 @@ make
 sudo make install
 dir=`pwd`
 
-cd ~/mdbci-repository-config/
-./maxscale-ci.sh $target xxx
-cp -r xxx/maxscale ~/mdbci/repo.d/
+#cd ~/mdbci-repository-config/
+#./maxscale-ci.sh $target xxx
+#cp -r xxx/maxscale ~/mdbci/repo.d/
+
+~/mdbci-repository-config/generate_all.sh repo.d
+~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+export repo_dir=$dir/repo.d/
 
 
 #kostyl'
@@ -32,7 +36,7 @@ mkdir -p $name
 cd $name
 vagrant destroy -f
 cd ..
-./mdbci --override --template $name.json generate $name
+./mdbci --override --template $name.json --repo-dir=$repodir generate $name
 cd $name
 
 #sed -i "s/aws do |aws, override|/aws do |aws, override|\noverride.nfs.functional = false/" Vagrantfile
@@ -53,7 +57,7 @@ if [ $? == 0 ] ; then
 rm ~/vagrant_lock
 
   cd ..
-  ./mdbci show network $name
+  ./mdbci --repo-dir=$repodir show network $name
   . ~/build-scripts/test/set_env_vagrant.sh $name
   cd $name
 #  ../setup_root.sh
