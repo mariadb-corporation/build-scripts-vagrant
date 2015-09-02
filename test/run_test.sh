@@ -69,7 +69,7 @@ rm ~/vagrant_lock
   echo "show slave hosts" | mysql -uskysql -pskysql -h $repl_000
 
 #  ~/build-scripts/test-scripts/install_for_test.sh
-  ~/build-scripts/test-scripts/configure_core.sh
+  ~/build-scripts/test/configure_core.sh
   #/usr/local/mariadb-maxscale/system-test/$test_name
   #disown
 
