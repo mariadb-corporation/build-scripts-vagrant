@@ -1,4 +1,5 @@
 set -x
+echo $*
 export config_name="$1"
 if [ -z $1 ] ; then
 	config_name="test1"
@@ -145,3 +146,5 @@ if [ x"$mysql51_only" == "xyes" ] ; then
         export start_db_command="/etc/init.d/mysqld start"
         export stop_db_command="/etc/init.d/mysqld stop"
 fi
+
+export ssl=true
