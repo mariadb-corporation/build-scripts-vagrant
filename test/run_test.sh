@@ -2,7 +2,8 @@
 
 set -x
 rm -rf LOGS
-cmake .
+cmake . -DBUILDNAME=$name
+
 make
 sudo make install
 dir=`pwd`
@@ -61,6 +62,7 @@ rm ~/vagrant_lock
   cd ..
   ./mdbci show network $name
   . ~/build-scripts/test/set_env_vagrant.sh $name
+env
   cd $name
 #  ../setup_root.sh
   ~/build-scripts/test-setup-scripts/setup_repl.sh
@@ -76,7 +78,7 @@ rm ~/vagrant_lock
   cd $dir
   ctest -VV -D Nightly -I $test_set
   date_str=`date +%Y%m%d-%H`
-  logs_dir="/home/vagrant/LOGS/$date_str/$target/"
+  logs_dir="/home/vagrant/LOGS/$date_str/$name/$target/"
   mkdir -p $logs_dir
   cp -r LOGS/* $logs_dir
   chmod a+r $logs_dir/*

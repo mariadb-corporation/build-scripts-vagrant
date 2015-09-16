@@ -47,7 +47,7 @@
         "hostname" : "galera0",
         "box" : "centos7",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -57,7 +57,7 @@
         "hostname" : "galera1",
         "box" : "centos7",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -67,7 +67,7 @@
         "hostname" : "galera2",
         "box" : "centos7",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -77,7 +77,7 @@
         "hostname" : "galera3",
         "box" : "centos7",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },

@@ -11,8 +11,8 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-log-basename=mar
-log-bin
+#log-basename=mar
+log-bin=mar
 #binlog-format=row
 binlog-format=STATEMENT
 server_id=###SERVER_ID###

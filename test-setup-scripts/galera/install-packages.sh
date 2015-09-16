@@ -35,8 +35,8 @@ if [[ "$linux_name" == "CentOS" || "$linux_name" == "Fedora" ]]; then
 	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -Uvh epel-release-6*.rpm
 	yum -y install http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
-	yum -y remove MariaDB-server
-        yum -y install MariaDB-Galera-server MariaDB-client nc rsync sudo chkconfig sed coreutils util-linux curl grep findutils gawk socat iproute
+#	yum -y remove MariaDB-server
+#        yum -y install MariaDB-Galera-server MariaDB-client nc rsync sudo chkconfig sed coreutils util-linux curl grep findutils gawk socat iproute
 	yum -y install percona-xtrabackup
 
         # Checking if packages were correctly installed
@@ -52,8 +52,8 @@ elif [[ "$linux_name" == "Debian" || "$linux_name" == "Ubuntu" ]]; then
 	apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 	echo "deb http://repo.percona.com/apt $distro_version_name main" >> /etc/apt/sources.list
         apt-get update
-	apt-get remove mariadb-server
-        apt-get install -y --force-yes mariadb-galera-server mariadb-client
+#	apt-get remove mariadb-server
+#        apt-get install -y --force-yes mariadb-galera-server mariadb-client
 	apt-get install -y --force-yes percona-xtrabackup
 
         # Checking if packages were correctly installed

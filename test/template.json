@@ -4,6 +4,7 @@
   {
         "hostname" : "node0",
         "box" : "centos6",
+	"memory_size" : "2048",
 	"product" : {
       		"name": "###product###",
 		"version": "###version###"
@@ -15,6 +16,7 @@
   {
         "hostname" : "node1",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -25,6 +27,7 @@
   {
         "hostname" : "node2",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -35,6 +38,7 @@
   {
         "hostname" : "node3",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
                 "version": "###version###"
@@ -45,8 +49,9 @@
   {
         "hostname" : "galera0",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -55,8 +60,9 @@
   {
         "hostname" : "galera1",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -65,8 +71,9 @@
   {
         "hostname" : "galera2",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -75,8 +82,9 @@
   {
         "hostname" : "galera3",
         "box" : "centos6",
+        "memory_size" : "2048",
         "product" : {
-                "name": "###product###",
+                "name": "galera",
                 "version": "###version###"
         }
   },
@@ -85,6 +93,7 @@
   {
         "hostname" : "maxscale",
         "box" : "###box###",
+        "memory_size" : "2048",
         "product" : {
                 "name": "maxscale"
         }

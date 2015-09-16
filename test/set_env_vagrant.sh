@@ -121,6 +121,39 @@ export galera_sshkey_003=`./mdbci show keyfile $config_name/galera3 --silent`
 export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent`
 
 cd $config_name
+
+
+for prefix in "repl" "galera"
+do
+	N_var="$prefix"_N
+	Nx=${!N_var}
+	N=`expr $Nx - 1`
+	for i in $(seq 0 $N)
+	do
+#		ip=`expr $IP_end + $i`
+		num=`printf "%03d" $i`
+		if [ $prefix == "repl" ] ; then
+			node_n="node"
+		else
+			node_n="$prefix"
+		fi
+		ip_var="$prefix"_"$num"
+		private_ip_var="$prefix"_private_"$num"
+		ip=${!ip_var}
+		private_ip=${!private_ip_var}
+		key_var="$prefix"_sshkey_"$num"
+		key=${!key_var}
+		server_num=`expr $i + 1`
+		start_cmd_var="$prefix"_start_db_command_"$num"
+		stop_cmd_var="$prefix"_stop_db_command_"$num"
+		mysql_exe=`vagrant ssh $node_n$i -c "ls /etc/init.d/mysql*"`
+		eval 'export $start_cmd_var="$mysql_exe start "'
+		eval 'export $stop_cmd_var="$mysql_exe stop "'
+
+	done
+done
+
+
 export access_user=`vagrant ssh maxscale -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
 export access_sudo="sudo "
 cd ..
@@ -139,12 +172,12 @@ export galera_kill_vm_command="exit 1"
 export galera_start_vm_command="exit 1"
 
 
-export start_db_command="/etc/init.d/mysql start"
-export stop_db_command="/etc/init.d/mysql stop"
+#export start_db_command="/etc/init.d/mysql start"
+#export stop_db_command="/etc/init.d/mysql stop"
 
-if [ x"$mysql51_only" == "xyes" ] ; then
-        export start_db_command="/etc/init.d/mysqld start"
-        export stop_db_command="/etc/init.d/mysqld stop"
-fi
+#if [ x"$mysql51_only" == "xyes" ] ; then
+#        export start_db_command="/etc/init.d/mysqld start"
+#        export stop_db_command="/etc/init.d/mysqld stop"
+#fi
 
 export ssl=true

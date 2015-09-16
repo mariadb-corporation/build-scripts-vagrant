@@ -22,6 +22,26 @@ vuser[1]=`vagrant ssh node1 -c 'whoami' 2> /dev/null`
 vuser[2]=`vagrant ssh node2 -c 'whoami' 2> /dev/null`
 vuser[3]=`vagrant ssh node3 -c 'whoami' 2> /dev/null`
 
+repl_start_db_command[0]=$repl_start_db_command_000
+repl_start_db_command[1]=$repl_start_db_command_001
+repl_start_db_command[2]=$repl_start_db_command_002
+repl_start_db_command[3]=$repl_start_db_command_003
+
+galera_start_db_command[0]=$galera_start_db_command_000
+galera_start_db_command[1]=$galera_start_db_command_001
+galera_start_db_command[2]=$galera_start_db_command_002
+galera_start_db_command[3]=$galera_start_db_command_003
+
+repl_stop_db_command[0]=$repl_stop_db_command_000
+repl_stop_db_command[1]=$repl_stop_db_command_001
+repl_stop_db_command[2]=$repl_stop_db_command_002
+repl_stop_db_command[3]=$repl_stop_db_command_003
+
+galera_stop_db_command[0]=$galera_stop_db_command_000
+galera_stop_db_command[1]=$galera_stop_db_command_001
+galera_stop_db_command[2]=$galera_stop_db_command_002
+galera_stop_db_command[3]=$galera_stop_db_command_003
+
 
 export scr_dir="/home/vagrant/build-scripts/test-setup-scripts"
 
@@ -31,7 +51,8 @@ x=`expr $repl_N - 1`
 for i in $(seq 0 $x)
 do
 	echo ${sshkey[$i]}
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo service mysql stop'
+	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo  ${repl_stop_db_command[$i]}" &
+	sleep 5
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf'
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/usr.sbin.mysqld; sudo service apparmor restart'
 
@@ -62,7 +83,9 @@ do
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables save'
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo /sbin/service iptables save'
 
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo service mysql start'
+	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mysql_install_db; sudo chown -R mysql:mysql /var/lib/mysql"
+	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo ${repl_start_db_command[$i]}" &
+	sleep 5
 #	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo systemctl start mariadb.service'
 done
 
