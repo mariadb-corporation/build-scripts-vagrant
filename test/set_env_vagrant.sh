@@ -11,60 +11,6 @@ export galera_N=4
 export repl_N=4
 export new_dirs="yes"
 
-
-
-# IP of Master/Slave replication setup nodes
-export repl_000=`./mdbci show network $config_name/node0 --silent 2> /dev/null`
-export repl_001=`./mdbci show network $config_name/node1 --silent 2> /dev/null`
-export repl_002=`./mdbci show network $config_name/node2 --silent 2> /dev/null`
-export repl_003=`./mdbci show network $config_name/node3 --silent 2> /dev/null`
-
-
-# IP of Galera cluster nodes
-export galera_000=`./mdbci show network $config_name/galera0 --silent 2> /dev/null`
-export galera_001=`./mdbci show network $config_name/galera1 --silent 2> /dev/null`
-export galera_002=`./mdbci show network $config_name/galera2 --silent 2> /dev/null`
-export galera_003=`./mdbci show network $config_name/galera3 --silent 2> /dev/null`
-
-
-cd $config_name
-export repl_private_000=`vagrant ssh node0 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export repl_private_001=`vagrant ssh node1 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export repl_private_002=`vagrant ssh node2 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export repl_private_003=`vagrant ssh node3 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-
-export galera_private_000=`vagrant ssh galera0 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export galera_private_001=`vagrant ssh galera1 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export galera_private_002=`vagrant ssh galera2 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-export galera_private_003=`vagrant ssh galera3 -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
-cd ..
-
-# kostyl
-echo $repl_private_000 | grep "\."
-if [ $? != 0 ] ; then
-	export repl_private_000=$repl_000
-	export repl_private_001=$repl_001
-	export repl_private_002=$repl_002
-	export repl_private_003=$repl_003
-
-	export galera_private_000=$galera_000
-        export galera_private_001=$galera_001
-        export galera_private_002=$galera_002
-        export galera_private_003=$galera_003
-fi
-
-# MariaDB/Mysql port of of Master/Slave replication setup nodes
-export repl_port_000=3306
-export repl_port_001=3306
-export repl_port_002=3306
-export repl_port_003=3306
-
-# MariaDB/Mysql Galera cluster nodes
-export galera_port_000=3306
-export galera_port_001=3306
-export galera_port_002=3306
-export galera_port_003=3306
-
 export maxdir="/usr/local/mariadb-maxscale"
 export maxdir_bin="$maxdir/bin/"
 
@@ -76,9 +22,7 @@ export maxscale_log_dir="$maxdir/log/"
 #popd > /dev/null
 export test_dir="$maxdir/system-test/"
 
-
 export maxscale_binlog_dir="/var/lib/maxscale/Binlog_Service/"
-
 
 if [ "$new_dirs" == "yes" ] ; then
         export maxdir="/usr/bin/"
@@ -87,9 +31,9 @@ if [ "$new_dirs" == "yes" ] ; then
         export maxscale_log_dir="/var/log/maxscale/"
 fi
 
-
 # IP Of MaxScale machine
 export maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
+export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent`
 
 # User name and Password for Master/Slave replication setup (should have all PRIVILEGES)
 export repl_user="skysql"
@@ -107,22 +51,6 @@ export maxadmin_password="mariadb"
 # command to download logs from MaxScale machine
 export get_logs_command="$test_dir/get_logs.sh"
 
-# links to ssh keys files for all machines
-export repl_sshkey_000=`./mdbci show keyfile $config_name/node0 --silent`
-export repl_sshkey_001=`./mdbci show keyfile $config_name/node1 --silent`
-export repl_sshkey_002=`./mdbci show keyfile $config_name/node2 --silent`
-export repl_sshkey_003=`./mdbci show keyfile $config_name/node3 --silent`
-
-export galera_sshkey_000=`./mdbci show keyfile $config_name/galera0 --silent`
-export galera_sshkey_001=`./mdbci show keyfile $config_name/galera1 --silent`
-export galera_sshkey_002=`./mdbci show keyfile $config_name/galera2 --silent`
-export galera_sshkey_003=`./mdbci show keyfile $config_name/galera3 --silent`
-
-export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent`
-
-cd $config_name
-
-
 for prefix in "repl" "galera"
 do
 	N_var="$prefix"_N
@@ -130,7 +58,6 @@ do
 	N=`expr $Nx - 1`
 	for i in $(seq 0 $N)
 	do
-#		ip=`expr $IP_end + $i`
 		num=`printf "%03d" $i`
 		if [ $prefix == "repl" ] ; then
 			node_n="node"
@@ -139,10 +66,30 @@ do
 		fi
 		ip_var="$prefix"_"$num"
 		private_ip_var="$prefix"_private_"$num"
-		ip=${!ip_var}
-		private_ip=${!private_ip_var}
-		key_var="$prefix"_sshkey_"$num"
-		key=${!key_var}
+
+		# get IP
+		ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
+		# get ssh key
+    		key=`./mdbci show keyfile $config_name/$node_n$i --silent`
+
+		eval 'export "$prefix"_"$num"=`./mdbci show network "$config_name"/"$node_n$i" --silent 2> /dev/null`'
+		eval 'export "$prefix"_sshkey_"$num"=`./mdbci show keyfile "$config_name"/"$node_n$i" --silent 2> /dev/null`'
+		eval 'export "$prefix"_port_"$num"=3306'
+	
+		# trying to get private IP (for AWS)
+		cd $config_name
+		private_ip=`vagrant ssh $node_n$i -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
+		# kostyl
+		echo $private_ip | grep "\."
+		if [ $? != 0 ] ; then
+        		private_ip=$ip
+		fi
+
+		eval 'export "$prefix"_private_"$num"="$private_ip"'
+
+		au=`vagrant ssh $node_n$i -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
+		eval 'export "$prefix"_access_user_"$num"=$au'
+
 		server_num=`expr $i + 1`
 		start_cmd_var="$prefix"_start_db_command_"$num"
 		stop_cmd_var="$prefix"_stop_db_command_"$num"
@@ -150,34 +97,18 @@ do
 		eval 'export $start_cmd_var="$mysql_exe start "'
 		eval 'export $stop_cmd_var="$mysql_exe stop "'
 
+		eval 'export "$prefix"_start_vm_command_"$num"="dir=`pwd`; cd $mdbci_dir/$config_name;vagrant up $node_n$i $provider; cd $dir"'
+		eval 'export "$prefix"_kill_vm_command_"$num"="dir=`pwd`; cd $mdbci_dir/$config_name;vagrant halt $node_n$i $provider; cd $dir"'
+		cd ..
 	done
 done
 
-
-export access_user=`vagrant ssh maxscale -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
-export access_sudo="sudo "
-cd ..
+cd $mdbci_dir/$config_name
+export maxscale_access_user=`vagrant ssh maxscale -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
+export maxscale_access_sudo="sudo "
+#cd ..
 
 # Sysbench directory (should be sysbench >= 0.5)
 export sysbench_dir="/home/turenko/sysbench_deb7/sysbench/"
-
-# command to kill VM (obsolete)
-export kill_vm_command="exit 1"
-# command to restore VM (obsolete)
-export start_vm_command="exit 1"
-
-export repl_kill_vm_command="exit 1"
-export repl_start_vm_command="exit 1"
-export galera_kill_vm_command="exit 1"
-export galera_start_vm_command="exit 1"
-
-
-#export start_db_command="/etc/init.d/mysql start"
-#export stop_db_command="/etc/init.d/mysql stop"
-
-#if [ x"$mysql51_only" == "xyes" ] ; then
-#        export start_db_command="/etc/init.d/mysqld start"
-#        export stop_db_command="/etc/init.d/mysqld stop"
-#fi
 
 export ssl=true
