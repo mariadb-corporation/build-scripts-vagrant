@@ -14,7 +14,7 @@ export orig_image=$image
 scp $scpopt ~/build-scripts/vm_setup_scripts/$image.sh $sshuser@$IP:./
 ssh $sshopt "sudo ./$image.sh"
 
-ssh $sshopt "rm -rf $work_dir"
+ssh $sshopt "sudo rm -rf $work_dir"
 echo "copying stuff to $image machine"
 ssh $sshopt "mkdir -p $work_dir"
 
@@ -24,9 +24,11 @@ if [ $? -ne 0 ] ; then
         exit 2
 fi
 
+scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
+
 if [ "$Coverity" == "yes" ] ; then
 	echo "Copying Coverity tools to VM"
-        scp $scpopt -r  ~/build-scripts/coverity root@$IP:$work_dir
+        scp $scpopt -r  ~/build-scripts/coverity $sshuser@$IP:$work_dir
 fi
 
 image_type="RPM"

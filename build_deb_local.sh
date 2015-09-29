@@ -10,7 +10,7 @@ cd $work_dir
 . ~/check_arch.sh
 
 sudo apt-get update
-sudo apt-get install -y dpkg-dev
+sudo apt-get install -y dpkg-dev git
 
 sudo apt-get install -y --force-yes cmake
 sudo apt-get install -y --force-yes gcc g++ ncurses-dev bison build-essential libssl-dev libaio-dev perl make libtool 

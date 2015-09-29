@@ -105,6 +105,8 @@ do
 
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mysql < /home/${vuser[i]}/setup_slave.sql"
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "cat  /home/${vuser[i]}//setup_slave.sql"
+	ssh -i ${sshkey[i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[i]}@${IP[i]} "sudo yum install -y psmisc ; sudo apt-get install -y --force-yes psmisc; sudo zypper -n install psmisc"
+
 done
 
 ssh -i ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[0]}@${IP[0]} "sudo yum install -y psmisc ; sudo apt-get install -y --force-yes psmisc; sudo zypper -n install psmisc"

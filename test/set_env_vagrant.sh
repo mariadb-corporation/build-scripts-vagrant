@@ -6,6 +6,8 @@ if [ -z $1 ] ; then
 fi
 export mdbci_dir="/home/vagrant/mdbci/"
 
+export curr_dir=`pwd`
+
 # Number of nodes
 export galera_N=4
 export repl_N=4
@@ -30,6 +32,8 @@ if [ "$new_dirs" == "yes" ] ; then
         export maxscale_cnf="/etc/maxscale.cnf"
         export maxscale_log_dir="/var/log/maxscale/"
 fi
+
+cd $mdbci_dir
 
 # IP Of MaxScale machine
 export maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
@@ -70,10 +74,10 @@ do
 		# get IP
 		ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
 		# get ssh key
-    		key=`./mdbci show keyfile $config_name/$node_n$i --silent`
+    		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null`
 
-		eval 'export "$prefix"_"$num"=`./mdbci show network "$config_name"/"$node_n$i" --silent 2> /dev/null`'
-		eval 'export "$prefix"_sshkey_"$num"=`./mdbci show keyfile "$config_name"/"$node_n$i" --silent 2> /dev/null`'
+		eval 'export "$prefix"_"$num"=$ip'
+		eval 'export "$prefix"_sshkey_"$num"=$key'
 		eval 'export "$prefix"_port_"$num"=3306'
 	
 		# trying to get private IP (for AWS)
@@ -89,16 +93,24 @@ do
 
 		au=`vagrant ssh $node_n$i -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
 		eval 'export "$prefix"_access_user_"$num"=$au'
+		eval 'export "$prefix"_access_sudo_"$num"=sudo'
 
 		server_num=`expr $i + 1`
 		start_cmd_var="$prefix"_start_db_command_"$num"
 		stop_cmd_var="$prefix"_stop_db_command_"$num"
-		mysql_exe=`vagrant ssh $node_n$i -c "ls /etc/init.d/mysql*"`
-		eval 'export $start_cmd_var="$mysql_exe start "'
-		eval 'export $stop_cmd_var="$mysql_exe stop "'
+		mysql_exe=`vagrant ssh $node_n$i -c 'ls /etc/init.d/mysql* 2> /dev/null | tr -cd "[:print:]"'`
+		echo $mysql_exe | grep -i "mysql"
+		if [ $? != 0 ] ; then
+			vagrant ssh $node_n$i -c 'echo "/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &" > mysql_start.sh; echo "sleep 20" >> mysql_start.sh; echo "disown" >> mysql_start.sh; chmod a+x mysql_start.sh'
+                        eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
+                        eval 'export $stop_cmd_var="/usr/bin/killall mysqld "'
+		else
+			eval 'export $start_cmd_var="$mysql_exe start "'
+			eval 'export $stop_cmd_var="$mysql_exe stop "'
+		fi
 
-		eval 'export "$prefix"_start_vm_command_"$num"="dir=`pwd`; cd $mdbci_dir/$config_name;vagrant up $node_n$i $provider; cd $dir"'
-		eval 'export "$prefix"_kill_vm_command_"$num"="dir=`pwd`; cd $mdbci_dir/$config_name;vagrant halt $node_n$i $provider; cd $dir"'
+		eval 'export "$prefix"_start_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant up $node_n$i $provider; cd $curr_dir"'
+		eval 'export "$prefix"_kill_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant halt $node_n$i $provider; cd $curr_dir"'
 		cd ..
 	done
 done
@@ -106,9 +118,11 @@ done
 cd $mdbci_dir/$config_name
 export maxscale_access_user=`vagrant ssh maxscale -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
 export maxscale_access_sudo="sudo "
+export maxscale_hostname=`vagrant ssh maxscale -c 'hostname' | tr -cd "[:print:]" `
 #cd ..
 
 # Sysbench directory (should be sysbench >= 0.5)
-export sysbench_dir="/home/turenko/sysbench_deb7/sysbench/"
+export sysbench_dir="/home/ec2-user/sysbench_deb7/sysbench/"
 
 export ssl=true
+cd $curr_dir

@@ -52,7 +52,7 @@
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -63,7 +63,7 @@
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -74,7 +74,7 @@
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -85,7 +85,7 @@
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 

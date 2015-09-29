@@ -7,9 +7,9 @@ set -x
 
 cd $work_dir
 
-sudo yum install -y rpmdevtools
+sudo yum install -y rpmdevtools git
 sudo yum install -y wget
-sudo zypper -n install rpmdevtools
+sudo zypper -n install rpmdevtools git
 sudo zypper -n install wget
 . ~/check_arch.sh
 

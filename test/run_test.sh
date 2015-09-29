@@ -15,6 +15,14 @@ export repo_dir=$dir/repo.d/
 . ~/build-scripts/test/get_provider
 
 cp ~/build-scripts/test/$template ~/mdbci/$name.json
+
+export galera_version=5.5
+echo $version | grep "^10."
+if [ $? == 0 ] ; then
+	export galera_version="10.0"
+fi
+
+sed -i "s/###galera_version###/$galera_version/g" ~/mdbci/$name.json
 sed -i "s/###version###/$version/g" ~/mdbci/$name.json
 sed -i "s/###product###/$product/g" ~/mdbci/$name.json
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
@@ -72,4 +80,7 @@ fi
 echo "done!"
 
 cd ~/mdbci/$name
+if [ "$do_not_destroy" != "yes" ] ; then
+	vagrant destroy -f
+fi
 #vagrant destroy -f

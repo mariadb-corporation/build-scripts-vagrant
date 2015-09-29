@@ -48,7 +48,7 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -58,7 +58,7 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -68,7 +68,7 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
@@ -78,7 +78,7 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###version###"
+                "version": "###galera_version###"
         }
   },
 
