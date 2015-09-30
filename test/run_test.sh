@@ -21,6 +21,11 @@ echo $version | grep "^10."
 if [ $? == 0 ] ; then
 	export galera_version="10.0"
 fi
+echo $version | grep "^10."
+if [ $? == 0 ] ; then
+        export galera_version="10.1"
+fi
+
 
 sed -i "s/###galera_version###/$galera_version/g" ~/mdbci/$name.json
 sed -i "s/###version###/$version/g" ~/mdbci/$name.json
