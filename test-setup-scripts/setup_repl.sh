@@ -17,10 +17,13 @@ sshkey[1]=$repl_sshkey_001
 sshkey[2]=$repl_sshkey_002
 sshkey[3]=$repl_sshkey_003
 
-vuser[0]=`vagrant ssh node0 -c 'whoami' 2> /dev/null`
-vuser[1]=`vagrant ssh node1 -c 'whoami' 2> /dev/null`
-vuser[2]=`vagrant ssh node2 -c 'whoami' 2> /dev/null`
-vuser[3]=`vagrant ssh node3 -c 'whoami' 2> /dev/null`
+dir1=`pwd`
+cd ..
+vuser[0]=`./mdbci ssh --command 'whoami' $name/node0 --silent 2> /dev/null`
+vuser[1]=`./mdbci ssh --command 'whoami' $name/node1 --silent 2> /dev/null`
+vuser[2]=`./mdbci ssh --command 'whoami' $name/node2 --silent 2> /dev/null`
+vuser[3]=`./mdbci ssh --command 'whoami' $name/node3 --silent 2> /dev/null`
+cd $dir1
 
 repl_start_db_command[0]=$repl_start_db_command_000
 repl_start_db_command[1]=$repl_start_db_command_001

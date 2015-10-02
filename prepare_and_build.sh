@@ -59,8 +59,9 @@ if [ $? != 0 ] ; then
 	exit 1
 fi
 
-export sshuser=`vagrant ssh -c 'whoami' 2> /dev/null`
 cd ..
+export sshuser=`./mdbci ssh --command 'whoami' --silent build_conf_$box/build 2> /dev/null`
+
 
 # get VM info
 #mdbci#6373 [kkv] changed name for build machine

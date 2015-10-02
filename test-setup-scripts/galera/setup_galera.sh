@@ -12,8 +12,6 @@ private_IP[1]=$galera_private_001
 private_IP[2]=$galera_private_002
 private_IP[3]=$galera_private_003
 
-
-
 N=$galera_N
 
 sshkey[0]=$galera_sshkey_000
@@ -21,10 +19,13 @@ sshkey[1]=$galera_sshkey_001
 sshkey[2]=$galera_sshkey_002
 sshkey[3]=$galera_sshkey_003
 
-vuser[0]=`vagrant ssh galera0 -c 'whoami' 2> /dev/null`
-vuser[1]=`vagrant ssh galera1 -c 'whoami' 2> /dev/null`
-vuser[2]=`vagrant ssh galera2 -c 'whoami' 2> /dev/null`
-vuser[3]=`vagrant ssh galera3 -c 'whoami' 2> /dev/null`
+dir1=`pwd`
+cd ..
+vuser[0]=`./mdbci ssh --command 'whoami' $name/galera0 --silent 2> /dev/null`
+vuser[1]=`./mdbci ssh --command 'whoami' $name/galera1 --silent 2> /dev/null`
+vuser[2]=`./mdbci ssh --command 'whoami' $name/galera2 --silent 2> /dev/null`
+vuser[3]=`./mdbci ssh --command 'whoami' $name/galera3 --silent 2> /dev/null`
+cd $dir1
 
 repl_start_db_command[0]=$repl_start_db_command_000
 repl_start_db_command[1]=$repl_start_db_command_001

@@ -58,8 +58,8 @@ if [ $? != 0 ] ; then
 	exit 1
 fi
 
-export sshuser=`vagrant ssh -c 'whoami' 2> /dev/null | tr -cd "[:print:]"`
 cd ..
+export sshuser=`./mdbci ssh --command 'whoami' --silent build_conf_$box/build 2> /dev/null | tr -cd "[:print:]"`
 
 # get VM info
 export IP=`./mdbci show network install_$box/default --silent 2> /dev/null`

@@ -81,8 +81,8 @@ do
 		eval 'export "$prefix"_port_"$num"=3306'
 	
 		# trying to get private IP (for AWS)
-		cd $config_name
-		private_ip=`vagrant ssh $node_n$i -c 'curl http://169.254.169.254/latest/meta-data/local-ipv4' 2> /dev/null`
+#		cd $config_name
+		private_ip=`./mdbci ssh -command 'curl http://169.254.169.254/latest/meta-data/local-ipv4' $config_name/$node_n$i --silent 2> /dev/null`
 		# kostyl
 		echo $private_ip | grep "\."
 		if [ $? != 0 ] ; then
@@ -91,17 +91,17 @@ do
 
 		eval 'export "$prefix"_private_"$num"="$private_ip"'
 
-		au=`vagrant ssh $node_n$i -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
+		au=`./mdbci ssh --command 'whoami' $config_name/$node_n$i --silent 2> /dev/null | tr -cd "[:print:]" `
 		eval 'export "$prefix"_access_user_"$num"=$au'
 		eval 'export "$prefix"_access_sudo_"$num"=sudo'
 
 		server_num=`expr $i + 1`
 		start_cmd_var="$prefix"_start_db_command_"$num"
 		stop_cmd_var="$prefix"_stop_db_command_"$num"
-		mysql_exe=`vagrant ssh $node_n$i -c 'ls /etc/init.d/mysql* 2> /dev/null | tr -cd "[:print:]"'`
+		mysql_exe=`./mdbci ssh --command 'ls /etc/init.d/mysql* 2> /dev/null | tr -cd "[:print:]"' $config_name/$node_n$i  --silent 2> /dev/null`
 		echo $mysql_exe | grep -i "mysql"
 		if [ $? != 0 ] ; then
-			vagrant ssh $node_n$i -c 'echo "/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &" > mysql_start.sh; echo "sleep 20" >> mysql_start.sh; echo "disown" >> mysql_start.sh; chmod a+x mysql_start.sh'
+			./mdbci ssh --command 'echo "/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &" > mysql_start.sh; echo "sleep 20" >> mysql_start.sh; echo "disown" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
                         eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
                         eval 'export $stop_cmd_var="/usr/bin/killall mysqld "'
 		else
@@ -111,14 +111,14 @@ do
 
 		eval 'export "$prefix"_start_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant up $node_n$i $provider; cd $curr_dir"'
 		eval 'export "$prefix"_kill_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant halt $node_n$i $provider; cd $curr_dir"'
-		cd ..
+#		cd ..
 	done
 done
 
-cd $mdbci_dir/$config_name
-export maxscale_access_user=`vagrant ssh maxscale -c 'whoami' 2> /dev/null | tr -cd "[:print:]" `
+cd $mdbci_dir
+export maxscale_access_user=`./mdbci ssh --command 'whoami' $config_name/maxscale --silent 2> /dev/null | tr -cd "[:print:]" `
 export maxscale_access_sudo="sudo "
-export maxscale_hostname=`vagrant ssh maxscale -c 'hostname' | tr -cd "[:print:]" `
+export maxscale_hostname=`./mdbci ssh --command 'hostname' $config_name/maxscale --silent 2> /dev/null | tr -cd "[:print:]" `
 #cd ..
 
 # Sysbench directory (should be sysbench >= 0.5)

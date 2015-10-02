@@ -37,16 +37,17 @@ if [[ "$linux_name" == "CentOS" || "$linux_name" == "Fedora" ]]; then
 	yum -y install http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
 #	yum -y remove MariaDB-server
 #        yum -y install MariaDB-Galera-server MariaDB-client nc rsync sudo chkconfig sed coreutils util-linux curl grep findutils gawk socat iproute
+	yum -y install nc rsync sudo chkconfig sed coreutils util-linux curl grep findutils gawk socat iproute
 	yum -y install percona-xtrabackup
 
         # Checking if packages were correctly installed
-        rpm -q MariaDB-Galera-server MariaDB-client
-        rpm_q_status=$?
+#        rpm -q MariaDB-Galera-server MariaDB-client
+#        rpm_q_status=$?
 
-        if [[ "$rpm_q_status" != "0" ]]; then
-                echo  "Error installing MariaDB packages."
-                exit $rpm_q_status
-        fi
+#        if [[ "$rpm_q_status" != "0" ]]; then
+#                echo  "Error installing MariaDB packages."
+#                exit $rpm_q_status
+#        fi
 elif [[ "$linux_name" == "Debian" || "$linux_name" == "Ubuntu" ]]; then
         # Installing MariaDB packages
 	apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
@@ -57,13 +58,13 @@ elif [[ "$linux_name" == "Debian" || "$linux_name" == "Ubuntu" ]]; then
 	apt-get install -y --force-yes percona-xtrabackup
 
         # Checking if packages were correctly installed
-        dpkg -s mariadb-galera-server mariadb-client
-        dpkg_s_status=$?
-
-        if [[ "$dpkg_s_status" != "0" ]]; then
-                echo "Error installing MariaDB packages."
-                exit $dpkg_s_status
-        fi
+#        dpkg -s mariadb-galera-server mariadb-client
+#        dpkg_s_status=$?
+#
+#        if [[ "$dpkg_s_status" != "0" ]]; then
+#                echo "Error installing MariaDB packages."
+#                exit $dpkg_s_status
+#        fi
 fi
 
 exit 0
