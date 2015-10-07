@@ -57,12 +57,14 @@ for i in $(seq 0 $x)
 do
 	scp -r -i  ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $scr_dir/galera/* ${vuser[$i]}@${IP[$i]}:/home/${vuser[$i]}/
 	ssh -i  ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo cp -r /home/${vuser[$i]}/* /root/"
-	ssh -i  ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "export xtrabackup=$xtrabackup ; sudo /root/install-packages.sh ; sudo /root/firewall-setup.sh $maxscale_ip; sudo /root/configure.sh ${private_IP[$i]} node$i"
+#	ssh -i  ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "export xtrabackup=$xtrabackup ; sudo /root/install-packages.sh ; sudo /root/firewall-setup.sh $maxscale_ip; sudo /root/configure.sh ${private_IP[$i]} node$i"
+        ssh -i  ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "export xtrabackup=$xtrabackup ; sudo /root/install-packages.sh ; sudo /root/configure.sh ${private_IP[$i]} node$i"
+
         ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mysql_install_db; sudo chown -R mysql:mysql /var/lib/mysql"
 done
 
 scp -r -i  ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $src_dir/galera/* ${vuser[0]}@${IP[0]}:/home/${vuser[$i]}/
-ssh -i  ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[0]}@${IP[0]} "sudo /root/firewall-setup.sh $maxscale_ip"
+#ssh -i  ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[0]}@${IP[0]} "sudo /root/firewall-setup.sh $maxscale_ip"
 
 ssh -i  ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[0]}@${IP[0]} "sudo ${galera_start_db_command[0]} --wsrep-cluster-address=gcomm://" &
 sleep 10

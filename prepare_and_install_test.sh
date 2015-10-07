@@ -50,7 +50,8 @@ fi
 # starting VM for build
 ./mdbci --override --template ~/mdbci/install_$box.json generate install_$box
 cd install_$box
-vagrant up $provider
+export provider
+~/build-scripts/vagrant_up $provider
 if [ $? != 0 ] ; then
 	echo "Error starting VM"
 	vagrant destroy -f
@@ -59,11 +60,11 @@ if [ $? != 0 ] ; then
 fi
 
 cd ..
-export sshuser=`./mdbci ssh --command 'whoami' --silent build_conf_$box/build 2> /dev/null | tr -cd "[:print:]"`
+export sshuser=`./mdbci ssh --command 'whoami' --silent install_$box/build 2> /dev/null | tr -cd "[:print:]"`
 
 # get VM info
-export IP=`./mdbci show network install_$box/default --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile install_$box/default --silent 2> /dev/null`
+export IP=`./mdbci show network install_$box/build --silent 2> /dev/null`
+export sshkey=`./mdbci show keyfile install_$box/build --silent 2> /dev/null`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 export sshopt="$scpopt $sshuser@$IP"
 

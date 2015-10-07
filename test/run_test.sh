@@ -9,7 +9,11 @@ sudo make install
 dir=`pwd`
 
 ~/mdbci-repository-config/generate_all.sh repo.d
-~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+if [ "$ci_release" != "ci" ] ; then
+	/mdbci-repository-config/maxscale.sh $target repo.d
+else
+	~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+fi
 export repo_dir=$dir/repo.d/
 
 . ~/build-scripts/test/get_provider

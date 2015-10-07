@@ -68,28 +68,28 @@ do
 	scp -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server.cnf ${vuser[$i]}@${IP[$i]}:./
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo cp ./server.cnf $dir/"
 
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 3306 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 3306 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4006 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4006 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4008 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4009 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4008 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4008 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4442 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4442 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 6444 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 6444 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 5306 -j ACCEPT'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 5306 -j ACCEPT -m state --state NEW'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo /etc/init.d/iptables save'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables save'
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo /sbin/service iptables save'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 3306 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 3306 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4006 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4006 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4008 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4009 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4008 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4008 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 4442 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 4442 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 6444 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 6444 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 5306 -j ACCEPT'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 5306 -j ACCEPT -m state --state NEW'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo /etc/init.d/iptables save'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables save'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo /sbin/service iptables save'
 
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mysql_install_db; sudo chown -R mysql:mysql /var/lib/mysql"
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo ${repl_start_db_command[$i]}" &
 	sleep 5
-#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo systemctl start mariadb.service'
+	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo systemctl start mariadb.service'
 done
 
 scp -i ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $scr_dir/create_*_user.sql ${vuser[0]}@${IP[0]}:/home/${vuser[0]}

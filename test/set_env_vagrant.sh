@@ -82,7 +82,7 @@ do
 	
 		# trying to get private IP (for AWS)
 #		cd $config_name
-		private_ip=`./mdbci ssh -command 'curl http://169.254.169.254/latest/meta-data/local-ipv4' $config_name/$node_n$i --silent 2> /dev/null`
+		private_ip=`./mdbci ssh --command 'curl http://169.254.169.254/latest/meta-data/local-ipv4' $config_name/$node_n$i --silent 2> /dev/null`
 		# kostyl
 		echo $private_ip | grep "\."
 		if [ $? != 0 ] ; then
