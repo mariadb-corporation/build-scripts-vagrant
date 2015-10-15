@@ -60,13 +60,13 @@ do
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/usr.sbin.mysqld; sudo service apparmor restart'
 
         dir="/etc/my.cnf.d"
-	server_id=`expr $i + 1`
-	sed "s/###SERVER_ID###/$server_id/"  $scr_dir/server.cnf.template >  ./server.cnf
+#	server_id=`expr $i + 1`
+#	sed "s/###SERVER_ID###/$server_id/"  $scr_dir/server.cnf.template >  ./server.cnf
 
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo sudo sh -c 'echo !includedir /etc/my.cnf.d >> /etc/my.cnf'"
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mkdir -p $dir"
-	scp -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server.cnf ${vuser[$i]}@${IP[$i]}:./
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo cp ./server.cnf $dir/"
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo sudo sh -c 'echo !includedir /etc/my.cnf.d >> /etc/my.cnf'"
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mkdir -p $dir"
+#	scp -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server.cnf ${vuser[$i]}@${IP[$i]}:./
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo cp ./server.cnf $dir/"
 
 #	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp -m tcp --dport 3306 -j ACCEPT'
 #	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo iptables -I INPUT -p tcp --dport 3306 -j ACCEPT -m state --state NEW'
@@ -89,7 +89,7 @@ do
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo mysql_install_db; sudo chown -R mysql:mysql /var/lib/mysql"
 	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} "sudo ${repl_start_db_command[$i]}" &
 	sleep 5
-	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo systemctl start mariadb.service'
+#	ssh -i ${sshkey[$i]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${vuser[$i]}@${IP[$i]} 'sudo systemctl start mariadb.service'
 done
 
 scp -i ${sshkey[0]} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $scr_dir/create_*_user.sql ${vuser[0]}@${IP[0]}:/home/${vuser[0]}

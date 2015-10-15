@@ -7,7 +7,9 @@
         "box" : "centos7",
 	"product" : {
       		"name": "###product###",
-		"version": "###version###"
+		"version": "###version###",
+                "cnf_template" : "server1.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
 	}
 
   },
@@ -18,7 +20,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "###product###",
-                "version": "###version###"
+                "version": "###version###",
+                "cnf_template" : "server2.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -28,7 +32,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "###product###",
-                "version": "###version###"
+                "version": "###version###",
+                "cnf_template" : "server3.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -38,7 +44,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "###product###",
-                "version": "###version###"
+                "version": "###version###",
+                "cnf_template" : "server4.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -48,7 +56,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###galera_version###"
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server1.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -58,7 +68,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###galera_version###"
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server1.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -68,7 +80,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###galera_version###"
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server2.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -78,7 +92,9 @@
         "box" : "centos7",
         "product" : {
                 "name": "galera",
-                "version": "###galera_version###"
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server3.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -87,7 +103,9 @@
         "hostname" : "maxscale",
         "box" : "###box###",
         "product" : {
-                "name": "maxscale"
+                "name": "maxscale",
+                "cnf_template" : "galera_server4.cnf",
+                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
         }
 
   }

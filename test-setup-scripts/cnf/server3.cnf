@@ -15,7 +15,7 @@
 log-bin=mar-bin
 #binlog-format=row
 binlog-format=STATEMENT
-server_id=###SERVER_ID###
+server_id=3
 #slave_parallel_threads=2
 user=mysql
 
