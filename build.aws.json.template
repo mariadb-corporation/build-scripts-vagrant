@@ -1,6 +1,5 @@
 {
   "cookbook_path" : "../recipes/cookbooks/",
-  "vm_provision" : "aws",
   "aws_config" : "../aws-config.yml",
   "build" :
   {

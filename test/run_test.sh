@@ -42,7 +42,7 @@ cd $name
 vagrant destroy -f
 cd ..
 ./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
-cd $name
+#cd $name
 
 while [ -f /home/vagrant/vagrant_lock ]
 do
@@ -53,15 +53,16 @@ done
 touch /home/vagrant/vagrant_lock
 
 echo "running vagrant up $provider"
-~/build-scripts/vagrant_up 
+#~/build-scripts/vagrant_up 
+./mdbci up $name
 
 if [ $? == 0 ] ; then
 rm ~/vagrant_lock
 
-  cd ..
+ # cd ..
   ./mdbci show network $name
   . ~/build-scripts/test/set_env_vagrant.sh $name
-env
+#env
   cd $name
 #  ../setup_root.sh
   ~/build-scripts/test-setup-scripts/setup_repl.sh
