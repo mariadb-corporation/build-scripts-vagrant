@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 rm -rf LOGS
 cmake . -DBUILDNAME=$name
 
@@ -42,33 +42,24 @@ cd $name
 vagrant destroy -f
 cd ..
 ./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
-#cd $name
 
 while [ -f /home/vagrant/vagrant_lock ]
 do
 	echo "vagrant is locked, waiting ..."
 	sleep 5
-
 done
 touch /home/vagrant/vagrant_lock
 
 echo "running vagrant up $provider"
-#~/build-scripts/vagrant_up 
 ./mdbci up $name
 
 if [ $? == 0 ] ; then
 rm ~/vagrant_lock
 
- # cd ..
-  ./mdbci show network $name
   . ~/build-scripts/test/set_env_vagrant.sh $name
-#env
   cd $name
-#  ../setup_root.sh
   ~/build-scripts/test-setup-scripts/setup_repl.sh
   ~/build-scripts/test-setup-scripts/galera/setup_galera.sh
-
-  echo "show slave hosts" | mysql -uskysql -pskysql -h $repl_000
 
   ~/build-scripts/test/configure_core.sh
 
@@ -86,11 +77,7 @@ else
   exit 1
 fi  
 
-#sleep 1800
-echo "done!"
-
 cd ~/mdbci/$name
 if [ "$do_not_destroy" != "yes" ] ; then
 	vagrant destroy -f
 fi
-#vagrant destroy -f

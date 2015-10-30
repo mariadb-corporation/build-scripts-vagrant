@@ -19,9 +19,6 @@ export maxdir_bin="$maxdir/bin/"
 export maxscale_cnf="$maxdir/etc/MaxScale.cnf"
 export maxscale_log_dir="$maxdir/log/"
 
-#pushd `dirname $0` > /dev/null
-#export test_dir=`pwd`
-#popd > /dev/null
 export test_dir="$maxdir/system-test/"
 
 export maxscale_binlog_dir="/var/lib/maxscale/Binlog_Service/"
@@ -74,7 +71,7 @@ do
 		# get IP
 		ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
 		# get ssh key
-    		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null`
+   		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null`
 
 		eval 'export "$prefix"_"$num"=$ip'
 		eval 'export "$prefix"_sshkey_"$num"=$key'
@@ -82,17 +79,12 @@ do
 	
 		# trying to get private IP (for AWS)
 #		cd $config_name
-		private_ip=`./mdbci ssh --command 'curl http://169.254.169.254/latest/meta-data/local-ipv4' $config_name/$node_n$i --silent 2> /dev/null`
-		# kostyl
-		echo $private_ip | grep "\."
-		if [ $? != 0 ] ; then
-        		private_ip=$ip
-		fi
+		private_ip=`./mdbci show private_ip $config_name/$node_n$i --silent 2> /dev/null`
 
 		eval 'export "$prefix"_private_"$num"="$private_ip"'
 
 		au=`./mdbci ssh --command 'whoami' $config_name/$node_n$i --silent 2> /dev/null | tr -cd "[:print:]" `
-		eval 'export "$prefix"_access_user_"$num"=$au'
+		eval 'export "$prefix"_access_user_"$num"="$au"'
 		eval 'export "$prefix"_access_sudo_"$num"=sudo'
 
 		server_num=`expr $i + 1`

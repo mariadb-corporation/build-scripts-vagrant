@@ -120,7 +120,8 @@ wsrep_sst_receive_address=###NODE-ADDRESS###
 # INITIAL SETUP
 # SST authentication string. This will be used to send SST to joining nodes.
 # Depends on SST method. For mysqldump method it is root:<root password>
-wsrep_sst_auth=###REP-USERNAME###:###REP-PASSWORD###
+#wsrep_sst_auth=###REP-USERNAME###:###REP-PASSWORD###
+wsrep_sst_auth=repl:repl
 
 # Desired SST donor name.
 #wsrep_sst_donor=
