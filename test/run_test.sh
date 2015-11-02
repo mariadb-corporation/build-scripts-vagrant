@@ -17,8 +17,10 @@ fi
 export repo_dir=$dir/repo.d/
 
 . ~/build-scripts/test/get_provider
+cd ~/mdbci/
+#provider=`./mdbci show provider $box --silent 2> /dev/null`
 
-cp ~/build-scripts/test/$template ~/mdbci/$name.json
+#cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
 
 export galera_version=5.5
 echo $version | grep "^10."
