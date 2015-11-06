@@ -2,7 +2,7 @@
 
 #set -x
 
-export scr_dir="/home/vagrant/build-scripts/test-setup-scripts"
+export scr_dir="$HOME/build-scripts/test-setup-scripts"
 
 x=`expr $repl_N - 1`
 for i in $(seq 0 $x)

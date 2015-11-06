@@ -9,7 +9,7 @@
       		"name": "###product###",
 		"version": "###version###",
                 "cnf_template" : "server1.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
 	}
 
   },
@@ -22,7 +22,7 @@
                 "name": "###product###",
                 "version": "###version###",
                 "cnf_template" : "server2.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -34,7 +34,7 @@
                 "name": "###product###",
                 "version": "###version###",
                 "cnf_template" : "server3.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -46,7 +46,7 @@
                 "name": "###product###",
                 "version": "###version###",
                 "cnf_template" : "server4.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -58,7 +58,7 @@
                 "name": "galera",
                 "version": "###galera_version###",
                 "cnf_template" : "galera_server1.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -70,7 +70,7 @@
                 "name": "galera",
                 "version": "###galera_version###",
                 "cnf_template" : "galera_server1.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -82,7 +82,7 @@
                 "name": "galera",
                 "version": "###galera_version###",
                 "cnf_template" : "galera_server2.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -94,7 +94,7 @@
                 "name": "galera",
                 "version": "###galera_version###",
                 "cnf_template" : "galera_server3.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
@@ -105,7 +105,7 @@
         "product" : {
                 "name": "maxscale",
                 "cnf_template" : "galera_server4.cnf",
-                "cnf_template_path": "/home/vagrant/build-scripts/test-setup-scripts/cnf"
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
 
   }
