@@ -10,17 +10,20 @@ dir=`pwd`
 
 ~/mdbci-repository-config/generate_all.sh repo.d
 if [ "$ci_release" != "ci" ] ; then
-	/mdbci-repository-config/maxscale.sh $target repo.d
+	~/mdbci-repository-config/maxscale.sh $target repo.d
 else
 	~/mdbci-repository-config/maxscale-ci.sh $target repo.d
 fi
 export repo_dir=$dir/repo.d/
 
 . ~/build-scripts/test/get_provider
+echo "box: $box"
+echo "template: $template"
 cd ~/mdbci/
-#provider=`./mdbci show provider $box --silent 2> /dev/null`
+provider=`./mdbci show provider $box --silent 2> /dev/null`
 
-#cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+#cp ~/build-scripts/test/$template ~/mdbci/$name.json
 
 export galera_version=5.5
 echo $version | grep "^10."
