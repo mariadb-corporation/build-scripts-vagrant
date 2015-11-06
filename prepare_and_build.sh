@@ -23,13 +23,11 @@ if [ $? == 0 ] ; then
 	
 else
 
-#kostyl'
-echo "rhel5 rhel6 rhel7 sles11 sles12 centos7 fedora19 fedora20 fedora21 fedora22 fedora23 deb_jessie ubuntu_vivid" | grep $box 
-if [ $? == 0 ] ; then
-	cp ~/build-scripts/build.aws.json.template ~/mdbci/build_$box.json
-else
-	cp ~//build-scripts/build.json.template ~/mdbci/build_$box.json
-fi
+cd ~/mdbci
+
+provider=`./mdbci show provider $box --silent 2> /dev/null`
+cp ~/build-scripts/build.$provider.json.template ~/mdbci/build_$box.json
+
 sed -i "s/###box###/$box/g" ~/mdbci/build_$box.json
 
 while [ -f ~/vagrant_lock ]
@@ -39,7 +37,6 @@ done
 touch ~/vagrant_lock
 
 # destroying existing box
-cd ~/mdbci
 if [ -d "build_conf_$box" ]; then
 	cd build_conf_$box
 	vagrant destroy -f
