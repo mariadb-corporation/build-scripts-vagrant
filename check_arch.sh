@@ -37,6 +37,11 @@ else
 	if [ $endian == 0 ] ; then 
                 export mariadbd_link="http://jenkins.engskysql.com/x/mariadb-5.5.41-linux-ppc64.tar.gz"
                 export mariadbd_file="mariadb-5.5.41-linux-ppc64.tar.gz"
+		cat /etc/redhat-release | grep " 6\."
+		if [ $? == 0 ] ; then
+		     export mariadbd_link="http://jenkins.engskysql.com/x/rhel6/mariadb-5.5.41-linux-ppc64.tar.gz"
+		fi
+
 	else
 	        export mariadbd_link="http://jenkins.engskysql.com/x/mariadb-5.5.41-linux-ppc64le.tar.gz"
         	export mariadbd_file="mariadb-5.5.41-linux-ppc64le.tar.gz"

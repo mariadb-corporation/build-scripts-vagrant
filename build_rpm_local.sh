@@ -22,6 +22,7 @@ else
 	zy=0
 fi
 
+rm $mariadbd_file
 wget  --retry-connrefused $mariadbd_link
 sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
 cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/ "
