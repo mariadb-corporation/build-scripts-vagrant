@@ -11,6 +11,7 @@ mkdir -p $pre_repo_dir/$target/$image
 export work_dir="workspace"
 export orig_image=$image
 
+echo $sshuser
 scp $scpopt ~/build-scripts/vm_setup_scripts/$image.sh $sshuser@$IP:./
 ssh $sshopt "sudo ./$image.sh"
 
@@ -65,10 +66,11 @@ if [ $? -ne 0 ] ; then
         exit 4
 fi
 
-echo "copying repo to the repo/$target/$image"
-scp $scpopt $sshuser@$IP:$work_dir/$files $pre_repo_dir/$target/$image
-scp $scpopt $sshuser@$IP:$work_dir/$tars $pre_repo_dir/$target/$image
-
+if [ "$no_repo" != "yes" ] ; then
+	echo "copying repo to the repo/$target/$image"
+	scp $scpopt $sshuser@$IP:$work_dir/$files $pre_repo_dir/$target/$image
+	scp $scpopt $sshuser@$IP:$work_dir/$tars $pre_repo_dir/$target/$image
+fi
 
 if [ "$Coverity" == "yes" ] ; then
   scp $scpopt $sshuser@$IP:$work_dir/_build/maxscale.tgz .
@@ -82,4 +84,6 @@ curl --form token=DayIHFlOnCrr6Iizd98jVQ \
 fi
 echo "package building for $target done!"
 
-~/build-scripts/create_remote_repo.sh $image $IP $target
+if [ "$no_repo" != "yes" ] ; then
+	~/build-scripts/create_remote_repo.sh $image $IP $target
+fi

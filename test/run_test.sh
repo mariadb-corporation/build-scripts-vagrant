@@ -1,30 +1,34 @@
 #!/bin/bash
 
-#set -x
+# $1 - "debug" means do not install Maxscale
+
 rm -rf LOGS
-cmake . -DBUILDNAME=$name
-
-make
-sudo make install
+echo $1
+if [ "$1" != "debug" ] ; then
+	cmake . -DBUILDNAME=$name
+	make
+	sudo make install
+fi
 dir=`pwd`
-
+whoami
+echo $dir
 ~/mdbci-repository-config/generate_all.sh repo.d
-
-#if [ "$ci_release" != "ci" ] ; then
-#	~/mdbci-repository-config/maxscale.sh $target repo.d
-#else
+if [ "$1" != "debug" ] ; then
 	~/mdbci-repository-config/maxscale-ci.sh $target repo.d
-#fi
+fi
+
 export repo_dir=$dir/repo.d/
 
-#. ~/build-scripts/test/get_provider
 echo "box: $box"
 echo "template: $template"
 cd ~/mdbci/
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 
-cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
-#cp ~/build-scripts/test/$template ~/mdbci/$name.json
+if [ "$1" != "debug" ] ; then
+	cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+else
+        cp ~/build-scripts/test/debugtemplate.$provider.json ~/mdbci/$name.json
+fi
 
 export galera_version=5.5
 echo $version | grep "^10."
@@ -35,7 +39,6 @@ echo $version | grep "^10."
 if [ $? == 0 ] ; then
         export galera_version="10.1"
 fi
-
 
 sed -i "s/###galera_version###/$galera_version/g" ~/mdbci/$name.json
 sed -i "s/###version###/$version/g" ~/mdbci/$name.json
@@ -70,7 +73,9 @@ rm ~/vagrant_lock
   ~/build-scripts/test/configure_core.sh
 
   cd $dir
-  ctest -VV -D Nightly -I $test_set
+  if [ "$1" != "debug" ] ; then
+    ctest -VV -D Nightly -I $test_set
+  fi
   date_str=`date +%Y%m%d-%H`
   logs_dir="/home/vagrant/LOGS/$date_str/$name/$target/"
   mkdir -p $logs_dir

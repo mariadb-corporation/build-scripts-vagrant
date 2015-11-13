@@ -40,7 +40,7 @@ fi
 export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$box"
 
 mkdir -p $pre_repo_dir/$3/SRC
-
+echo $sshuser
 ~/build-scripts/remote_build_new.sh
 build_result=$?
 
