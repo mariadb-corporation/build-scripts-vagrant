@@ -4,7 +4,7 @@ export config_name="$1"
 if [ -z $1 ] ; then
 	config_name="test1"
 fi
-export mdbci_dir="/home/vagrant/mdbci/"
+export mdbci_dir="$HOME/mdbci/"
 
 export curr_dir=`pwd`
 

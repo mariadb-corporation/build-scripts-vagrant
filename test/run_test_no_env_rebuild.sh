@@ -1,6 +1,6 @@
 set -x
 dir=`pwd`
-. ~/build-scripts/test/get_provider
+#. ~/build-scripts/test/get_provider
 cd ~/mdbci/$name
 #vagrant up
 cd ..

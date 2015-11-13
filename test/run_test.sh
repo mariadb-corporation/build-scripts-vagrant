@@ -52,12 +52,12 @@ vagrant destroy -f
 cd ..
 ./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
 
-while [ -f /home/vagrant/vagrant_lock ]
+while [ -f ~/vagrant_lock ]
 do
 	echo "vagrant is locked, waiting ..."
 	sleep 5
 done
-touch /home/vagrant/vagrant_lock
+touch ~/vagrant_lock
 
 echo "running vagrant up $provider"
 ./mdbci up $name
@@ -77,7 +77,7 @@ rm ~/vagrant_lock
     ctest -VV -D Nightly -I $test_set
   fi
   date_str=`date +%Y%m%d-%H`
-  logs_dir="/home/vagrant/LOGS/$date_str/$name/$target/"
+  logs_dir="$HOME/LOGS/$date_str/$name/$target/"
   mkdir -p $logs_dir
   cp -r LOGS/* $logs_dir
   chmod a+r $logs_dir/*
