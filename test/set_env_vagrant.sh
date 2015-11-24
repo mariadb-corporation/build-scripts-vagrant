@@ -21,7 +21,7 @@ export maxscale_log_dir="$maxdir/log/"
 
 export test_dir="$maxdir/system-test/"
 
-export maxscale_binlog_dir="/var/lib/maxscale/Binlog_Service/"
+export maxscale_binlog_dir="/var/lib/maxscale/Binlog_Service"
 
 if [ "$new_dirs" == "yes" ] ; then
         export maxdir="/usr/bin/"
@@ -93,7 +93,7 @@ do
 		mysql_exe=`./mdbci ssh --command 'ls /etc/init.d/mysql* 2> /dev/null | tr -cd "[:print:]"' $config_name/$node_n$i  --silent 2> /dev/null`
 		echo $mysql_exe | grep -i "mysql"
 		if [ $? != 0 ] ; then
-			./mdbci ssh --command 'echo "/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &" > mysql_start.sh; echo "sleep 20" >> mysql_start.sh; echo "disown" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
+			./mdbci ssh --command 'echo \"/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &\" > mysql_start.sh; echo \"sleep 20\" >> mysql_start.sh; echo \"disown\" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
                         eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
                         eval 'export $stop_cmd_var="/usr/bin/killall mysqld "'
 		else
@@ -101,8 +101,8 @@ do
 			eval 'export $stop_cmd_var="$mysql_exe stop "'
 		fi
 
-		eval 'export "$prefix"_start_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant up $node_n$i $provider; cd $curr_dir"'
-		eval 'export "$prefix"_kill_vm_command_"$num"="cd $mdbci_dir/$config_name;vagrant halt $node_n$i $provider; cd $curr_dir"'
+		eval 'export "$prefix"_start_vm_command_"$num"="\"cd $mdbci_dir/$config_name;vagrant up $node_n$i --provider=$provider; cd $curr_dir\""'
+		eval 'export "$prefix"_kill_vm_command_"$num"="\"cd $mdbci_dir/$config_name;vagrant halt $node_n$i --provider=$provider; cd $curr_dir\""'
 #		cd ..
 	done
 done
@@ -114,7 +114,7 @@ export maxscale_hostname=`./mdbci ssh --command 'hostname' $config_name/maxscale
 #cd ..
 
 # Sysbench directory (should be sysbench >= 0.5)
-export sysbench_dir="/home/ec2-user/sysbench_deb7/sysbench/"
+export sysbench_dir="$HOME/sysbench_deb7/sysbench/"
 
 export ssl=true
 cd $curr_dir
