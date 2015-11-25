@@ -7,7 +7,7 @@ echo $1
 if [ "$1" != "debug" ] ; then
 	cmake . -DBUILDNAME=$name
 	make
-	sudo make install
+#	sudo make install
 fi
 dir=`pwd`
 whoami
@@ -23,13 +23,17 @@ echo "box: $box"
 echo "template: $template"
 cd ~/mdbci/
 provider=`./mdbci show provider $box --silent 2> /dev/null`
-
+set -x
 if [ "$1" != "debug" ] ; then
-	cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+	if [ "x$big" != "xyes" ] ; then
+		cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+	else
+                cp ~/build-scripts/test/template_big.$provider.json ~/mdbci/$name.json
+	fi
 else
         cp ~/build-scripts/test/debugtemplate.$provider.json ~/mdbci/$name.json
 fi
-
+set +x
 export galera_version=5.5
 echo $version | grep "^10."
 if [ $? == 0 ] ; then

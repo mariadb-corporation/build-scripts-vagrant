@@ -1,0 +1,231 @@
+{
+  "cookbook_path" : "../recipes/cookbooks/",
+  "aws_config" : "../aws-config.yml",
+  "node0" :
+  {
+        "hostname" : "node0",
+        "box" : "centos7",
+	"product" : {
+      		"name": "###product###",
+		"version": "###version###",
+                "cnf_template" : "server1.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+	}
+
+  },
+
+  "node1" :
+  {
+        "hostname" : "node1",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server2.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "node2" :
+  {
+        "hostname" : "node2",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server3.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "node3" :
+  {
+        "hostname" : "node3",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server4.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node4" :
+  {
+        "hostname" : "node4",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server5.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node5" :
+  {
+        "hostname" : "node5",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server6.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node6" :
+  {
+        "hostname" : "node6",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server7.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node7" :
+  {
+        "hostname" : "node7",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server8.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node8" :
+  {
+        "hostname" : "node8",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server9.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node9" :
+  {
+        "hostname" : "node9",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server10.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node10" :
+  {
+        "hostname" : "node10",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server11.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node11" :
+  {
+        "hostname" : "node11",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server12.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node12" :
+  {
+        "hostname" : "node12",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server13.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node13" :
+  {
+        "hostname" : "node13",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server14.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node14" :
+  {
+        "hostname" : "node14",
+        "box" : "centos7",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server15.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera0" :
+  {
+        "hostname" : "galera0",
+        "box" : "centos7",
+        "product" : {
+                "name": "galera",
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server1.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera1" :
+  {
+        "hostname" : "galera1",
+        "box" : "centos7",
+        "product" : {
+                "name": "galera",
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server2.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera2" :
+  {
+        "hostname" : "galera2",
+        "box" : "centos7",
+        "product" : {
+                "name": "galera",
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server3.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera3" :
+  {
+        "hostname" : "galera3",
+        "box" : "centos7",
+        "product" : {
+                "name": "galera",
+                "version": "###galera_version###",
+                "cnf_template" : "galera_server4.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "maxscale" :
+  {
+        "hostname" : "maxscale",
+        "box" : "###box###",
+        "product" : {
+                "name": "maxscale"
+        }
+
+  }
+}

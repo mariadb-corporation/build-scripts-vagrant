@@ -4,13 +4,16 @@ export config_name="$1"
 if [ -z $1 ] ; then
 	config_name="test1"
 fi
-export mdbci_dir="$HOME/mdbci/"
+export mdbci_dir="$HOME/mdbci"
 
 export curr_dir=`pwd`
 
+cd $mdbci_dir/$config_name
+
 # Number of nodes
-export galera_N=4
-export repl_N=4
+export galera_N=`vagrant status | grep galera | wc -l`
+export repl_N=`vagrant status | grep node | wc -l`
+cd $curr_dir
 export new_dirs="yes"
 
 export maxdir="/usr/local/mariadb-maxscale"
