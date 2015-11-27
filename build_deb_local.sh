@@ -39,7 +39,7 @@ if [ $remove_strip == "yes" ] ; then
         sudo touch /usr/bin/strip
         sudo chmod a+x /usr/bin/strip
 fi 
-
+sudo make install
 sudo make package
 res=$?
 if [ $res != 0 ] ; then
