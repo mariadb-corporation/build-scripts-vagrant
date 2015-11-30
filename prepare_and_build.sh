@@ -8,20 +8,20 @@ export target=`echo $target | sed "s/ //g"`
 #genereting json file 
 
 #kostyl : PPC64 build
-echo $box | grep "ppc64"
-if [ $? == 0 ] ; then
-	export sshuser="ec2-user"
-	export IP=`cat ~/build-scripts/ppc_ip/$box`
-	export sshkey="$HOME/build-scripts/ppc_key/$box"
-	export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
-	export sshopt="$scpopt $sshuser@$IP"
+#echo $box | grep "ppc64"
+#if [ $? == 0 ] ; then
+#	export sshuser="ec2-user"
+#	export IP=`cat ~/build-scripts/ppc_ip/$box`
+#	export sshkey="$HOME/build-scripts/ppc_key/$box"
+#	export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
+#	export sshopt="$scpopt $sshuser@$IP"
 
 #	sudo ./start_vpn.sh
 
-	~/build-scripts/build.sh
+#	~/build-scripts/build.sh
 #        sudo killall openconnect
 	
-else
+#else
 
 cd ~/mdbci
 
@@ -78,4 +78,5 @@ if [ "x$do_not_destroy_vm" != "xyes" ] ; then
 fi
 exit $res
 
-fi
+#fi
+

@@ -18,6 +18,14 @@ sudo apt-get install -y --force-yes librabbitmq-dev
 sudo apt-get install -y --force-yes libcurl4-openssl-dev
 sudo apt-get install -y --force-yes libpcre3-dev
 
+mkdir rabbit
+cd rabbit
+git clone https://github.com/alanxz/rabbitmq-c.git
+cd rabbitmq-c
+cmake .
+sudo make install
+cd ../../
+
 wget --retry-connrefused $mariadbd_link
 sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
 
