@@ -78,7 +78,7 @@ if [ "$Coverity" == "yes" ] ; then
 curl --form token=DayIHFlOnCrr6Iizd98jVQ \
   --form email=timofey.turenko@skysql.com \
   --form file=@maxscale.tgz \
-  --form version="1.0.2" \
+  --form version="1.3.0" \
   --form description="develop branch" \
   https://scan.coverity.com/builds?project=mariadb-corporation%2FMaxScale
 fi

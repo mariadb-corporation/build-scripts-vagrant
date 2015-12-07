@@ -37,6 +37,8 @@ if [ "$5" != "" ] ; then
   cd $5
 fi
 
+sed -i "s/MAXSCALE_VERSION_PATCH \"0\"/MAXSCALE_VERSION_PATCH \"1.21\"/" cmake/macros.cmake
+
 export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$box"
 
 mkdir -p $pre_repo_dir/$3/SRC

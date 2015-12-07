@@ -27,7 +27,7 @@ cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 datestr=`date +%Y%m%d-%H%M`
-name=`echo build_$box_$datestr`
+name="build_$box-$datestr"
 cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
