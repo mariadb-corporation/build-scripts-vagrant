@@ -4,7 +4,7 @@
   "node0" :
   {
         "hostname" : "node0",
-        "box" : "centos7",
+        "box" : "centos7_large",
 	"product" : {
       		"name": "###product###",
 		"version": "###version###",
@@ -17,7 +17,7 @@
   "node1" :
   {
         "hostname" : "node1",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -29,7 +29,7 @@
   "node2" :
   {
         "hostname" : "node2",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -41,7 +41,7 @@
   "node3" :
   {
         "hostname" : "node3",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -52,7 +52,7 @@
   "node4" :
   {
         "hostname" : "node4",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -63,7 +63,7 @@
   "node5" :
   {
         "hostname" : "node5",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -74,7 +74,7 @@
   "node6" :
   {
         "hostname" : "node6",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -85,7 +85,7 @@
   "node7" :
   {
         "hostname" : "node7",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -96,7 +96,7 @@
   "node8" :
   {
         "hostname" : "node8",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -107,7 +107,7 @@
   "node9" :
   {
         "hostname" : "node9",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -118,7 +118,7 @@
   "node10" :
   {
         "hostname" : "node10",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -129,7 +129,7 @@
   "node11" :
   {
         "hostname" : "node11",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -140,7 +140,7 @@
   "node12" :
   {
         "hostname" : "node12",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -151,7 +151,7 @@
   "node13" :
   {
         "hostname" : "node13",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -162,7 +162,7 @@
   "node14" :
   {
         "hostname" : "node14",
-        "box" : "centos7",
+        "box" : "centos7_large",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -222,7 +222,7 @@
   "maxscale" :
   {
         "hostname" : "maxscale",
-        "box" : "###box###",
+        "box" : "centos7_large",
         "product" : {
                 "name": "maxscale"
         }
