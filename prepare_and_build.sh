@@ -46,7 +46,7 @@ if [ -d "$name" ]; then
 fi
 
 # starting VM for build
-./mdbci --override --template ~/mdbci/$name.json generate $name
+./mdbci --override --template $name.json generate $name
 ./mdbci up --attempts=4 $name
 if [ $? != 0 ] ; then
 	echo "Error starting VM"
@@ -60,7 +60,7 @@ export sshuser=`./mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null
 # get VM info
 export IP=`./mdbci show network $name/build --silent 2> /dev/null`
 export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null`
-export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
+export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 
 rm ~/vagrant_lock

@@ -40,6 +40,10 @@ set -x
         if [ $? -eq 0 ]; then
                 dist_name="vivid";
         fi
+        echo $ubuntu_ver | grep "15.10" > /dev/null
+        if [ $? -eq 0 ]; then
+                dist_name="wily";
+        fi
 
 
 	if [ -z "$dist_name" ]; then

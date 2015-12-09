@@ -1,0 +1,4 @@
+rm -rf $path_prefix/ubuntu/dists/vivid/main/binary-amd64/
+rm -rf $path_prefix/ubuntu/dists/vivid/main/binary-i386/
+mkdir -p $path_prefix/ubuntu/
+cp -r ~/repo/$repo_name/ubuntu_vivid/* $path_prefix/ubuntu/
