@@ -2,7 +2,7 @@
 
 set -x
 
-echo "ubuntu_trusty ubuntu_utopic ubuntu_precise ubuntu_vivid deb_wheezy deb_squeeze deb_jessie ubuntu_utopic_ppc64 ubuntu_trusty_ppc64" | grep $box
+echo "ubuntu_trusty ubuntu_utopic ubuntu_precise ubuntu_vivid ubuntu_wily deb_wheezy deb_squeeze deb_jessie ubuntu_utopic_ppc64 ubuntu_trusty_ppc64" | grep $box
 if [ $? == 0 ] ; then
 	ssh $sshopt "sudo apt-get  -y --force-yes remove maxscale"
 	ssh $sshopt "sudo dpkg -r mariadb-enterprise-repository.deb; rm mariadb-enterprise-repository*"

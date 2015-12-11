@@ -1,0 +1,13 @@
+{
+  "cookbook_path" : "../recipes/cookbooks/",
+  "aws_config" : "../aws-config.yml",
+  "maxscale" :
+  {
+        "hostname" : "maxscale",
+        "box" : "###box###",
+        "product" : {
+                "name": "maxscale"
+        }
+
+  }
+}

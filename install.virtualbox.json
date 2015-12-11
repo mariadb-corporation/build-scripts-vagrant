@@ -1,0 +1,13 @@
+{
+  "cookbook_path" : "../recipes/cookbooks/",
+  "maxscale" :
+  {
+        "hostname" : "maxscale",
+        "box" : "###box###",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "maxscale"
+        }
+
+  }
+}
