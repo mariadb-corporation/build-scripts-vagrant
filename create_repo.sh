@@ -59,6 +59,11 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
         if [ $? -eq 0 ]; then
                 dist_name="vivid";
         fi
+        echo $ubuntu_ver | grep "15.10"
+        if [ $? -eq 0 ]; then
+                dist_name="wily";
+        fi
+
 
 
 	if [ -z "$dist_name" ]; then
