@@ -59,9 +59,9 @@ Following variables have to be defined before executing run_test.sh
 
 > cd ~/mdbci/$name/
 
-> vagrant ssh <node_name>
+> vagrant ssh $node_name
 
-where <node_name> - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', ..., 'galera3', ..., 'galeraN'
+where $node_name - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', ..., 'galera3', ..., 'galeraN'
 
 ### Getting IP address and access keys
 
@@ -69,9 +69,9 @@ where <node_name> - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', 
 
 > ./mdbci show network $name
 
-> ./mdbci show network $name/<node_name>
+> ./mdbci show network $name/$node_name
 
-> ./mdbci show keyfile $name/<node_name>
+> ./mdbci show keyfile $name/$node_name
 
 ### Destroying configuration
 
