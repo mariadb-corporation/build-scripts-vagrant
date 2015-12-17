@@ -41,6 +41,7 @@ It is recommeneded to publish ~/repository/ directory on a web server
 
 ## run_test.sh
 Following variables have to be defined before executing run_test.sh
+
 |Variable|Meaning|
 |--------|--------|
 |$box|name of MDBCI box for Maxscale machine (see [MDBCI docs](https://github.com/OSLL/mdbci#terminology))|
@@ -50,4 +51,36 @@ Following variables have to be defined before executing run_test.sh
 |$target|name of Maxscale repository|
 |$ci_url|URL of repostory web site, Maxscale will be installed from $ci_url/$target/mariadb-maxscale/
 |$do_not_destroy_vm|if 'yes' build VM won't be destroyed after the build. NOTE: do not forget to destroy it manually|
+|$smoke|if 'yes' all tests are executed in 'quick' mode (less iterations, skip heavy operations)|
 
+## Running configuration operations
+
+### Accessing nodes
+
+> cd ~/mdbci/$name/
+
+> vagrant ssh <node_name>
+
+where <node_name> - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', ..., 'galera3', ..., 'galeraN'
+
+### Getting IP address and access keys
+
+> cd ~/mdbci/
+
+> ./mdbci show network $name
+
+> ./mdbci show network $name/<node_name>
+
+> ./mdbci show keyfile $name/<node_name>
+
+### Destroying configuration
+
+> cd ~/mdbci/$name/
+
+> vagrant destroy -f
+
+### Set environmental variables
+
+> cd ~/mdbci/
+
+> . ../build-scripts/test/set_env_vagrant.sh $name
