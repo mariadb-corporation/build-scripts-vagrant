@@ -1,19 +1,22 @@
 # build-scripts-vagrant
 
-Modified build scripts to work with Vagrant-controlled VMs
+Build and test scripts to work with Vagrant-controlled VMs do follwoing:
+* create VM for Maxscale build
+* create a set of VMs (test environment) for running Maxscale tests
 
 ## Main files
 
 File|Description
 ----|-----------
 [prepare_and_build.sh](prepare_and_build.sh)|Create VM for build and execute build, publish resulting repository
-build.\<provider\>.template.json|templates of MDBCI configuration description of build machines|
+build.\<provider\>.template.json|templates of MDBCI configuration description (build environment description) of build machines|
 [test-setup-scripts/setup_repl.sh](test-setup-scripts/setup_repl.sh)|Prepares repl_XXX machines to be configured into Master/Slave
 [test-setup-scripts/galera/setup_galera.sh](test-setup-scripts/galera/setup_galera.sh)|Prepares galera_XXX machines to be configured into Galera cluster
 [test-setup-scripts](test-setup-scripts/cnf/)/cnf/|my.cnf files for all backend machines
-test/template.\<provider\>.json|Templates of MDBCI configuration description of test machines|
+test/template.\<provider\>.json|Templates of MDBCI configuration description (test environment description) of test machines|
 [test/run_test.sh](test/run_test.sh)|Creates test environment, build maxscale-system-tests from source and execute tests using ctest
 [test/set_env_vagrant.sh](test/set_env_vagrant.sh)|set all environment variables for existing test machines using MDBCI to get all values
+[test/create_env.sh](test/create_env.sh)|Creates test environment, copy Maxscale source code to 'maxscale' machine in this environment, build Maxscale
 
 ## [prepare_and_build.sh](prepare_and_build.sh)
 Following variables have to be defined before executing prepare_and_build.sh
@@ -54,7 +57,7 @@ Following variables have to be defined before executing run_test.sh
 |$smoke|if 'yes' all tests are executed in 'quick' mode (less iterations, skip heavy operations)|
 |$test_set|definition of set of tests to run in ctest notation (ctest -I option value)|
 
-## Running configuration operations
+## Test environment operations
 
 ### Accessing nodes
 <pre>
@@ -72,13 +75,13 @@ cd ~/mdbci/
 ./mdbci show keyfile $name/$node_name
 </pre>
 
-### Destroying configuration
+### Destroying environemnt
 <pre>
 cd ~/mdbci/$name/
 vagrant destroy -f
 </pre>
 
-### Set environmental variables by [test/set_env_vagrant.sh](test/set_env_vagrant.sh)
+### Set variables by [test/set_env_vagrant.sh](test/set_env_vagrant.sh)
 <pre>
 cd ~/mdbci/
 . ../build-scripts/test/set_env_vagrant.sh $name
