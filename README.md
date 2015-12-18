@@ -6,16 +6,16 @@ Modified build scripts to work with Vagrant-controlled VMs
 
 File|Description
 ----|-----------
-prepare_and_build.sh|Create VM for build and execute build, publish resulting repository
-build.<provider>.template.json|templates of MDBCI configuration description of build machines|
-test-setup-scripts/setup_repl.sh|Prepares repl_XXX machines to be configured into Master/Slave
-test-setup-scripts/galera/setup_galera.sh|Prepares galera_XXX machines to be configured into Galera cluster
-test-setup-scripts/cnf/|my.cnf files for all backend machines
-test/template.<provider>.json|Templates of MDBCI configuration description of test machines|
-test/run_test.sh|Creates test environment, build maxscale-system-tests from source and execute tests using ctest
-test/set_env_vagrant.sh|set all environment variables for existing test machines using MDBCI to get all values
+[prepare_and_build.sh](prepare_and_build.sh)|Create VM for build and execute build, publish resulting repository
+build.\<provider\>.template.json|templates of MDBCI configuration description of build machines|
+[test-setup-scripts/setup_repl.sh](test-setup-scripts/setup_repl.sh)|Prepares repl_XXX machines to be configured into Master/Slave
+[test-setup-scripts/galera/setup_galera.sh](test-setup-scripts/galera/setup_galera.sh)|Prepares galera_XXX machines to be configured into Galera cluster
+[test-setup-scripts](test-setup-scripts/cnf/)/cnf/|my.cnf files for all backend machines
+test/template.\<provider\>.json|Templates of MDBCI configuration description of test machines|
+[test/run_test.sh](test/run_test.sh)|Creates test environment, build maxscale-system-tests from source and execute tests using ctest
+[test/set_env_vagrant.sh](test/set_env_vagrant.sh)|set all environment variables for existing test machines using MDBCI to get all values
 
-## prepare_and_build.sh
+## [prepare_and_build.sh](prepare_and_build.sh)
 Following variables have to be defined before executing prepare_and_build.sh
 
 |Variable|Meaning|
@@ -39,7 +39,7 @@ Resulting repository goes to ~/repository/$target/mariadb-maxscale/
 
 It is recommeneded to publish ~/repository/ directory on a web server
 
-## run_test.sh
+## [test/run_test.sh](test/run_test.sh)
 Following variables have to be defined before executing run_test.sh
 
 |Variable|Meaning|
@@ -57,31 +57,29 @@ Following variables have to be defined before executing run_test.sh
 ## Running configuration operations
 
 ### Accessing nodes
-
-> cd ~/mdbci/$name/
-
-> vagrant ssh $node_name
+<pre>
+cd ~/mdbci/$name/
+vagrant ssh $node_name
+</pre>
 
 where $node_name - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', ..., 'galera3', ..., 'galeraN'
 
 ### Getting IP address and access keys
-
-> cd ~/mdbci/
-
-> ./mdbci show network $name
-
-> ./mdbci show network $name/$node_name
-
-> ./mdbci show keyfile $name/$node_name
+<pre>
+cd ~/mdbci/
+./mdbci show network $name
+./mdbci show network $name/$node_name
+./mdbci show keyfile $name/$node_name
+</pre>
 
 ### Destroying configuration
+<pre>
+cd ~/mdbci/$name/
+vagrant destroy -f
+</pre>
 
-> cd ~/mdbci/$name/
-
-> vagrant destroy -f
-
-### Set environmental variables
-
-> cd ~/mdbci/
-
-> . ../build-scripts/test/set_env_vagrant.sh $name
+### Set environmental variables by [test/set_env_vagrant.sh](test/set_env_vagrant.sh)
+<pre>
+cd ~/mdbci/
+. ../build-scripts/test/set_env_vagrant.sh $name
+</pre>
