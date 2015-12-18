@@ -2,8 +2,13 @@
 
 ## Prerequirements 
 
-Installed MDBCI (with dependencies, see [MDBCI doc](https://github.com/OSLL/mdbci#mariadb-continuous-integration-infrastructure-mdbci)), [mdbci-repository-config]
-(https://github.com/mariadb-corporation/mdbci-repository-config#mdbci-repository-config)
+Installed [MDBCI](https://github.com/OSLL/mdbci) (with dependencies, see 
+[MDBCI doc](https://github.com/OSLL/mdbci#mariadb-continuous-integration-infrastructure-mdbci)), 
+[mdbci-repository-config]
+(https://github.com/mariadb-corporation/mdbci-repository-config#mdbci-repository-config),
+[build-scripts](https://github.com/mariadb-corporation/build-scripts-vagrant)
+
+Componets should be iin following directories:
 
 [mdbci-repository-config](https://github.com/mariadb-corporation/mdbci-repository-config)
 should be in ~/mdbci-repository-config/
@@ -12,7 +17,7 @@ should be in ~/mdbci-repository-config/
 
 [mdbci](https://github.com/OSLL/mdbci) - in ~/mdbci/
 
-## Creating test configuration and running tests example
+## Creating test environment and running tests
 
 [run_test.sh](test/run_test.sh) generates MDBCI description of configuration, bring all VMs up, setup DB on all backends,
 prapare DB for creating Master/Slave and Galera setups, build [maxscale-system-test](https://github.com/mariadb-corporation/maxscale-system-test/tree/master#maxscale-system-test)
@@ -29,14 +34,14 @@ export name="my-centos7-release-1.3.0-test"
 export box="centos7"
 export product="mariadb"
 export version="5.5"
-export target="release-1.3.0"
+export target="develop"
 export ci_url="http://max-tst-01.mariadb.com/ci-repository/"
 export do_not_destroy_vm="yes"
 export test_set="1,10,,20,30,95"
 ~/build-scripts/test/run_test.sh
 </pre>
 
-After the test all machines can be accessed:
+After the test, all machines can be accessed:
 <pre>
 cd ~mdbci/$name
 vagrant ssh \<machine_name\>
@@ -44,14 +49,14 @@ vagrant ssh \<machine_name\>
 
 where \<machine_name\> is 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', ..., 'galera3', ..., 'galeraN'
 
-http://max-tst-01.mariadb.com/ci-repository/release-1.3.0/mariadb-maxscale/ have to contain Maxscale repository
+http://max-tst-01.mariadb.com/ci-repository/develop/mariadb-maxscale/ have to contain Maxscale repository
 
-## Running tests with existing test configuration
+## Running tests with existing test environment
 
 [set_env_vagrant.sh](test/set_env_vagrant.sh) script sets all needed environmental variables for 
 [maxscale-system-test](https://github.com/mariadb-corporation/maxscale-system-test)
 
-Script have to be executed when current direcroty is mdbci directory.
+Script have to be executed when current direcroty is 'mdbci' directory (~/mdbci).
 
 See [maxscale-system-test documentation](https://github.com/mariadb-corporation/maxscale-system-test/tree/master#environmental-variables) for details regarding variables.
 
@@ -79,14 +84,12 @@ setup DB on all backends, prapare DB for creating Master/Slave and Galera setups
 
 Note: script does not install Maxscale, it have to be done manually.
 
-
-
 Following variables have to be defined:
 
-name, box, product, version 
+'name', 'box', 'product', 'version' 
 (see [run_test.sh documentation](https://github.com/mariadb-corporation/build-scripts-vagrant/blob/master/README.md#run_testsh))
 
-source, values 
+'source', 'value' 
 (see 
 [prepare_and_build.sh documentation](https://github.com/mariadb-corporation/build-scripts-vagrant/blob/master/README.md#prepare_and_buildsh))
 
@@ -101,7 +104,7 @@ export value="develop"
 ~/build-scripts/test/create_env.sh
 </pre>
 
-Note: do not forget to destroy test environment by vagrant destroy:
+**Note**: do not forget to destroy test environment by vagrant destroy:
 
 <pre>
 cd ~/mdbci/$name/
