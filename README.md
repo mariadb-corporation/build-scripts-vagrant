@@ -3,6 +3,11 @@
 Build and test scripts to work with Vagrant-controlled VMs do follwoing:
 * create VM for Maxscale build
 * create a set of VMs (test environment) for running Maxscale tests
+ 
+Test environment consists of:
+* 'maxscale' machine
+* 'nodeN' machines for Master/Slave setup (node0, node1, node2, node3)
+* 'galeraN' machines for Galera cluster (galera0, galera1, galera2, galera3)
 
 ## Main files
 
@@ -12,7 +17,7 @@ File|Description
 build.\<provider\>.template.json|templates of MDBCI configuration description (build environment description) of build machines|
 [test-setup-scripts/setup_repl.sh](test-setup-scripts/setup_repl.sh)|Prepares repl_XXX machines to be configured into Master/Slave
 [test-setup-scripts/galera/setup_galera.sh](test-setup-scripts/galera/setup_galera.sh)|Prepares galera_XXX machines to be configured into Galera cluster
-[test-setup-scripts](test-setup-scripts/cnf/)/cnf/|my.cnf files for all backend machines
+[test-setup-scripts/cnf/](test-setup-scripts/cnf/)|my.cnf files for all backend machines
 test/template.\<provider\>.json|Templates of MDBCI configuration description (test environment description) of test machines|
 [test/run_test.sh](test/run_test.sh)|Creates test environment, build maxscale-system-tests from source and execute tests using ctest
 [test/set_env_vagrant.sh](test/set_env_vagrant.sh)|set all environment variables for existing test machines using MDBCI to get all values
