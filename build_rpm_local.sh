@@ -30,7 +30,7 @@ cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/ "
 
 if [ $zy != 0 ] ; then
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel cmake libgcc_s1 perl make libtool libopenssl-devel libaio libaio-devel 
-  sudo zypper -n install librabbitmq-devel
+#  sudo zypper -n install librabbitmq-devel
   sudo zypper -n install libcurl-devel
   sudo zypper -n install pcre-devel
   cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
@@ -42,7 +42,7 @@ if [ $zy != 0 ] ; then
 
 else
   sudo yum clean all 
-  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel librabbitmq-devel libedit-devel
+  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel
   sudo yum install -y --nogpgcheck libedit-devel
   sudo yum install -y --nogpgcheck libcurl-devel
   sudo yum install -y --nogpgcheck curl-devel
@@ -57,6 +57,15 @@ else
       sudo yum remove -y libedit-devel libedit
   fi
 fi
+
+mkdir rabbit
+cd rabbit
+git clone https://github.com/alanxz/rabbitmq-c.git
+cd rabbitmq-c
+git checkout v0.7.1
+cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/usr
+sudo make install
+cd ../../
 
 mkdir _build
 #sudo chmod -R a-w .
