@@ -1,6 +1,7 @@
 [mysqld]
 expire_logs_days=7
 user=mysql
+server_id=3
 
 # Row binary log format is required by Galera
 binlog_format=ROW

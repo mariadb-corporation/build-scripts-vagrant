@@ -22,7 +22,9 @@ mkdir rabbit
 cd rabbit
 git clone https://github.com/alanxz/rabbitmq-c.git
 cd rabbitmq-c
-cmake .
+git checkout v0.7.1
+#cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N -DCMAKE_INSTALL_PREFIX=/usr
+cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N -DCMAKE_INSTALL_PREFIX=/usr
 sudo make install
 cd ../../
 
@@ -33,7 +35,9 @@ mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
 cd _build
+#export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier:$PWD/server/core
 cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/
+export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier
 if [ -d ../coverity ] ; then
         tar xzvf ../coverity/coverity_tool.tgz
         export PATH=$PATH:`pwd`/cov-analysis-linux64-7.6.0/bin/
@@ -48,7 +52,7 @@ if [ $remove_strip == "yes" ] ; then
         sudo chmod a+x /usr/bin/strip
 fi 
 #sudo make install
-sudo make package
+make package
 res=$?
 if [ $res != 0 ] ; then
         exit $res
