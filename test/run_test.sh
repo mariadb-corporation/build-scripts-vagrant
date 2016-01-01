@@ -67,7 +67,7 @@ echo "running vagrant up $provider"
 ./mdbci up $name
 
 if [ $? == 0 ] ; then
-rm ~/vagrant_lock
+#rm ~/vagrant_lock
 
   . ~/build-scripts/test/set_env_vagrant.sh $name
   cd $name
@@ -77,6 +77,7 @@ rm ~/vagrant_lock
   ~/build-scripts/test/configure_core.sh
 
   cd $dir
+rm ~/vagrant_lock
   if [ "$1" != "debug" ] ; then
     ctest -VV -D Nightly -I $test_set
   fi
