@@ -1,4 +1,4 @@
 rm -rf $path_prefix/debian/dists/wheezy/main/binary-amd64
 rm -rf $path_prefix/debian/dists/wheezy/main/binary-i386 
 mkdir -p $path_prefix/debian/
-cp -r ~/repo/$repo_name/deb_wheezy/* $path_prefix/debian/
+cp -r ~/repo/$repo_name/debian_7.5_libvirt/* $path_prefix/debian/
