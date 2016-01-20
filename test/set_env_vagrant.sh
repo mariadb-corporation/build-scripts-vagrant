@@ -16,22 +16,11 @@ export repl_N=`vagrant status | grep node | wc -l`
 cd $curr_dir
 export new_dirs="yes"
 
-export maxdir="/usr/local/mariadb-maxscale"
-export maxdir_bin="$maxdir/bin/"
-
-export maxscale_cnf="$maxdir/etc/MaxScale.cnf"
-export maxscale_log_dir="$maxdir/log/"
-
-export test_dir="$maxdir/system-test/"
-
 export maxscale_binlog_dir="/var/lib/maxscale/Binlog_Service"
-
-if [ "$new_dirs" == "yes" ] ; then
-        export maxdir="/usr/bin/"
-        export maxdir_bin="/usr/bin/"
-        export maxscale_cnf="/etc/maxscale.cnf"
-        export maxscale_log_dir="/var/log/maxscale/"
-fi
+export maxdir="/usr/bin/"
+export maxdir_bin="/usr/bin/"
+export maxscale_cnf="/etc/maxscale.cnf"
+export maxscale_log_dir="/var/log/maxscale/"
 
 cd $mdbci_dir
 
@@ -51,9 +40,6 @@ export maxscale_user="skysql"
 export maxscale_password="skysql"
 
 export maxadmin_password="mariadb"
-
-# command to download logs from MaxScale machine
-export get_logs_command="$test_dir/get_logs.sh"
 
 for prefix in "repl" "galera"
 do
