@@ -82,9 +82,10 @@ do
 		mysql_exe=`./mdbci ssh --command 'ls /etc/init.d/mysql* 2> /dev/null | tr -cd "[:print:]"' $config_name/$node_n$i  --silent 2> /dev/null`
 		echo $mysql_exe | grep -i "mysql"
 		if [ $? != 0 ] ; then
-			./mdbci ssh --command 'echo \"/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &\" > mysql_start.sh; echo \"sleep 20\" >> mysql_start.sh; echo \"disown\" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
-                        eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
-                        eval 'export $stop_cmd_var="/usr/bin/killall mysqld "'
+			#./mdbci ssh --command 'echo \"/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &\" > mysql_start.sh; echo \"sleep 20\" >> mysql_start.sh; echo \"disown\" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
+                        # eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
+                        eval 'export $start_cmd_var="service mysql start "'
+                        eval 'export $stop_cmd_var="service mysql stop  "'
 		else
 			eval 'export $start_cmd_var="$mysql_exe start "'
 			eval 'export $stop_cmd_var="$mysql_exe stop "'
@@ -107,3 +108,4 @@ export sysbench_dir="$HOME/sysbench_deb7/sysbench/"
 
 export ssl=true
 cd $curr_dir
+set +x
