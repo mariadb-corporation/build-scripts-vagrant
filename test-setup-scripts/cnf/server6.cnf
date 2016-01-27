@@ -18,7 +18,6 @@ binlog-format=STATEMENT
 server_id=6
 #slave_parallel_threads=2
 user=mysql
-max_long_data_size=1G
 
 # this is only for embedded server
 [embedded]
