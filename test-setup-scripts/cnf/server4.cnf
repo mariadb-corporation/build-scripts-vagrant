@@ -18,6 +18,7 @@ binlog-format=STATEMENT
 server_id=4
 #slave_parallel_threads=2
 user=mysql
+## x001
 
 # this is only for embedded server
 [embedded]
