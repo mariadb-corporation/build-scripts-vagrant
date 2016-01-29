@@ -22,18 +22,23 @@ export repo_dir=$dir/repo.d/
 echo "box: $box"
 echo "template: $template"
 cd ~/mdbci/
-provider=`./mdbci show provider $box --silent 2> /dev/null`
-set -x
-if [ "$1" != "debug" ] ; then
-	if [ "x$big" != "xyes" ] ; then
-		cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
-	else
-                cp ~/build-scripts/test/template_big.$provider.json ~/mdbci/$name.json
-	fi
+
+if [ "$box" == "predefined_template" ] ; then
+	cp ~/build-scripts/test/templates/$template_name.json ~/mdbci/$name.json
 else
-        cp ~/build-scripts/test/debugtemplate.$provider.json ~/mdbci/$name.json
+	provider=`./mdbci show provider $box --silent 2> /dev/null`
+#	set -x
+	if [ "$1" != "debug" ] ; then
+		if [ "x$big" != "xyes" ] ; then
+			cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+		else
+        	        cp ~/build-scripts/test/template_big.$provider.json ~/mdbci/$name.json
+		fi
+	else
+        	cp ~/build-scripts/test/debugtemplate.$provider.json ~/mdbci/$name.json
+	fi
 fi
-set +x
+#set +x
 export galera_version=5.5
 #echo $version | grep "^10."
 #if [ $? == 0 ] ; then
