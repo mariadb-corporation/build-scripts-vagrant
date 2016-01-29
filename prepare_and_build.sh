@@ -36,7 +36,8 @@ if [ $? != 0 ] ; then
 	rm ~/vagrant_lock
 	exit 1
 fi
-
+cp  ~/build-scripts/team_keys .
+./mdbci public_keys --key team_keys --silent $name
 export sshuser=`./mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
 
 # get VM info
