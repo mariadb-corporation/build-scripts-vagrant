@@ -59,8 +59,9 @@ mkdir -p $name
 cd $name
 vagrant destroy -f
 cd ..
+set -x
 ./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
-
+set +x
 while [ -f ~/vagrant_lock ]
 do
 	echo "vagrant is locked, waiting ..."
