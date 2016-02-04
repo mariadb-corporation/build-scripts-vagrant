@@ -85,13 +85,20 @@ do
 			#./mdbci ssh --command 'echo \"/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &\" > mysql_start.sh; echo \"sleep 20\" >> mysql_start.sh; echo \"disown\" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
                         # eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
 			service_name=`./mdbci ssh --command 'systemctl list-unit-files | grep mysql' $config_name/$node_n$i  --silent`
-			echo $service_name | grep mysqld
+			echo $service_name | grep mysql
 			if [ $? == 0 ] ; then
-	                        eval 'export $start_cmd_var="service mysqld start "'
-	                        eval 'export $stop_cmd_var="service mysqdl stop  "'
+				echo $service_name | grep mysqld
+				if [ $? == 0 ] ; then
+		                        eval 'export $start_cmd_var="service mysqld start "'
+	        	                eval 'export $stop_cmd_var="service mysqdl stop  "'
+				else
+	                        	eval 'export $start_cmd_var="service mysql start "'
+	        	                eval 'export $stop_cmd_var="service mysql stop  "'
+				fi
 			else
-	                        eval 'export $start_cmd_var="service mysql start "'
-        	                eval 'export $stop_cmd_var="service mysql stop  "'
+	                        ./mdbci ssh --command 'echo \"/usr/sbin/mysqld \$* 2> stderr.log > stdout.log &\" > mysql_start.sh; echo \"sleep 20\" >> mysql_start.sh; echo \"disown\" >> mysql_start.sh; chmod a+x mysql_start.sh' $config_name/$node_n$i  --silent
+        	                eval 'export $start_cmd_var="/home/$au/mysql_start.sh "'
+				eval 'export $start_cmd_var="killall mysqld "'
 			fi
 		else
 			eval 'export $start_cmd_var="$mysql_exe start "'
