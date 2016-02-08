@@ -1,3 +1,4 @@
+set -x
 chmod 777 /tmp/
 echo 2 > /proc/sys/fs/suid_dumpable
 sed -i "s/start() {/start() { \n export DAEMON_COREFILE_LIMIT='unlimited'; ulimit -c unlimited; /" /etc/init.d/maxscale
@@ -14,4 +15,4 @@ echo "*       hard        core        unlimited" >> /etc/security/limits.d/core.
 echo "*       soft        core        unlimited" >> /etc/security/limits.d/core.conf
 
 systemctl daemon-reexec
-sudo sysctl -p
+sysctl -p

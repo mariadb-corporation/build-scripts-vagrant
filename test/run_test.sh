@@ -86,7 +86,11 @@ if [ $? == 0 ] ; then
   cd $dir
 rm ~/vagrant_lock
   if [ "$1" != "debug" ] ; then
-    ctest -VV -D Nightly -I $test_set
+    if [ x"$named_test" == "x" ] ; then
+    	ctest -VV -D Nightly -I $test_set
+    else
+	./$named_test
+    fi
   fi
   date_str=`date +%Y%m%d-%H`
   logs_dir="$HOME/LOGS/$date_str/$name/$target/"
