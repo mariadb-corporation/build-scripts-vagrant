@@ -3,6 +3,11 @@
 # $1 - "debug" means do not install Maxscale
 
 rm -rf LOGS
+
+date_str=`date +%Y%m%d-%H`
+export logs_publish_dir="$HOME/LOGS/$date_str/$name/$target/"
+mkdir -p $logs_publish_dir
+
 echo $1
 if [ "$1" != "debug" ] ; then
 	cmake . -DBUILDNAME=$name
@@ -92,11 +97,12 @@ rm ~/vagrant_lock
 	./$named_test
     fi
   fi
-  date_str=`date +%Y%m%d-%H`
-  logs_dir="$HOME/LOGS/$date_str/$name/$target/"
-  mkdir -p $logs_dir
-  cp -r LOGS/* $logs_dir
-  chmod a+r $logs_dir/*
+#  date_str=`date +%Y%m%d-%H`
+#  logs_dir="$HOME/LOGS/$date_str/$name/$target/"
+#  mkdir -p $logs_dir
+#  cp -r LOGS/* $logs_dir
+  rsync -a LOGS $logs_publish_dir
+  chmod a+r $logs_publish_dir/*
 
 else
   vagrant destroy -f
