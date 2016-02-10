@@ -9,7 +9,7 @@ cd ~/mdbci
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 datestr=`date +%Y%m%d-%H%M`
 name="install_$box-$datestr"
-cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
+cp ~/build-scripts/install.$provider.json ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
 
@@ -53,8 +53,8 @@ rm -rf repo.d
 
 cd ~/mdbci
 
-./mdbci setup_repo --product maxscale --repo-dir $work_dir/repo.d $name/build
-./mdbci install_product --product maxscale $name/build
+./mdbci setup_repo --product maxscale --repo-dir $work_dir/repo.d $name/maxscale
+./mdbci install_product --product maxscale $name/maxscale
 
 
 res=$?
