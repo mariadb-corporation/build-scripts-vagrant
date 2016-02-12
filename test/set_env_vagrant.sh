@@ -26,7 +26,7 @@ cd $mdbci_dir
 
 # IP Of MaxScale machine
 export maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
-export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent`
+export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent | sed 's/"//g'`
 
 # User name and Password for Master/Slave replication setup (should have all PRIVILEGES)
 export repl_user="skysql"
@@ -60,7 +60,7 @@ do
 		# get IP
 		ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
 		# get ssh key
-   		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null`
+   		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null | sed 's/"//g'`
 
 		eval 'export "$prefix"_"$num"=$ip'
 		eval 'export "$prefix"_sshkey_"$num"=$key'

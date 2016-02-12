@@ -1,0 +1,9 @@
+rm -rf $path_prefix/centos/7/x86_64/
+mkdir -p $path_prefix/centos/7/x86_64/
+cp -r ~/repo/$repo_name/centos_7_libvirt/* $path_prefix/centos/7/x86_64/
+cd $path_prefix/
+cd centos
+ln -s 7 7server
+ln -s 7 7Server
+
+echo "copying done"

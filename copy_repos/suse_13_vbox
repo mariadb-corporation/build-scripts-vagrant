@@ -1,0 +1,3 @@
+rm -rf $path_prefix/opensuse/13/x86_64/
+mkdir -p $path_prefix/opensuse/13/x86_64/
+cp -r ~/repo/$repo_name/suse_13_vbox/* $path_prefix/opensuse/13/x86_64/

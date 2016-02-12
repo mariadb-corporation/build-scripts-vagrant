@@ -29,7 +29,7 @@ fi
 
 # starting VM for build
 ./mdbci --override --template $name.json generate $name
-./mdbci up --attempts=4 $name
+./mdbci up --attempts=1 $name
 if [ $? != 0 ] ; then
 	echo "Error starting VM"
 	vagrant destroy -f
@@ -42,7 +42,7 @@ export sshuser=`./mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null
 
 # get VM info
 export IP=`./mdbci show network $name/build --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null`
+export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 

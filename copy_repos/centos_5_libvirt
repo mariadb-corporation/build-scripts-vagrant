@@ -1,0 +1,8 @@
+rm -rf $path_prefix/centos/5/x86_64/
+mkdir -p $path_prefix/centos/5/x86_64/
+cp -r ~/repo/$repo_name/centos_5_libvirt/* $path_prefix/centos/5/x86_64/
+cd $path_prefix/
+cd centos
+ln -s 5 5server
+ln -s 5 5Server
+echo "copying done"
