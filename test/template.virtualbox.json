@@ -3,7 +3,7 @@
   "node0" :
   {
         "hostname" : "node0",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
 	"memory_size" : "2048",
 	"product" : {
       		"name": "###product###",
@@ -17,7 +17,7 @@
   "node1" :
   {
         "hostname" : "node1",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
@@ -30,7 +30,7 @@
   "node2" :
   {
         "hostname" : "node2",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
@@ -43,7 +43,7 @@
   "node3" :
   {
         "hostname" : "node3",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
@@ -56,7 +56,7 @@
   "galera0" :
   {
         "hostname" : "galera0",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
@@ -69,7 +69,7 @@
   "galera1" :
   {
         "hostname" : "galera1",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
@@ -82,7 +82,7 @@
   "galera2" :
   {
         "hostname" : "galera2",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
@@ -95,7 +95,7 @@
   "galera3" :
   {
         "hostname" : "galera3",
-        "box" : "centos6",
+        "box" : "centos_6_vbox",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",

@@ -3,7 +3,7 @@
   "node0" :
   {
         "hostname" : "node0",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
 	"product" : {
       		"name": "###product###",
 		"version": "###version###",
@@ -16,7 +16,7 @@
   "node1" :
   {
         "hostname" : "node1",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -28,7 +28,7 @@
   "node2" :
   {
         "hostname" : "node2",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -40,7 +40,7 @@
   "node3" :
   {
         "hostname" : "node3",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
@@ -52,7 +52,7 @@
   "galera0" :
   {
         "hostname" : "galera0",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
@@ -64,7 +64,7 @@
   "galera1" :
   {
         "hostname" : "galera1",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
@@ -76,7 +76,7 @@
   "galera2" :
   {
         "hostname" : "galera2",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
@@ -88,7 +88,7 @@
   "galera3" :
   {
         "hostname" : "galera3",
-        "box" : "centos_7.0_libvirt",
+        "box" : "centos_7_libvirt",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
