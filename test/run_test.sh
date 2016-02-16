@@ -10,7 +10,7 @@ mkdir -p $logs_publish_dir
 
 echo $1
 if [ "$1" != "debug" ] ; then
-	cmake . -DBUILDNAME=$name
+	cmake . -DBUILDNAME=$name -DCMAKE_BUIL_TYPE=Debug
 	make
 #	sudo make install
 fi
@@ -75,7 +75,9 @@ done
 touch ~/vagrant_lock
 
 echo "running vagrant up $provider"
+
 ./mdbci up $name --attempts 3
+
 cp ~/build-scripts/team_keys .
 ./mdbci  public_keys --key team_keys $name
 if [ $? == 0 ] ; then

@@ -1,0 +1,4 @@
+rm -rf $path_prefix/debian/dists/squeeze/main/binary-amd64
+rm -rf $path_prefix/debian/dists/squeeze/main/binary-i386
+mkdir -p $path_prefix/debian/
+cp -r ~/repo/$repo_name/debian_squeeze_aws/* $path_prefix/debian/

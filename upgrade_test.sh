@@ -34,7 +34,7 @@ cd ~/mdbci
 
 # starting VM for build
 ./mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
-./mdbci up $name
+./mdbci up $name --attempts=1
 if [ $? != 0 ] ; then
 	echo "Error starting VM"
 	cd $name

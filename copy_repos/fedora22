@@ -1,7 +1,0 @@
-rm -rf $path_prefix/fedora/22/x86_64/
-mkdir -p $path_prefix/fedora/22/x86_64/
-cp -r ~/repo/$repo_name/fedora22/* $path_prefix/fedora/22/x86_64/
-cd $path_prefix/
-ln -s fedora/22 fedora22
-
-echo "copying done"

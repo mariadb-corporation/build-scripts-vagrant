@@ -1,0 +1,4 @@
+rm -rf $path_prefix/ubuntu/dists/utopic/main/binary-amd64/
+rm -rf $path_prefix/ubuntu/dists/utopic/main/binary-i386/
+mkdir -p $path_prefix/ubuntu/
+cp -r ~/repo/$repo_name/ubuntu_utopic_aws/* $path_prefix/ubuntu/
