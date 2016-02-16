@@ -39,7 +39,8 @@ fi
 
 #sed -i "s/MAXSCALE_VERSION_PATCH \"0\"/MAXSCALE_VERSION_PATCH \"1.22\"/" cmake/macros.cmake
 
-export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$box"
+dist_sfx=`echo $box | sed "s/_libvirt//" | sed "s/_aws//" | sed "s/_vbox//"`
+export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$dist_sfx"
 
 mkdir -p $pre_repo_dir/$3/SRC
 echo $sshuser

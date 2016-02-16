@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -x
+set -x
 
 export scr_dir="$HOME/build-scripts/test-setup-scripts"
 
@@ -52,7 +52,7 @@ ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user
 		ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysql_install_db; sudo chown -R mysql:mysql /var/lib/mysql"
 		ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo $start_cmd" &
 	fi
-	sleep 5
+	sleep 50
         scp -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $scr_dir/create_*_user.sql $user@$IP://home/$user/
         ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysql < /home/$user/create_repl_user.sql"
         ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysql < /home/$user/create_skysql_user.sql"

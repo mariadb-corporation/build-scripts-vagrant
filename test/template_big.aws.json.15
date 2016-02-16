@@ -93,6 +93,83 @@
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
+  "node8" :
+  {
+        "hostname" : "node8",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server9.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node9" :
+  {
+        "hostname" : "node9",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server10.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node10" :
+  {
+        "hostname" : "node10",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server11.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node11" :
+  {
+        "hostname" : "node11",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server12.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node12" :
+  {
+        "hostname" : "node12",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server13.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node13" :
+  {
+        "hostname" : "node13",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server14.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+  "node14" :
+  {
+        "hostname" : "node14",
+        "box" : "centos_7_aws_large",
+        "product" : {
+                "name": "###product###",
+                "version": "###version###",
+                "cnf_template" : "server15.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
 
   "galera0" :
   {
