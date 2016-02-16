@@ -75,7 +75,7 @@ done
 touch ~/vagrant_lock
 
 echo "running vagrant up $provider"
-./mdbci up $name
+./mdbci up $name --attempts 3
 cp ~/build-scripts/team_keys .
 ./mdbci  public_keys --key team_keys $name
 if [ $? == 0 ] ; then

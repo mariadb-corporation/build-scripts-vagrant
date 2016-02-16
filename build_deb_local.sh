@@ -14,7 +14,7 @@ sudo apt-get install -y dpkg-dev git
 
 sudo apt-get install -y --force-yes cmake
 sudo apt-get install -y --force-yes gcc g++ ncurses-dev bison build-essential libssl-dev libaio-dev perl make libtool 
-sudo apt-get install -y --force-yes librabbitmq-dev
+#sudo apt-get install -y --force-yes librabbitmq-dev
 sudo apt-get install -y --force-yes libcurl4-openssl-dev
 sudo apt-get install -y --force-yes libpcre3-dev
 
