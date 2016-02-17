@@ -52,6 +52,7 @@ if [ $remove_strip == "yes" ] ; then
         sudo chmod a+x /usr/bin/strip
 fi 
 #sudo make install
+export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname $i); done|sort|uniq|xargs|sed -e 's/[[:space:]]/:/g')
 make package
 res=$?
 if [ $res != 0 ] ; then

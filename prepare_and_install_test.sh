@@ -43,7 +43,7 @@ export sshuser=`./mdbci ssh --command 'whoami' --silent install_$box/build 2> /d
 
 # get VM info
 export IP=`./mdbci show network $name/build --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null`
+export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 export sshopt="$scpopt $sshuser@$IP"
 

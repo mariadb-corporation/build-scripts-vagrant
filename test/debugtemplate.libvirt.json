@@ -3,7 +3,7 @@
   "node0" :
   {
         "hostname" : "node0",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
 	"memory_size" : "2048",
 	"product" : {
       		"name": "###product###",
@@ -17,7 +17,7 @@
   "node1" :
   {
         "hostname" : "node1",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
@@ -30,78 +30,78 @@
   "node2" :
   {
         "hostname" : "node2",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
 		"cnf_template" : "server3.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
   "node3" :
   {
         "hostname" : "node3",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
 		"cnf_template" : "server4.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
   "galera0" :
   {
         "hostname" : "galera0",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
                 "cnf_template" : "galera_server1.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
   "galera1" :
   {
         "hostname" : "galera1",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
 		"cnf_template" : "galera_server2.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
   "galera2" :
   {
         "hostname" : "galera2",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
 		"cnf_template" : "galera_server3.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
   "galera3" :
   {
         "hostname" : "galera3",
-        "box" : "centos_6_libvirt",
+        "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
                 "name": "galera",
                 "version": "###galera_version###",
 		"cnf_template" : "galera_server4.cnf",
-		"cnf_template_path": "~build-scripts/test-setup-scripts/cnf"
+		"cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
 
