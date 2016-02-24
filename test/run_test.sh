@@ -10,7 +10,7 @@ mkdir -p $logs_publish_dir
 
 echo $1
 if [ "$1" != "debug" ] ; then
-	cmake . -DBUILDNAME=$name -DCMAKE_BUIL_TYPE=Debug
+	cmake . -DBUILDNAME=$name -DCMAKE_BUILD_TYPE=Debug
 	make
 #	sudo make install
 fi
@@ -93,6 +93,11 @@ if [ $? == 0 ] ; then
   cd $dir
 rm ~/vagrant_lock
   if [ "$1" != "debug" ] ; then
+    ./check_backend
+    if [ $? != 0 ] ; then
+	echo "Backend is broken, test won't run"
+	exit 1
+    fi
     if [ x"$named_test" == "x" ] ; then
     	ctest -VV -D Nightly -I $test_set
     else

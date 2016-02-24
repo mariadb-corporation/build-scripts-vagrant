@@ -109,6 +109,9 @@
   {
         "hostname" : "maxscale",
         "box" : "###box###",
+	"product" : {
+        	"name" : "packages"
+        },
         "memory_size" : "2048"
   }
 }

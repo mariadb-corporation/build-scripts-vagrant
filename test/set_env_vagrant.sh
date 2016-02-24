@@ -25,7 +25,16 @@ export maxscale_log_dir="/var/log/maxscale/"
 cd $mdbci_dir
 
 # IP Of MaxScale machine
-export maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
+maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
+                # HACK : second attempt to bring node up
+                if [ $? != 0 ] ; then
+                        cd $config_name
+                        vagrant destroy maxscale -f
+                        vagrant up maxscale 
+			cd ..
+                        ip=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
+                fi
+export maxscale_IP
 export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent | sed 's/"//g'`
 
 # User name and Password for Master/Slave replication setup (should have all PRIVILEGES)
@@ -59,6 +68,14 @@ do
 
 		# get IP
 		ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
+		# HACK : second attempt to bring node up
+		if [ $? != 0 ] ; then
+			cd $config_name
+			vagrant destroy $node_n$i -f
+		        vagrant up $node_n$i 
+			cd ..
+			ip=`./mdbci show network $config_name/$node_n$i --silent 2> /dev/null`
+		fi
 		# get ssh key
    		key=`./mdbci show keyfile $config_name/$node_n$i --silent 2> /dev/null | sed 's/"//g'`
 

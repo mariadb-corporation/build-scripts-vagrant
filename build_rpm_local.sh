@@ -12,6 +12,12 @@ sudo yum install -y wget
 sudo zypper -n install rpmdevtools
 sudo zypper -n install git
 sudo zypper -n install wget
+
+wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
+wget http://maxscale-jenkins.mariadb.com/x/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
+#sudo yum install -
+sudo yum install flex-2.5.35-0.8.el5.rfb.x86_64.rpm -y --nogpgcheck 
+rm flex-2.5.35-0.8.el5.rfb.x86_64*
 . ~/check_arch.sh
 
 yum --version
@@ -31,6 +37,7 @@ cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/ "
 
 if [ $zy != 0 ] ; then
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel cmake libgcc_s1 perl make libtool libopenssl-devel libaio libaio-devel 
+  sudo zypper -n install flex
 #  sudo zypper -n install librabbitmq-devel
   sudo zypper -n install libcurl-devel
   sudo zypper -n install pcre-devel
@@ -51,6 +58,7 @@ else
   sudo yum install -y --nogpgcheck rpm-sign
   sudo yum install -y --nogpgcheck gnupg
   sudo yum install -y --nogpgcheck pcre-devel
+  sudo yum install -y --nogpgcheck flex
 # sudo yum install -y libaio 
 
   cat /etc/redhat-release | grep "release 5"
