@@ -1,6 +1,6 @@
 rm -rf $path_prefix/rhel/7/ppc64/
 mkdir -p $path_prefix/rhel/7/ppc64/
-cp -r ~/repo/$repo_name/rhel7_ppc64be/* $path_prefix/rhel/7/ppc64/
+cp -r ~/repo/$repo_name/rhel_7_ppc64be/* $path_prefix/rhel/7/ppc64/
 cd $path_prefix/rhel
 ln -s 7 7server
 ln -s 7 7Server

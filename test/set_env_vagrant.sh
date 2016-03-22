@@ -32,7 +32,7 @@ maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
                         vagrant destroy maxscale -f
                         vagrant up maxscale 
 			cd ..
-                        ip=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
+                        maxscale_IP=`./mdbci show network $config_name/maxscale --silent 2> /dev/null`
                 fi
 export maxscale_IP
 export maxscale_sshkey=`./mdbci show keyfile $config_name/maxscale --silent | sed 's/"//g'`

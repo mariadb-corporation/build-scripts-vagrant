@@ -2,7 +2,7 @@ set -x
 rm -rf $path_prefix/rhel/6/ppc64/
 
 mkdir -p $path_prefix/rhel/6/ppc64/
-cp -r ~/repo/$repo_name/rhel6_ppc64/* $path_prefix/rhel/6/ppc64/
+cp -r ~/repo/$repo_name/rhel_6_ppc64/* $path_prefix/rhel/6/ppc64/
 cd $path_prefix/rhel
 ln -s 6 6server
 ln -s 6 6Server

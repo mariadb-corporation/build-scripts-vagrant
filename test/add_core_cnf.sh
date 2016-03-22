@@ -13,6 +13,11 @@ echo "DefaultLimitCORE=infinity" >> /etc/systemd/system.conf
 
 echo "*       hard        core        unlimited" >> /etc/security/limits.d/core.conf
 echo "*       soft        core        unlimited" >> /etc/security/limits.d/core.conf
+echo "*       soft     nofile           65536" >> /etc/security/limits.d/core.conf
+echo "*       hard     nofile           65536" >> /etc/security/limits.d/core.conf
+
+
+echo "fs.file-max = 65536" >>  /etc/sysctl.conf
 
 systemctl daemon-reexec
 sysctl -p

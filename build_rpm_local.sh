@@ -9,9 +9,11 @@ cd $work_dir
 
 sudo yum install -y rpmdevtools git
 sudo yum install -y wget
+sudo yum install -y tcl
 sudo zypper -n install rpmdevtools
 sudo zypper -n install git
 sudo zypper -n install wget
+sudo zypper -n install tcl
 
 wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
 wget http://maxscale-jenkins.mariadb.com/x/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
@@ -32,7 +34,7 @@ fi
 rm $mariadbd_file
 wget  --retry-connrefused $mariadbd_link
 sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
-cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/ "
+cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ "
 
 
 if [ $zy != 0 ] ; then

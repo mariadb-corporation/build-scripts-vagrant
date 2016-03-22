@@ -18,6 +18,9 @@ sudo apt-get install -y --force-yes gcc g++ ncurses-dev bison build-essential li
 sudo apt-get install -y --force-yes libcurl4-openssl-dev
 sudo apt-get install -y --force-yes libpcre3-dev
 sudo apt-get install -y --force-yes flex
+#sudo apt-get install -y --force-yes flex
+sudo apt-get install -y --force-yes tcl
+sudo apt-get install -y --force-yes libeditline-dev
 
 mkdir rabbit
 cd rabbit
@@ -37,7 +40,8 @@ mkdir _build
 #sudo chmod u+w _build
 cd _build
 #export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier:$PWD/server/core
-cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/
+cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/
+#cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_INCLUDE_DIR
 export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier
 if [ -d ../coverity ] ; then
         tar xzvf ../coverity/coverity_tool.tgz
@@ -64,7 +68,7 @@ rm ../CMakeCache.txt
 rm CMakeCache.txt
 
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
-  cmake ../rabbitmq_consumer/  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DEMBEDDED_LIB=/usr/lib/
+  cmake ../rabbitmq_consumer/  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/
   sudo make package
   res=$?
   if [ $res != 0 ] ; then

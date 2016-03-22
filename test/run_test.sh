@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $1 - "debug" means do not install Maxscale
-
+ulimit -n
 rm -rf LOGS
 
 date_str=`date +%Y%m%d-%H`
