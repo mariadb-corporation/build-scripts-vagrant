@@ -84,8 +84,8 @@ mkdir _build
 cd _build
 cmake ..  $cmake_flags 
 if [ -d ../coverity ] ; then
-  tar xzvf ../coverity/coverity_tool.tgz
-  export PATH=$PATH:`pwd`/cov-analysis-linux64-7.6.0/bin/
+  tar xzvf ../coverity/cov-analysis-linux64-7.7.0.4.tar.gz
+  export PATH=$PATH:`pwd`/cov-analysis-linux64-7.7.0.4/bin/
   cov-build --dir cov-int make
   tar czvf maxscale.tgz cov-int
 else

@@ -38,7 +38,9 @@ cd ~/mdbci
 if [ $? != 0 ] ; then
 	echo "Error starting VM"
 	cd $name
-	vagrant destroy -f
+	if [ "x$do_not_destroy_vm" != "xyes" ] ; then
+		vagrant destroy -f
+	fi
 	rm ~/vagrant_lock
 	exit 1
 fi

@@ -66,6 +66,7 @@ vagrant destroy -f
 cd ..
 set -x
 ./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
+#cp ~/provider > $name/
 set +x
 while [ -f ~/vagrant_lock ]
 do
