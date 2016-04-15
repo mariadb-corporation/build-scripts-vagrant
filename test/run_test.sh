@@ -22,7 +22,12 @@ if [ "$1" != "debug" ] ; then
 	~/mdbci-repository-config/maxscale-ci.sh $target repo.d
 fi
 
+
 export repo_dir=$dir/repo.d/
+
+if [ -n "$repo_user" ] ; then
+	sed -i "s|http://|http://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
+fi
 
 echo "box: $box"
 echo "template: $template"
