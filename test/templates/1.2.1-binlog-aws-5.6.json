@@ -1,0 +1,198 @@
+{
+  "cookbook_path" : "../recipes/cookbooks/",
+  "aws_config" : "../aws-config.yml",
+  "node0" :
+  {
+        "hostname" : "node0",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+	"product" : {
+      		"name": "mysql",
+		"version": "5.6",
+                "cnf_template" : "server1.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+	}
+
+  },
+
+  "node1" :
+  {
+        "hostname" : "node1",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server2.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node2" :
+  {
+        "hostname" : "node2",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server3.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node3" :
+  {
+        "hostname" : "node3",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server4.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node4" :
+  {
+        "hostname" : "node4",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server5.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+
+  "node5" :
+  {
+        "hostname" : "node5",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server6.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node6" :
+  {
+        "hostname" : "node6",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server7.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node7" :
+  {
+        "hostname" : "node7",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server8.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node8" :
+  {
+        "hostname" : "node8",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server9.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "node9" :
+  {
+        "hostname" : "node9",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mysql",
+                "version": "5.6",
+                "cnf_template" : "server10.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf/mysql56"
+        }
+  },
+
+  "galera0" :
+  {
+        "hostname" : "galera0",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "galera",
+                "version": "5.5",
+                "cnf_template" : "galera_server1.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera1" :
+  {
+        "hostname" : "galera1",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "galera",
+                "version": "5.5",
+                "cnf_template" : "galera_server2.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera2" :
+  {
+        "hostname" : "galera2",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "galera",
+                "version": "5.5",
+                "cnf_template" : "galera_server3.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "galera3" :
+  {
+        "hostname" : "galera3",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "galera",
+                "version": "5.5",
+                "cnf_template" : "galera_server4.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "maxscale" :
+  {
+        "hostname" : "maxscale",
+        "box" : "centos_7_aws_large",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "maxscale"
+        }
+
+  }
+}
