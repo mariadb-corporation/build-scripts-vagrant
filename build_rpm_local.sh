@@ -10,10 +10,12 @@ cd $work_dir
 sudo yum install -y rpmdevtools git
 sudo yum install -y wget
 sudo yum install -y tcl
+sudo yum install -y libuuid-devel
 sudo zypper -n install rpmdevtools
 sudo zypper -n install git
 sudo zypper -n install wget
 sudo zypper -n install tcl
+sudo zypper -n install libuuid-devel
 
 wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
 wget http://maxscale-jenkins.mariadb.com/x/flex-2.5.35-0.8.el5.rfb.x86_64.rpm

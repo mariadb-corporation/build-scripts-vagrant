@@ -10,6 +10,10 @@ cd ~/mdbci
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 datestr=`date +%Y%m%d-%H%M`
 name="build_$box-$datestr"
+
+export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
+export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
+
 cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json

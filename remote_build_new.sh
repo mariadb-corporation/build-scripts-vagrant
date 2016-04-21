@@ -12,8 +12,11 @@ export work_dir="workspace"
 export orig_image=$image
 
 echo $sshuser
-scp $scpopt ~/build-scripts/vm_setup_scripts/$image.sh $sshuser@$IP:./
-ssh $sshopt "sudo ./$image.sh"
+echo $platform
+echo $platform_version
+export vm_setup_script="$platform"_"$platform_version".sh
+scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
+ssh $sshopt "sudo ./$vm_setup_script"
 
 ssh $sshopt "sudo rm -rf $work_dir"
 echo "copying stuff to $image machine"
@@ -30,16 +33,6 @@ scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
 if [ "$Coverity" == "yes" ] ; then
 	echo "Copying Coverity tools to VM"
         scp $scpopt -r  ~/build-scripts/coverity $sshuser@$IP:$work_dir
-fi
-
-image_type="RPM"
-echo $box | grep -i ubuntu
-if [ $? == 0 ] ; then
-  image_type="DEB"
-fi
-echo $box | grep -i deb
-if [ $? == 0 ] ; then
-  image_type="DEB"
 fi
 
 echo "copying build script to $image machine"
@@ -60,7 +53,7 @@ else
 fi
 
 echo "run build on $image"
-ssh $sshopt "export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; ./$build_script"
+ssh $sshopt "export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$build_script"
 if [ $? -ne 0 ] ; then
         echo "Error build on $image"
         exit 4

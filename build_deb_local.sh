@@ -21,6 +21,7 @@ sudo apt-get install -y --force-yes flex
 #sudo apt-get install -y --force-yes flex
 sudo apt-get install -y --force-yes tcl
 sudo apt-get install -y --force-yes libeditline-dev
+sudo apt-get install -y --force-yes uuid-dev
 
 mkdir rabbit
 cd rabbit

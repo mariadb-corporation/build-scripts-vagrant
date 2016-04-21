@@ -1,4 +1,0 @@
-rm -rf $path_prefix/debian/dists/jessie/main/binary-amd64
-rm -rf $path_prefix/debian/dists/jessie/main/binary-i386 
-mkdir -p $path_prefix/debian/
-cp -r ~/repo/$repo_name/debian_jessie_aws/* $path_prefix/debian/

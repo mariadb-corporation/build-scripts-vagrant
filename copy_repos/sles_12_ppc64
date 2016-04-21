@@ -1,3 +1,0 @@
-rm -rf $path_prefix/sles/12/ppc64le/
-mkdir -p $path_prefix/sles/12/ppc64le/
-cp -r ~/repo/$repo_name/sles_12_ppc64/* $path_prefix/sles/12/ppc64le/

@@ -1,4 +1,0 @@
-rm -rf $path_prefix/ubuntu/dists/trusty/main/binary-amd64/
-rm -rf $path_prefix/ubuntu/dists/trusty/main/binary-i386/
-mkdir -p $path_prefix/ubuntu/
-cp -r ~/repo/$repo_name/ubuntu_trusty_vbox/* $path_prefix/ubuntu/

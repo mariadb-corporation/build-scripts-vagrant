@@ -5,12 +5,6 @@ set -x
 destdir=$1
 sourcedir=$2
 
-arch="binary-amd64"
-uname -m | grep "x86_64"
-if [ $? -ne 0 ] ; then
-	arch="binary-ppc64el"
-fi
-
 #rm -rf $destdir
 mkdir -p  $destdir/
 
@@ -21,56 +15,15 @@ y_res=$?
 
 if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
 # DEB-based system
+	arch_name=`dpkg --print-architecture`
+	arch="binary-$arch_name"
 	cd $destdir
 	debian_ver=`cat /etc/debian_version`
-	echo "Debian version: $debina_ver"
-	dist_name=""
-	echo $debian_ver  | grep "^6\."
-	if [ $? -eq 0 ]; then
-		dist_name="squeeze";
-	fi
-	echo $debian_ver  | grep "^7\."
-        if [ $? -eq 0 ]; then
-                dist_name="wheezy";
-        fi
-        echo $debian_ver  | grep "^8\."
-        if [ $? -eq 0 ]; then
-                dist_name="jessie";
-        fi
-	ubuntu_ver=`cat /etc/os-release | grep "VERSION_ID"`
-	echo $ubuntu_ver | grep "12.04"
-        if [ $? -eq 0 ]; then
-                dist_name="precise";
-        fi
-        echo $ubuntu_ver | grep "14.04"
-        if [ $? -eq 0 ]; then
-                dist_name="trusty";
-        fi
+	echo "Debian version: $debian_ver"
+	dist_name=$platform_version
 
-        echo $ubuntu_ver | grep "13.10"
-        if [ $? -eq 0 ]; then
-                dist_name="saucy";
-        fi
-        echo $ubuntu_ver | grep "14.10"
-        if [ $? -eq 0 ]; then
-                dist_name="utopic";
-        fi
-        echo $ubuntu_ver | grep "15.04"
-        if [ $? -eq 0 ]; then
-                dist_name="vivid";
-        fi
-        echo $ubuntu_ver | grep "15.10"
-        if [ $? -eq 0 ]; then
-                dist_name="wily";
-        fi
-
-
-
-	if [ -z "$dist_name" ]; then
-		dist_name="unknown"
-	fi
 	mkdir -p dists/$dist_name/main/$arch/
-ls -la ~/$sourcedir/
+
 	cp ~/$sourcedir/* dists/$dist_name/main/$arch/
 	sudo apt-get update
 	sudo apt-get install -y dpkg-dev
