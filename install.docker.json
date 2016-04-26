@@ -1,0 +1,12 @@
+{
+  "cookbook_path" : "../recipes/cookbooks/",
+  "maxscale" :
+  {
+        "hostname" : "maxscale",
+        "box" : "###box###",
+        "product" : {
+                "name": "maxscale"
+        }
+
+  }
+}
