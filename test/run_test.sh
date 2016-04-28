@@ -27,6 +27,7 @@ export repo_dir=$dir/repo.d/
 
 if [ -n "$repo_user" ] ; then
 	sed -i "s|http://|http://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
+        sed -i "s|https://|https://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
 fi
 
 echo "box: $box"
@@ -58,12 +59,16 @@ export galera_version=5.5
 #if [ $? == 0 ] ; then
 #        export galera_version="10.1"
 #fi
-
+set -x
 sed -i "s/###galera_version###/$galera_version/g" ~/mdbci/$name.json
 sed -i "s/###version###/$version/g" ~/mdbci/$name.json
 sed -i "s/###product###/$product/g" ~/mdbci/$name.json
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
 sed -i "s/###target###/$target/g" ~/mdbci/$name.json
+if [ "$product" == "mysql" ] ; then
+	sed -i "s|/cnf|/cnf/mysql56|g" ~/mdbci/$name.json
+fi
+set +x
 cd ~/mdbci/
 mkdir -p $name
 cd $name
@@ -102,6 +107,7 @@ rm ~/vagrant_lock
     ./check_backend
     if [ $? != 0 ] ; then
 	echo "Backend is broken, test won't run"
+	vagrant destroy -f
 	exit 1
     fi
     if [ x"$named_test" == "x" ] ; then
@@ -124,6 +130,6 @@ else
 fi  
 
 cd ~/mdbci/$name
-if [ "$do_not_destroy" != "yes" ] ; then
+if [ "$do_not_destroy_vm" != "yes" ] ; then
 	vagrant destroy -f
 fi

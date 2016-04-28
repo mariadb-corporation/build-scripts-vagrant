@@ -2,7 +2,7 @@
 
 dir=`pwd`
 
-export do_not_destroy="yes"
+export do_not_destroy_vm="yes"
 ~/build-scripts/test/run_test.sh debug
 
 cd ~/mdbci

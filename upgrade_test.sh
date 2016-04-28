@@ -30,6 +30,11 @@ fi
 cd $work_dir
 ~/mdbci-repository-config/generate_all.sh repo.d
 ~/mdbci-repository-config/maxscale-ci.sh $old_target repo.d
+if [ -n "$repo_user" ] ; then
+        sed -i "s|http://|http://$repo_user:$repo_password@|" repo.d/maxscale/*.json
+        sed -i "s|https://|https://$repo_user:$repo_password@|" repo.d/maxscale/*.json
+fi
+
 cd ~/mdbci
 
 # starting VM for build
@@ -52,6 +57,10 @@ cd $work_dir
 rm -rf repo.d
 ~/mdbci-repository-config/generate_all.sh repo.d
 ~/mdbci-repository-config/maxscale-ci.sh $new_target repo.d
+if [ -n "$repo_user" ] ; then
+        sed -i "s|http://|http://$repo_user:$repo_password@|" repo.d/maxscale/*.json
+fi
+
 
 cd ~/mdbci
 

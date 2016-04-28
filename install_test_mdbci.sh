@@ -36,7 +36,7 @@ echo "mdbci up returned $res"
 rm ~/vagrant_lock
 
 cd ~/mdbci/$name
-if [ "$do_not_destroy" != "yes" ] ; then
+if [ "$do_not_destroy_vm" != "yes" ] ; then
 	vagrant destroy -f
 fi
 
