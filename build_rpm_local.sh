@@ -83,7 +83,7 @@ cd ../../
 # Check for Avro client library
 if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
 then
-    sudo yum install -y jansson jansson-devel
+    sudo yum install -y jansson jansson-devel sqlite sqlite-devel
     wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
     tar -axf avro-c-1.8.0.tar.gz
     mkdir avro-c-1.8.0/build
