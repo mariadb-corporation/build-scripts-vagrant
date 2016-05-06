@@ -80,6 +80,20 @@ cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/us
 sudo make install
 cd ../../
 
+# Check for Avro client library
+if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
+then
+    sudo yum install -y jansson jansson-devel
+    wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+    tar -axf avro-c-1.8.0.tar.gz
+    mkdir avro-c-1.8.0/build
+    pushd avro-c-1.8.0/build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+    make
+    sudo make install
+    popd
+fi
+
 mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
