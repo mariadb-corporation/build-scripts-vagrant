@@ -90,7 +90,7 @@ then
     git clone https://github.com/akheron/jansson.git
     mkdir -p jansson/build
     pushd jansson/build
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=lib64
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=/usr/lib64
     make
     sudo make install
     popd
