@@ -54,7 +54,7 @@ if [ $zy != 0 ] ; then
 
 else
   sudo yum clean all 
-  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel
+  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel cmake libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel
   sudo yum install -y --nogpgcheck libedit-devel
   sudo yum install -y --nogpgcheck libcurl-devel
   sudo yum install -y --nogpgcheck curl-devel
