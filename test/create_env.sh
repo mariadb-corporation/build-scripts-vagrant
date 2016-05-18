@@ -16,6 +16,9 @@ export sshopt="$scpopt $sshuser@$IP"
 export no_repo="yes"
 export remove_strip="yes"
 
+export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
+export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
+
 cd $dir
 ~/build-scripts/build.sh
 res=$?
