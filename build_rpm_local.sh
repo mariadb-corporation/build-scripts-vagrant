@@ -80,6 +80,32 @@ cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/us
 sudo make install
 cd ../../
 
+# Check for Avro client library
+if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
+then
+    # SQLite3
+    sudo yum install -y sqlite sqlite-devel
+
+    # Jansson
+    git clone https://github.com/akheron/jansson.git
+    mkdir -p jansson/build
+    pushd jansson/build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=/usr/lib64
+    make
+    sudo make install
+    popd
+
+    # Avro C API
+    wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+    tar -axf avro-c-1.8.0.tar.gz
+    mkdir avro-c-1.8.0/build
+    pushd avro-c-1.8.0/build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
+    make
+    sudo make install
+    popd
+fi
+
 mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
