@@ -111,7 +111,7 @@ rm ~/vagrant_lock
 	exit 1
     fi
     if [ x"$named_test" == "x" ] ; then
-    	ctest -VV -D Nightly -I $test_set
+    	ctest -VV -D Nightly $test_set
     else
 	./$named_test
     fi

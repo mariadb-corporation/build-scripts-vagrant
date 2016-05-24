@@ -8,4 +8,4 @@ cd ..
 cd $dir
 cmake .
 #sudo make install
-ctest -I $test_set -VV
+ctest $test_set -VV
