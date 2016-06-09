@@ -22,6 +22,7 @@ sudo apt-get install -y --force-yes flex
 sudo apt-get install -y --force-yes tcl
 sudo apt-get install -y --force-yes libeditline-dev
 sudo apt-get install -y --force-yes uuid-dev
+sudo apt-get install -y --force-yes liblzma-dev
 
 mkdir rabbit
 cd rabbit
@@ -32,6 +33,31 @@ git checkout v0.7.1
 cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N -DCMAKE_INSTALL_PREFIX=/usr
 sudo make install
 cd ../../
+# Check for Avro client library
+if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
+then
+     # SQLite3
+     sudo apt-get install -y --force-yes libsqlite3-dev sqlite3
+
+     # Jansson
+     git clone https://github.com/akheron/jansson.git
+     mkdir -p jansson/build
+     pushd jansson/build
+     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=/usr/lib64
+     make
+     sudo make install
+     popd
+ 
+     # Avro C API
+     wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+     tar -axf avro-c-1.8.0.tar.gz
+     mkdir avro-c-1.8.0/build
+     pushd avro-c-1.8.0/build
+     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
+     make
+     sudo make install
+     popd
+fi
 
 wget --retry-connrefused $mariadbd_link
 sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1

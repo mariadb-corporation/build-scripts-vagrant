@@ -34,13 +34,15 @@ db_password="skysql"
 
 sudo /etc/init.d/mysql restart --wsrep-cluster-address=gcomm://
 
-sleep 5
+sleep 100
 
-mysql -u root -e "DELETE FROM mysql.user WHERE user = ''; \
+sudo mysql -u root -e "DELETE FROM mysql.user WHERE user = ''; \
 GRANT ALL PRIVILEGES ON *.* TO $rep_username@'%' IDENTIFIED BY '$rep_password'  WITH GRANT OPTION; \
 GRANT ALL PRIVILEGES ON *.* TO $db_username@'%' IDENTIFIED BY '$db_password'  WITH GRANT OPTION; \
 GRANT ALL PRIVILEGES ON *.* TO $rep_username@'localhost' IDENTIFIED BY '$rep_password'  WITH GRANT OPTION; \
 GRANT ALL PRIVILEGES ON *.* TO $db_username@'localhost' IDENTIFIED BY '$db_password'  WITH GRANT OPTION; \
+GRANT ALL PRIVILEGES ON *.* TO maxskysql@'%' IDENTIFIED BY '$db_password'  WITH GRANT OPTION; \
+GRANT ALL PRIVILEGES ON *.* TO maxskysql@'localhost' IDENTIFIED BY '$db_password'  WITH GRANT OPTION; \
 FLUSH PRIVILEGES;"
 
 
