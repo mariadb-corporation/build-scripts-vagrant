@@ -4,9 +4,14 @@ apt-get update
 apt-get install -y --force-yes wget
 
 apt-get install -y --force-yes gcc g++ make
-wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz --no-check-certificate
-tar xzvf cmake-2.8.12.2.tar.gz
-cd cmake-2.8.12.2
+#wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz --no-check-certificate
+wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz --no-check-certificate
+
+#tar xzvf cmake-2.8.12.2.tar.gz
+tar xzvf cmake-3.5.2.tar.gz
+
+#cd cmake-2.8.12.2
+cd cmake-3.5.2
 ./bootstrap
 make
 make install
