@@ -83,6 +83,16 @@ cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/us
 sudo make install
 cd ../../
 
+mkdir tcl
+cd tcl
+wget http://prdownloads.sourceforge.net/tcl/tcl8.6.5-src.tar.gz
+tar xzvf tcl8.6.5-src.tar.gz
+cd tcl8.6.5/unix
+./configure
+sudo make install
+cd ../../..
+
+
 # Check for Avro client library
 if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
 then

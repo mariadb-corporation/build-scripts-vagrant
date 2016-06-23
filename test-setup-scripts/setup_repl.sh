@@ -27,6 +27,11 @@ do
 	ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP 'sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/usr.sbin.mysqld; sudo service apparmor restart'
 
 	mysql_version=`ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP  'mysql --version'`
+        echo $mysql_version | grep "5\."
+        if [ $? == 0 ] ; then
+		ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo sed -i \"s/binlog_row_image=full//\" /etc/my.cnf.d/*.cnf"
+        fi
+
 	echo $mysql_version | grep "5\.7"
 	if [ $? == 0 ] ; then
 #		ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo sed -i \"s/## x001/validate-password=OFF/\" /etc/my.cnf.d/*.cnf"

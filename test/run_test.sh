@@ -5,7 +5,9 @@ ulimit -n
 rm -rf LOGS
 
 date_str=`date +%Y%m%d-%H`
-export logs_publish_dir="$HOME/LOGS/$date_str/$name/$target/"
+#export logs_publish_dir="$HOME/LOGS/$date_str/$name/$target/"
+export logs_publish_dir="$HOME/LOGS/$JOB_NAME-$BUILD_ID"
+echo "Logs go to $logs_publish_dir"
 mkdir -p $logs_publish_dir
 
 echo $1
@@ -50,7 +52,7 @@ else
 	fi
 fi
 #set +x
-export galera_version=5.5
+export galera_version=10.0
 #echo $version | grep "^10."
 #if [ $? == 0 ] ; then
 #	export galera_version="10.0"

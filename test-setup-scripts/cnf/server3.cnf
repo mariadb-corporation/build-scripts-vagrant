@@ -14,7 +14,9 @@
 #log-basename=mar
 log-bin=mar-bin
 #binlog-format=row
-binlog-format=STATEMENT
+#binlog-format=STATEMENT
+binlog-format=row
+binlog_row_image=full
 server_id=3
 #slave_parallel_threads=2
 user=mysql

@@ -41,13 +41,16 @@ cd ~/mdbci
 ./mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
 ./mdbci up $name --attempts=1
 if [ $? != 0 ] ; then
-	echo "Error starting VM"
-	cd $name
-	if [ "x$do_not_destroy_vm" != "xyes" ] ; then
-		vagrant destroy -f
+	./mdbci ssh --command "ls" $name
+        if [ $? != 0 ] ; then
+		echo "Error starting VM"
+		cd $name
+		if [ "x$do_not_destroy_vm" != "xyes" ] ; then
+			vagrant destroy -f
+		fi
+		rm ~/vagrant_lock
+		exit 1
 	fi
-	rm ~/vagrant_lock
-	exit 1
 fi
 
 rm ~/vagrant_lock
