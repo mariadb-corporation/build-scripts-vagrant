@@ -3,10 +3,7 @@
   "build" :
   {
         "hostname" : "default",
-        "box" : "###box###",
-	"product" : {
-        	"name" : "packages"
-        }
+        "box" : "###box###"
   }
 }
 
