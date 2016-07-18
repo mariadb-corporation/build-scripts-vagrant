@@ -36,10 +36,12 @@ else
 	zy=0
 fi
 
-rm $mariadbd_file
-wget  --retry-connrefused $mariadbd_link
-sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
-cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ "
+if [ "$use_mariadbd" == "yes" ] ; then
+	rm $mariadbd_file
+	wget  --retry-connrefused $mariadbd_link
+	sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
+	cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ "
+fi
 
 
 if [ $zy != 0 ] ; then
@@ -77,6 +79,10 @@ fi
 mkdir rabbit
 cd rabbit
 git clone https://github.com/alanxz/rabbitmq-c.git
+if [ $? != 0 ] ; then
+        echo "Error cloning rabbitmq-c"
+        exit 1
+fi
 cd rabbitmq-c
 git checkout v0.7.1
 cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/usr
@@ -86,6 +92,10 @@ cd ../../
 mkdir tcl
 cd tcl
 wget http://prdownloads.sourceforge.net/tcl/tcl8.6.5-src.tar.gz
+if [ $? != 0 ] ; then
+        echo "Error getting tcl"
+        exit 1
+fi
 tar xzvf tcl8.6.5-src.tar.gz
 cd tcl8.6.5/unix
 ./configure
@@ -102,6 +112,11 @@ then
 
     # Jansson
     git clone https://github.com/akheron/jansson.git
+    if [ $? != 0 ] ; then
+        echo "Error cloning jansson"
+        exit 1
+    fi
+
     mkdir -p jansson/build
     pushd jansson/build
     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=/usr/lib64
@@ -111,6 +126,11 @@ then
 
     # Avro C API
     wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+    if [ $? != 0 ] ; then
+       echo "Error getting avro-c"
+       exit 1
+    fi
+
     tar -axf avro-c-1.8.0.tar.gz
     mkdir avro-c-1.8.0/build
     pushd avro-c-1.8.0/build
@@ -139,15 +159,36 @@ if [ $remove_strip == "yes" ] ; then
 	sudo touch /usr/bin/strip
 	sudo chmod a+x /usr/bin/strip
 fi 
-sudo make package
+make package
 res=$?
 if [ $res != 0 ] ; then
 	exit $res
 fi
+cd ..
+cp _build/*.rpm .
+cp _build/*.gz .
 
 rm ../CMakeCache.txt
 rm CMakeCache.txt
+if [ "$build_experimental" == "yes" ] ; then
+        rm -rf _build
+        mkdir _build
+        cd _build
+        cmake ..  $cmake_flags -DTARGET_COMPONENT=experimental
+        make package
+        cd ..
+        cp _build/*.rpm .
+	cp _build/*.gz .
 
+        rm -rf _build
+        mkdir _build
+        cd _build
+        cmake ..  $cmake_flags -DTARGET_COMPONENT=devel
+        make package
+        cd ..
+        cp _build/*.rpm .
+	cp _build/*.gz .
+fi
 
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   cmake ../rabbitmq_consumer/  $cmake_flags 
@@ -156,9 +197,7 @@ if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   if [ $res != 0 ] ; then
         exit $res
   fi
+  cd ..
+  cp _build/*.rpm .
+  cp _build/*.gz .
 fi
-
-cd ..
-#chmod -R u+wr .
-cp _build/*.rpm .
-
