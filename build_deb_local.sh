@@ -24,6 +24,12 @@ sudo apt-get install -y --force-yes libeditline-dev
 sudo apt-get install -y --force-yes uuid-dev
 sudo apt-get install -y --force-yes liblzma-dev
 
+if [ $remove_strip == "yes" ] ; then
+        sudo rm -rf /usr/bin/strip
+        sudo touch /usr/bin/strip
+        sudo chmod a+x /usr/bin/strip
+fi 
+
 mkdir rabbit
 cd rabbit
 git clone https://github.com/alanxz/rabbitmq-c.git
@@ -66,9 +72,7 @@ mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
 cd _build
-#export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier:$PWD/server/core
 cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/
-#cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_INCLUDE_DIR
 export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier
 if [ -d ../coverity ] ; then
         tar xzvf ../coverity/coverity_tool.tgz
@@ -78,12 +82,7 @@ if [ -d ../coverity ] ; then
 else
         make
 fi
-if [ $remove_strip == "yes" ] ; then
-        sudo rm -rf /usr/bin/strip
-        sudo touch /usr/bin/strip
-        sudo chmod a+x /usr/bin/strip
-fi 
-#sudo make install
+
 export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname $i); done|sort|uniq|xargs|sed -e 's/[[:space:]]/:/g')
 make package
 res=$?
@@ -93,6 +92,18 @@ fi
 
 rm ../CMakeCache.txt
 rm CMakeCache.txt
+set -x
+if [ "$build_experimental" == "yes" ] ; then
+	export LD_LIBRARY_PATH=""
+	cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ -DTARGET_COMPONENT=experimental -DPACKAGE_NAME=maxscale-experimental -DBUILD_METAPACKAGE=N -DEXTRA_PACKAGE_DEPENDENCIES=maxscale-common -DWITH_MAXSCALE_CNF=N
+	export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname $i); done|sort|uniq|xargs|sed -e 's/[[:space:]]/:/g')
+	make package
+
+        export LD_LIBRARY_PATH=""
+        cmake ..  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ -DTARGET_COMPONENT=devel -DPACKAGE_NAME=maxscale-devel -DBUILD_METAPACKAGE=N -DWITH_MAXSCALE_CNF=N
+        export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname $i); done|sort|uniq|xargs|sed -e 's/[[:space:]]/:/g')
+        make package
+fi
 
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   cmake ../rabbitmq_consumer/  $cmake_flags -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/
@@ -108,3 +119,4 @@ cd ..
 #chmod -R u+wr .
 cp _build/*.deb .
 cp *.deb ..
+set +x
