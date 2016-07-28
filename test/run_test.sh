@@ -95,6 +95,7 @@ do
 	sleep 5
 done
 touch ~/vagrant_lock
+echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
 
 echo "running vagrant up $provider"
 
