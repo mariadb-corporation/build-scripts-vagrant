@@ -62,7 +62,7 @@ build_result=$?
 shellcheck `find . | grep "\.sh"` | grep -i "POSIX sh"
 if [ $? -eq 0 ] ; then
         echo "POSIX sh error are found in the scripts, exiting"
-        exit 1
+#        exit 1
 fi
 export repo_name=$target
 export path_prefix="$HOME/repository/$repo_name/mariadb-maxscale/"

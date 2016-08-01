@@ -20,7 +20,7 @@ sudo zypper -n install libuuid-devel
 sudo zypper -n install xz-devel
 
 
-wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
+#wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
 wget http://maxscale-jenkins.mariadb.com/x/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
 #sudo yum install -
 sudo yum install flex-2.5.35-0.8.el5.rfb.x86_64.rpm -y --nogpgcheck 
@@ -159,7 +159,7 @@ if [ $remove_strip == "yes" ] ; then
 	sudo touch /usr/bin/strip
 	sudo chmod a+x /usr/bin/strip
 fi 
-make package
+sudo make package
 res=$?
 if [ $res != 0 ] ; then
 	exit $res
@@ -168,23 +168,23 @@ cd ..
 cp _build/*.rpm .
 cp _build/*.gz .
 
-rm ../CMakeCache.txt
-rm CMakeCache.txt
+sudo rm ../CMakeCache.txt
+sudo rm CMakeCache.txt
 if [ "$build_experimental" == "yes" ] ; then
-        rm -rf _build
+        sudo rm -rf _build
         mkdir _build
         cd _build
         cmake ..  $cmake_flags -DTARGET_COMPONENT=experimental
-        make package
+        sudo make package
         cd ..
         cp _build/*.rpm .
 	cp _build/*.gz .
 
-        rm -rf _build
+        sudo rm -rf _build
         mkdir _build
         cd _build
         cmake ..  $cmake_flags -DTARGET_COMPONENT=devel
-        make package
+        sudo make package
         cd ..
         cp _build/*.rpm .
 	cp _build/*.gz .
