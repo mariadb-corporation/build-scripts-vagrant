@@ -1,8 +1,8 @@
 {
   "cookbook_path" : "../recipes/cookbooks/",
-  "node0" :
+  "node_000" :
   {
-        "hostname" : "node0",
+        "hostname" : "node000",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
 	"product" : {
@@ -14,9 +14,9 @@
 
   },
 
-  "node1" :
+  "node_001" :
   {
-        "hostname" : "node1",
+        "hostname" : "node001",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -27,9 +27,9 @@
         }
   },
 
-  "node2" :
+  "node_002" :
   {
-        "hostname" : "node2",
+        "hostname" : "node002",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -40,9 +40,9 @@
         }
   },
 
-  "node3" :
+  "node_003" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -53,9 +53,9 @@
         }
   },
 
-  "node4" :
+  "node_004" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -67,9 +67,9 @@
   },
 
 
-  "node5" :
+  "node_005" :
   {
-        "hostname" : "node6",
+        "hostname" : "node006",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -80,9 +80,9 @@
         }
   },
 
-  "node6" :
+  "node_006" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -93,9 +93,9 @@
         }
   },
 
-  "node7" :
+  "node_007" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -106,9 +106,9 @@
         }
   },
 
-  "node8" :
+  "node_008" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -119,9 +119,9 @@
         }
   },
 
-  "node9" :
+  "node_009" :
   {
-        "hostname" : "node3",
+        "hostname" : "node003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -132,9 +132,9 @@
         }
   },
 
-  "galera0" :
+  "galera_000" :
   {
-        "hostname" : "galera0",
+        "hostname" : "galera000",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -145,9 +145,9 @@
         }
   },
 
-  "galera1" :
+  "galera_001" :
   {
-        "hostname" : "galera1",
+        "hostname" : "galera001",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -158,9 +158,9 @@
         }
   },
 
-  "galera2" :
+  "galera_002" :
   {
-        "hostname" : "galera2",
+        "hostname" : "galera002",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -171,9 +171,9 @@
         }
   },
 
-  "galera3" :
+  "galera_003" :
   {
-        "hostname" : "galera3",
+        "hostname" : "galera003",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {

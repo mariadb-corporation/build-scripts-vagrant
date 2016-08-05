@@ -9,9 +9,9 @@ x=`expr $N - 1`
 for i in $(seq 0 $x)
 do
 	num=`printf "%03d" $i`
-	sshkey_var="galera_sshkey_$num"
-	user_var="galera_access_user_$num"
-	IP_var="galera_$num"
+	sshkey_var=galera_"$num"_keyfile
+	user_var=galera_"$num"_whoami
+	IP_var=galera_"$num"_network
 
 	sshkey=${!sshkey_var}
 	user=${!user_var}
@@ -24,8 +24,8 @@ do
 done
 
 
-ssh -i  $galera_sshkey_000 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $galera_access_user_000@$galera_000 "sudo $galera_start_db_command_000 --wsrep-cluster-address=gcomm://" &
+ssh -i  $galera_000_keyfile -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $galera_000_whoami@$galera_000_network "sudo $galera_000_start_db_command --wsrep-cluster-address=gcomm://" &
 sleep 10
-ssh -i  $galera_sshkey_000 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $galera_access_user_000@$galera_000 "echo 'CREATE DATABASE IF NOT EXISTS test;' | sudo mysql "
+ssh -i  $galera_000_keyfile -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $galera_000_whoami@$galera_000_network "echo 'CREATE DATABASE IF NOT EXISTS test;' | sudo mysql "
 
 disown
