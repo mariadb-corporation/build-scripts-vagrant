@@ -4,16 +4,16 @@ set -x
 
 export scr_dir="$HOME/build-scripts/test-setup-scripts"
 
-x=`expr $repl_N - 1`
+x=`expr $node_N - 1`
 for i in $(seq 0 $x)
 do
 #	echo ${sshkey[$i]}
         num=`printf "%03d" $i`
-        sshkey_var="repl_sshkey_$num"
-        user_var="repl_access_user_$num"
-        IP_var="repl_$num"
-	start_cmd_var="repl_start_db_command_$num"
-	stop_cmd_var="repl_stop_db_command_$num"
+        sshkey_var=node_"$num"_keyfile
+        user_var=node_"$num"_whoami
+        IP_var=node_"$num"_network
+	start_cmd_var=node_"$num"_start_db_command
+	stop_cmd_var=node_"$num"_stop_db_command
 
         sshkey=${!sshkey_var}
         user=${!user_var}

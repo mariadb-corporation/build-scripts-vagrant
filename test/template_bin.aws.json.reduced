@@ -1,9 +1,9 @@
 {
   "cookbook_path" : "../recipes/cookbooks/",
   "aws_config" : "../aws-config.yml",
-  "node0" :
+  "node_000" :
   {
-        "hostname" : "node0",
+        "hostname" : "node_000",
         "box" : "centos_7_aws_large",
 	"product" : {
       		"name": "###product###",
@@ -14,9 +14,9 @@
 
   },
 
-  "node1" :
+  "node_001" :
   {
-        "hostname" : "node1",
+        "hostname" : "node_001",
         "box" : "centos_7_aws_large",
         "product" : {
                 "name": "###product###",
@@ -26,9 +26,9 @@
         }
   },
 
-  "node2" :
+  "node_002" :
   {
-        "hostname" : "node2",
+        "hostname" : "node_002",
         "box" : "centos_7_aws_large",
         "product" : {
                 "name": "###product###",
@@ -38,9 +38,9 @@
         }
   },
 
-  "node3" :
+  "node_003" :
   {
-        "hostname" : "node3",
+        "hostname" : "node_003",
         "box" : "centos_7_aws_large",
         "product" : {
                 "name": "###product###",
@@ -49,9 +49,9 @@
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
-  "node4" :
+  "node_004" :
   {
-        "hostname" : "node4",
+        "hostname" : "node_004",
         "box" : "centos_7_aws_large",
         "product" : {
                 "name": "###product###",
@@ -60,9 +60,9 @@
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
-  "node5" :
+  "node_005" :
   {
-        "hostname" : "node5",
+        "hostname" : "node_005",
         "box" : "centos_7_aws_large",
         "product" : {
                 "name": "###product###",
@@ -71,9 +71,9 @@
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
-  "galera0" :
+  "galera_000" :
   {
-        "hostname" : "galera0",
+        "hostname" : "galera_000",
         "box" : "centos_7_aws",
         "product" : {
                 "name": "galera",
@@ -83,9 +83,9 @@
         }
   },
 
-  "galera1" :
+  "galera_001" :
   {
-        "hostname" : "galera1",
+        "hostname" : "galera_001",
         "box" : "centos_7_aws",
         "product" : {
                 "name": "galera",
