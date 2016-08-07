@@ -27,7 +27,7 @@ export node_N=`cat "$config_name"_network_config | grep node | grep network | wc
 
 # IP Of MaxScale machine
 sed "s/^/export /g" "$config_name"_network_config > "$config_name"_network_config_export
-source "$config_name"_network_config_export
+source "$curr_dir"/"$config_name"_network_config_export
 
 export maxscale_IP=$maxscale_network
 export maxscale_sshkey=$maxscale_keyfile
