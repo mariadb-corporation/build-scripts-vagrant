@@ -8,7 +8,7 @@ cd ~/mdbci
 . ~/build-scripts/test/set_env_vagrant.sh "$name"
 
 cd $dir
-
+echo Target is $target
 ~/mdbci-repository-config/maxscale-ci.sh $target repo.d
 export repo_dir=$dir/repo.d/
 
@@ -21,6 +21,7 @@ cd ~/mdbci
 
 ./mdbci sudo --command 'yum remove maxscale -y' $name/maxscale
 
+./mdbci setup_repo --product maxscale $name/maxscale --repo-dir $repo_dir
 ./mdbci install_product --product maxscale $name/maxscale --repo-dir $repo_dir
 
 
