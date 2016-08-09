@@ -8,8 +8,7 @@ export target=`echo $target | sed "s/ //g"`
 cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
-datestr=`date +%Y%m%d-%H%M`
-name="build_$box-$datestr"
+name="$box-$JOB_NAME-$BUILD_NUMBER"
 
 export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
 export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`

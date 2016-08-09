@@ -9,8 +9,7 @@ export repo_dir=$dir/repo.d/
 
 cd ~/mdbci/
 provider=`./mdbci show provider $box --silent 2> /dev/null`
-datestr=`date +%Y%m%d-%H%M`
-name="install_$box-$datestr"
+name=$box-$JOB_NAME-$BUILD_NUMBER
 cp ~/build-scripts/install.$provider.json ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
