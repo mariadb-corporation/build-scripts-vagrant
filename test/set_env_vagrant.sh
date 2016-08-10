@@ -26,7 +26,7 @@ export galera_N=`cat "$config_name"_network_config | grep galera | grep network 
 export node_N=`cat "$config_name"_network_config | grep node | grep network | wc -l`
 
 # IP Of MaxScale machine
-sed "s/^/export /g" "$config_name"_network_config > "$config_name"_network_config_export
+sed "s/^/export /g" "$config_name"_network_config > "$curr_dir"/"$config_name"_network_config_export
 source "$curr_dir"/"$config_name"_network_config_export
 
 export maxscale_IP=$maxscale_network
