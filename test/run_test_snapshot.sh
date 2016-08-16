@@ -1,6 +1,8 @@
 set -x
 dir=`pwd`
 
+. ~/build-scripts/configure_log_dir.sh
+
 cd ~/mdbci 
 
 ./mdbci snapshot revert --path-to-nodes $name --snapshot-name $snapshot_name
@@ -31,3 +33,7 @@ make
 
 ./check_backend --restart-galera
 ctest $test_set -VV
+
+rsync -a LOGS $logs_publish_dir
+chmod a+r $logs_publish_dir/*
+

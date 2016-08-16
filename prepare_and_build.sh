@@ -9,6 +9,7 @@ cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 name="$box-$JOB_NAME-$BUILD_NUMBER"
+name=`echo $name | sed "s|/|-|g"`
 
 export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
 export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
