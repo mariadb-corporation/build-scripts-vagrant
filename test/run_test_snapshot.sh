@@ -34,6 +34,5 @@ make
 ./check_backend --restart-galera
 ctest $test_set -VV
 
-rsync -a LOGS $logs_publish_dir
-chmod a+r $logs_publish_dir/*
+~/build-scripts/test/copy_logs.sh
 

@@ -4,8 +4,6 @@
 ulimit -n
 rm -rf LOGS
 
-date_str=`date +%Y%m%d-%H`
-#export logs_publish_dir="$HOME/LOGS/$date_str/$name/$target/"
 . ~/build-scripts/configure_log_dir.sh
 
 echo $1
@@ -21,7 +19,6 @@ echo $dir
 if [ "$1" != "debug" ] ; then
 	~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 fi
-
 
 export repo_dir=$dir/repo.d/
 
@@ -103,7 +100,7 @@ if [ $? == 0 ] ; then
   ~/build-scripts/test/configure_core.sh
 
   cd $dir
-rm ~/vagrant_lock
+  rm ~/vagrant_lock
   if [ "$1" != "debug" ] ; then
     ./check_backend
     if [ $? != 0 ] ; then
@@ -112,17 +109,15 @@ rm ~/vagrant_lock
 	exit 1
     fi
     if [ x"$named_test" == "x" ] ; then
-set -x
-    	ctest -VV -D Nightly $test_set
-set +x
+    set -x
+    ctest -VV -D Nightly $test_set
+    set +x
     else
 	./$named_test
     fi
   fi
-#  date_str=`date +%Y%m%d-%H`
-#  logs_dir="$HOME/LOGS/$date_str/$name/$target/"
-#  mkdir -p $logs_dir
-#  cp -r LOGS/* $logs_dir
+
+  ~/build-scripts/test/copy_logs.sh
   rsync -a LOGS $logs_publish_dir
   chmod a+r $logs_publish_dir/*
 
