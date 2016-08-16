@@ -19,7 +19,7 @@ whoami
 echo $dir
 ~/mdbci-repository-config/generate_all.sh repo.d
 if [ "$1" != "debug" ] ; then
-	~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+	~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 fi
 
 

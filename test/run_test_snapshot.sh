@@ -11,7 +11,7 @@ cd ~/mdbci
 
 cd $dir
 
-~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 export repo_dir=$dir/repo.d/
 
 if [ -n "$repo_user" ] ; then
