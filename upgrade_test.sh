@@ -8,6 +8,7 @@ cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 name=$box-$JOB_NAME-$BUILD_NUMBER
+name=`echo $name | sed "s|/|-|g"`
 cp ~/build-scripts/install.$provider.json ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json
@@ -29,7 +30,7 @@ fi
 
 cd $work_dir
 ~/mdbci-repository-config/generate_all.sh repo.d
-~/mdbci-repository-config/maxscale-ci.sh $old_target repo.d
+~/mdbci-repository-config/maxscale-ci.sh $old_target repo.d $ci_url_suffix
 if [ -n "$repo_user" ] ; then
         sed -i "s|http://|http://$repo_user:$repo_password@|" repo.d/maxscale/*.json
         sed -i "s|https://|https://$repo_user:$repo_password@|" repo.d/maxscale/*.json
@@ -59,7 +60,7 @@ rm ~/vagrant_lock
 cd $work_dir
 rm -rf repo.d
 ~/mdbci-repository-config/generate_all.sh repo.d
-~/mdbci-repository-config/maxscale-ci.sh $new_target repo.d
+~/mdbci-repository-config/maxscale-ci.sh $new_target repo.d $ci_url_suffix
 if [ -n "$repo_user" ] ; then
         sed -i "s|http://|http://$repo_user:$repo_password@|" repo.d/maxscale/*.json
 fi

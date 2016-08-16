@@ -5,7 +5,7 @@ export target=`echo $target | sed "s/ //g"`
 export repo_dir=$dir/repo.d/
 
 ~/mdbci-repository-config/generate_all.sh repo.d
-~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 
 cd ~/mdbci/
 provider=`./mdbci show provider $box --silent 2> /dev/null`
