@@ -9,3 +9,4 @@ cd $dir
 cmake .
 #sudo make install
 ctest $test_set -VV
+~/build-scripts/test/copy_logs.sh
