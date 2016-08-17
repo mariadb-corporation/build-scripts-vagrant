@@ -8,6 +8,7 @@ cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
 name=$box-$JOB_NAME-$BUILD_NUMBER
+name=`echo $name | sed "s|/|-|g"
 cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
 
 sed -i "s/###box###/$box/g" ~/mdbci/$name.json

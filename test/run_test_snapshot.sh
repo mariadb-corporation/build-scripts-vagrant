@@ -1,6 +1,8 @@
 set -x
 dir=`pwd`
 
+. ~/build-scripts/test/configure_log_dir.sh
+
 cd ~/mdbci 
 
 ./mdbci snapshot revert --path-to-nodes $name --snapshot-name $snapshot_name
@@ -9,7 +11,7 @@ cd ~/mdbci
 
 cd $dir
 
-~/mdbci-repository-config/maxscale-ci.sh $target repo.d
+~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 export repo_dir=$dir/repo.d/
 
 if [ -n "$repo_user" ] ; then
@@ -31,3 +33,6 @@ make
 
 ./check_backend --restart-galera
 ctest $test_set -VV
+
+~/build-scripts/test/copy_logs.sh
+
