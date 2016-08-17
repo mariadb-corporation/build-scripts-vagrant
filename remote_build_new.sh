@@ -5,6 +5,7 @@
 set -x
 
 echo "target is $target"
+rm -rf $pre_repo_dir/$target/
 mkdir -p $pre_repo_dir/$target/SRC
 mkdir -p $pre_repo_dir/$target/$image
 
