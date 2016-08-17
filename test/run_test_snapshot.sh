@@ -1,7 +1,7 @@
 set -x
 dir=`pwd`
 
-. ~/build-scripts/configure_log_dir.sh
+. ~/build-scripts/test/configure_log_dir.sh
 
 cd ~/mdbci 
 

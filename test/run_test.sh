@@ -4,7 +4,7 @@
 ulimit -n
 rm -rf LOGS
 
-. ~/build-scripts/configure_log_dir.sh
+. ~/build-scripts/test/configure_log_dir.sh
 
 echo $1
 if [ "$1" != "debug" ] ; then
