@@ -5,6 +5,17 @@ dir=`pwd`
 
 cd ~/mdbci 
 
+# Setting snapshot_lock
+snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
+while [ -f $snapshot_lock_file ]
+do
+	echo "snapshot is locked, waiting ..."
+	sleep 5
+done
+touch $snapshot_lock_file
+echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_files
+# /Setting snapshot_lock
+
 ./mdbci snapshot revert --path-to-nodes $name --snapshot-name $snapshot_name
 
 . ~/build-scripts/test/set_env_vagrant.sh "$name"
@@ -36,3 +47,6 @@ ctest $test_set -VV
 
 ~/build-scripts/test/copy_logs.sh
 
+# Removing snapshot_lock
+rm $snapshot_lock_file
+# /Removing snapshot_lock
