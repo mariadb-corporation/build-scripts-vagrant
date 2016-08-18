@@ -1,29 +1,52 @@
+#!/bin/bash
+
 set -x
-dir=`pwd`
+
+export box="centos_7_libvirt"
+export product="mariadb"
+export version="10.0"
+
+export dir=`pwd`
 
 . ~/build-scripts/test/configure_log_dir.sh
 
 cd ~/mdbci 
 
 # Setting snapshot_lock
-snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
+export snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
 while [ -f $snapshot_lock_file ]
 do
 	echo "snapshot is locked, waiting ..."
 	sleep 5
 done
 touch $snapshot_lock_file
-echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_files
-# /Setting snapshot_lock
+echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
+
+export repo_dir=$dir/repo.d/
 
 ./mdbci snapshot revert --path-to-nodes $name --snapshot-name $snapshot_name
 
-. ~/build-scripts/test/set_env_vagrant.sh "$name"
+if [ $? != 0 ]; then
+	touch $snapshot_lock_file
+	echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
+
+	cd $dir
+	~/build-scripts/test/create_config.sh
+	if [ $? != 0 ]; then
+		echo "Error creating configuration"
+		exit 1
+	fi 
+        . ~/build-scripts/test/configure_backend.sh
+	cd ~/mdbci
+	echo "Creating snapshot from new config"
+	./mdbci snapshot take --path-to-nodes $name --snapshot-name $snapshot_name
+fi
 
 cd $dir
 
+. ~/build-scripts/test/set_env_vagrant.sh "$name"
+
 ~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
-export repo_dir=$dir/repo.d/
 
 if [ -n "$repo_user" ] ; then
         sed -i "s|http://|http://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
@@ -40,7 +63,6 @@ cd ~/mdbci
 cd $dir
 cmake .
 make
-#sudo make install
 
 ./check_backend --restart-galera
 ctest $test_set -VV
@@ -49,4 +71,3 @@ ctest $test_set -VV
 
 # Removing snapshot_lock
 rm $snapshot_lock_file
-# /Removing snapshot_lock
