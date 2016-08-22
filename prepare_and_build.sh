@@ -16,6 +16,14 @@ export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_
 
 if [ "$try_already_running" == "yes" ]; then
 	export name=$box
+	export snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
+	while [ -f $snapshot_lock_file ]
+	do
+        	echo "snapshot is locked, waiting ..."
+	        sleep 5
+	done
+
+	echo $JOB_NAME-$BUILD_NUMBER > $snapshot_lock_file
 	./mdbci snapshot revert --path-to-nodes $box --snapshot-name clean
 	if [ $? == 0 ]; then
 		export already_running="ok"
@@ -69,6 +77,9 @@ cd $work_dir
 ~/build-scripts/build.sh
 res=$?
 cd ~/mdbci/$name
+if [ "$try_alrady_running" == "yes" ] ; then
+	rm $snapshot_lock_file
+fi
 if [[ "$do_not_destroy_vm" != "yes" && "$try_already_running" != "yes" ]] ; then
 	vagrant destroy -f
 	cd ..
