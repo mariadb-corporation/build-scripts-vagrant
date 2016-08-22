@@ -15,9 +15,16 @@ export orig_image=$image
 echo $sshuser
 echo $platform
 echo $platform_version
-export vm_setup_script="$platform"_"$platform_version".sh
-scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
-ssh $sshopt "sudo ./$vm_setup_script"
+
+if [ "$already_running" != "ok" ]; then
+	export vm_setup_script="$platform"_"$platform_version".sh
+	scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
+	ssh $sshopt "sudo ./$vm_setup_script"
+	dir1=`pwd`
+	cd ~/mdbci
+	./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
+	cd $dir1
+fi
 
 ssh $sshopt "sudo rm -rf $work_dir"
 echo "copying stuff to $image machine"

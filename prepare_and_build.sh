@@ -7,42 +7,53 @@ export target=`echo $target | sed "s/ //g"`
 
 cd ~/mdbci
 
-provider=`./mdbci show provider $box --silent 2> /dev/null`
-name="$box-$JOB_NAME-$BUILD_NUMBER"
-name=`echo $name | sed "s|/|-|g"`
+export provider=`./mdbci show provider $box --silent 2> /dev/null`
+export name="$box-$JOB_NAME-$BUILD_NUMBER"
+export name=`echo $name | sed "s|/|-|g"`
 
 export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
 export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
 
-cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
-
-sed -i "s/###box###/$box/g" ~/mdbci/$name.json
-
-while [ -f ~/vagrant_lock ]
-do
-	sleep 5
-done
-touch ~/vagrant_lock
-echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
-
-# destroying existing box
-if [ -d "$name" ]; then
-	cd $name
-	vagrant destroy -f
-	cd ..
+if [ "$try_already_running" == "yes" ]; then
+	export name=$box
+	./mdbci snapshot revert --path-to-nodes $box --snapshot-name clean
+	if [ $? == 0 ]; then
+		export already_running="ok"
+	fi
 fi
 
-# starting VM for build
-./mdbci --override --template $name.json generate $name
-./mdbci up --attempts=1 $name
-if [ $? != 0 ] ; then
-	echo "Error starting VM"
-	vagrant destroy -f
-	rm ~/vagrant_lock
-	exit 1
+if [ "$already_running" != "ok" ]; then
+
+	cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
+
+	sed -i "s/###box###/$box/g" ~/mdbci/$name.json
+
+	while [ -f ~/vagrant_lock ]
+	do
+		sleep 5
+	done
+	touch ~/vagrant_lock
+	echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
+
+	# destroying existing box
+	if [ -d "$name" ]; then
+		cd $name
+		vagrant destroy -f
+		cd ..
+	fi
+
+	# starting VM for build
+	./mdbci --override --template $name.json generate $name
+	./mdbci up --attempts=1 $name
+	if [ $? != 0 ] ; then
+		echo "Error starting VM"
+		vagrant destroy -f
+		rm ~/vagrant_lock
+		exit 1
+	fi
+	cp  ~/build-scripts/team_keys .
+	./mdbci public_keys --key team_keys --silent $name
 fi
-cp  ~/build-scripts/team_keys .
-./mdbci public_keys --key team_keys --silent $name
 export sshuser=`./mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
 
 # get VM info
@@ -58,7 +69,7 @@ cd $work_dir
 ~/build-scripts/build.sh
 res=$?
 cd ~/mdbci/$name
-if [ "x$do_not_destroy_vm" != "xyes" ] ; then
+if [[ "$do_not_destroy_vm" != "yes" && "$try_already_running" != "yes" ]] ; then
 	vagrant destroy -f
 	cd ..
 	rm -rf $name
