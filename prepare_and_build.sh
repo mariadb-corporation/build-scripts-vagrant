@@ -77,7 +77,7 @@ cd $work_dir
 ~/build-scripts/build.sh
 res=$?
 cd ~/mdbci/$name
-if [ "$try_alrady_running" == "yes" ] ; then
+if [ "$try_already_running" == "yes" ] ; then
 	rm $snapshot_lock_file
 fi
 if [[ "$do_not_destroy_vm" != "yes" && "$try_already_running" != "yes" ]] ; then
