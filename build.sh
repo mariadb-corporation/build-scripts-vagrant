@@ -65,7 +65,8 @@ if [ $? -eq 0 ] ; then
 #        exit 1
 fi
 export repo_name=$target
-export path_prefix="$HOME/repository/$repo_name/mariadb-maxscale/"
+export repo_path=${repo_path:-$HOME/repository}
+export path_prefix="$repo_path/$repo_name/mariadb-maxscale/"
 
 ~/build-scripts/copy_repos/copy_repos.sh
 
