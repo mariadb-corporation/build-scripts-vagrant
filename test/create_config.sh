@@ -22,15 +22,21 @@ if [ "$box" == "predefined_template" ] ; then
 else
 	provider=`./mdbci show provider $box --silent 2> /dev/null`
 #	set -x
+	template_raw="~/build-scripts/test/debugtemplate.$provider.json"
 	if [ "$debug_mode" != "debug" ] ; then
 		if [ "x$big" != "xyes" ] ; then
-			cp ~/build-scripts/test/template.$provider.json ~/mdbci/$name.json
+			if [ -n "$machines_count" ] ; then
+				# If machines_count is not empty means generate special performance config
+				template_raw=`~/build-scripts/test/generate_variable_machine_count_conf.sh $machines_count ~/build-scripts/test/template_performance.$provider.json`
+			else
+				template_raw=~/build-scripts/test/template.$provider.json
+			fi
 		else
-        	        cp ~/build-scripts/test/template_big.$provider.json ~/mdbci/$name.json
+        	        template_raw=~/build-scripts/test/template_big.$provider.json
 		fi
-	else
-        	cp ~/build-scripts/test/debugtemplate.$provider.json ~/mdbci/$name.json
 	fi
+
+       	cp $template_raw ~/mdbci/$name.json
 fi
 #set +x
 export galera_version=10.0
