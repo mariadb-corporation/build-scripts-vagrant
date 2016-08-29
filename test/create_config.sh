@@ -35,8 +35,7 @@ else
         	        template_raw=~/build-scripts/test/template_big.$provider.json
 		fi
 	fi
-
-       	cp $template_raw ~/mdbci/$name.json
+	cp $template_raw ~/mdbci/$name.json
 fi
 #set +x
 export galera_version=10.0
