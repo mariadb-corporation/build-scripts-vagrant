@@ -1,0 +1,12 @@
+  "node_###N###" :
+  {
+        "hostname" : "node###N###",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+	"product" : {
+      		"name": "###product###",
+		"version": "###version###",
+                "cnf_template" : "###server.cnf###",
+                "cnf_template_path": "###server.cnf_path###"
+	}
+  },
