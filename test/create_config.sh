@@ -26,8 +26,7 @@ else
 	if [ "$debug_mode" != "debug" ] ; then
 		if [ "x$big" != "xyes" ] ; then
 			if [ -n "$machines_count" ] ; then
-				# If machines_count is not empty means generate special performance config
-				template_raw=`~/build-scripts/test/generate_variable_machine_count_conf.sh $machines_count ~/build-scripts/test/template_performance.$provider.json`
+				template_raw=`~/build-scripts/test/generate_variable_machine_count_conf.sh $machines_count ~/build-scripts/test/template_performance.$provider.json ~/build-scripts/test/template_performance_node.$provider.json ~/build-scripts/test-setup-scripts/cnf_perf `
 			else
 				template_raw=~/build-scripts/test/template.$provider.json
 			fi
