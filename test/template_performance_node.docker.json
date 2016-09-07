@@ -1,0 +1,12 @@
+  "node_###N###" :
+  {
+        "hostname" : "node###N###",
+        "box" : "centos_7_docker",
+        "memory_size" : "1024",
+	"product" : {
+      		"name": "###product###",
+		"version": "###version###",
+                "cnf_template" : "###server.cnf###",
+                "cnf_template_path": "###server.cnf_path###"
+	}
+  },
