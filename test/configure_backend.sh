@@ -1,5 +1,5 @@
 . ~/build-scripts/test/set_env_vagrant.sh $name
-cd $name
+cd ~/mdbci/$name
 ~/build-scripts/test-setup-scripts/setup_repl.sh
 ~/build-scripts/test-setup-scripts/galera/setup_galera.sh
 
