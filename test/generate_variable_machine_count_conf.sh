@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 5 ]; then
 	echo "Illegal number of parameters"
-	echo "Usage: ./test/generate_variable_machine_count_conf.sh machines_count config_template_raw server_cnf_path node_template server_cnf_template"
+	echo "Usage: ./test/generate_variable_machine_count_conf.sh machines_count config_template_raw node_template server_cnf_path server_cnf_template"
 	exit 1
 fi
 
