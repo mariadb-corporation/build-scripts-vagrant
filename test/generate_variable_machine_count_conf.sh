@@ -8,8 +8,8 @@ fi
 
 machines_count=$1
 template_raw=${2}
-server_cnf_path=${3}
-node_template=${4}
+node_template=${3}
+server_cnf_path=${4}
 server_cnf_template=${5}
 
 
