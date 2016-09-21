@@ -103,8 +103,18 @@ export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname 
 make package
 res=$?
 if [ $res != 0 ] ; then
+        echo "Make package failed"
         exit $res
 fi
+
+sudo rm ../CMakeCache.txt
+sudo rm CMakeCache.txt
+
+echo "Building tarball..."
+cmake .. $cmake_flags -DTARBALL=Y 
+sudo make package
+
+
 cp _CPack_Packages/Linux/DEB/*.deb ../
 
 rm ../CMakeCache.txt

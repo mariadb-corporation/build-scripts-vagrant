@@ -18,10 +18,20 @@ if [ $? == 0 ] ; then
   export platform_family="debian"
 fi
 
-echo "target $target"
+echo "target: $target"
+echo "value:  $value"
+export target=`echo $target | sed "s/?//g"
+export value=`echo $value | sed "s/?//g"`
+echo "target: $target"
+echo "value:  $value"
 
 if [ "$source" == "TAG" ] ; then
 	git reset --hard $value
+	if [ $? -ne 0 ] ; then
+                echo "Error reset to tag"
+                exit 12
+        fi
+
 fi
 
 if [ "$source" == "BRANCH" ] ; then

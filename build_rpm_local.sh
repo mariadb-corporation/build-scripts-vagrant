@@ -162,14 +162,40 @@ fi
 sudo make package
 res=$?
 if [ $res != 0 ] ; then
+	echo "Make package failed"
 	exit $res
 fi
-cd ..
-cp _build/*.rpm .
-cp _build/*.gz .
 
 sudo rm ../CMakeCache.txt
 sudo rm CMakeCache.txt
+
+echo "Building tarball..."
+cmake .. $cmake_flags -DTARBALL=Y
+sudo make package
+
+# manual tarball build
+#
+#cmake ..\
+#      -DCMAKE_INSTALL_PREFIX=/usr/local/maxscale\
+#
+#      -DMAXSCALE_VARDIR=/usr/local/masxcale/var\
+#
+#      -DMAXSCALE_CONFDIR=/usr/local/maxscale/etc\
+#make
+#sudo make install
+#w_dir=$PWD
+#cd /usr/local
+#sudo mv maxscale maxscale-2.0.0
+#sudo tar -czvf maxscale-2.0.0.tar.gz maxscale-2.0.0
+#cd $w_dir
+
+cd ..
+cp _build/*.rpm .
+cp _build/*.gz .
+#cp /usr/local/maxscale-2.0.0.tar.gz maxscale-2.0.0-$platform.$platform_version.tar.gz
+
+#sudo rm ../CMakeCache.txt
+#sudo rm CMakeCache.txt
 if [ "$build_experimental" == "yes" ] ; then
         sudo rm -rf _build
         mkdir _build
