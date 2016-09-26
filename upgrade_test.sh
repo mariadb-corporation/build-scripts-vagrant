@@ -71,8 +71,39 @@ cd ~/mdbci
 ./mdbci setup_repo --product maxscale --repo-dir $work_dir/repo.d $name/maxscale
 ./mdbci install_product --product maxscale $name/maxscale
 
-
 res=$?
+
+I# get VM info
+export sshuser=`./mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
+export IP=`./mdbci show network $name/maxscale --silent 2> /dev/null`
+export sshkey=`./mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
+export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
+export sshopt="$scpopt $sshuser@$IP"
+
+scp $scpopt ~/build-scripts/maxscale.cnf.minimum $sshuser@$IP:~/
+
+ssh $sshopt 'sudo cp maxscale.cnf.minimum /etc/maxscale.cnf'
+ssh $sshopt 'sudo service maxscale start'
+#ssh $sshopt 'sudo /etc/init.d/maxscale start'
+
+
+ssh $sshopt 'sudo maxadmin show services'
+if [ $? != 0 ] ; then
+	res=1
+fi
+maxadmin_out=Â`ssh $sshopt 'sudo maxadmin show services'`
+echo $maxadmin_out | grep "CLI"
+if [ $? != 0 ] ; then
+        res=1
+fi
+echo $maxadmin_out | grep "Started"
+if [ $? != 0 ] ; then
+        res=1
+fi
+
+
+
+
 cd ~/mdbci/$name
 if [ "x$do_not_destroy_vm" != "xyes" ] ; then
 	vagrant destroy -f
