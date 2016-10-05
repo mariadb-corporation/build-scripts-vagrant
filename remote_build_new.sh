@@ -38,7 +38,7 @@ fi
 
 scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
 
-if [ "$Coverity" == "yes" ] ; then
+if [ "$coverity" == "yes" ] ; then
 	echo "Copying Coverity tools to VM"
         scp $scpopt -r  ~/build-scripts/coverity $sshuser@$IP:$work_dir
 fi
@@ -73,7 +73,7 @@ if [ "$no_repo" != "yes" ] ; then
 	scp $scpopt $sshuser@$IP:$work_dir/$tars $pre_repo_dir/$target/$image
 fi
 
-if [ "$Coverity" == "yes" ] ; then
+if [ "$coverity" == "yes" ] ; then
   scp $scpopt $sshuser@$IP:$work_dir/_build/maxscale.tgz .
 
 curl --form token=DayIHFlOnCrr6Iizd98jVQ \
