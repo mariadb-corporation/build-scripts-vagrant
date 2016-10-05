@@ -57,7 +57,7 @@ then
 
      mkdir -p jansson/build
      pushd jansson/build
-     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DJANSSON_INSTALL_LIB_DIR=/usr/lib64
+     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC
      make
      sudo make install
      popd
