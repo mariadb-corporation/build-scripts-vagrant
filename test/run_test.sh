@@ -4,6 +4,10 @@
 ulimit -n
 rm -rf LOGS
 
+export target=`echo $target | sed "s/?//g"`
+export value=`echo $value | sed "s/?//g"`
+
+
 . ~/build-scripts/test/configure_log_dir.sh
 
 echo $1
