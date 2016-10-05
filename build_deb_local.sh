@@ -84,6 +84,12 @@ if [ "$use_mariadbd" == "yes" ] ; then
 	cmake_flags +=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/"
 fi
 
+# Install Lua packages
+if [ "$build_experimental" ]
+then
+    sudo apt-get -y install liblua5.1 liblua5.1-dev
+fi
+
 mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build

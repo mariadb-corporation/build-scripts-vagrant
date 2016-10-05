@@ -140,6 +140,12 @@ then
     popd
 fi
 
+# Install Lua packages
+if [ "$build_experimental" ]
+then
+    sudo yum -y install lua lua-devel
+fi
+
 mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
