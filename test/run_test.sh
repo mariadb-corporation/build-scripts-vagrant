@@ -4,13 +4,9 @@
 ulimit -n
 rm -rf LOGS
 
-echo $target
-echo $name
-
 export target=`echo $target | sed "s/?//g"`
+export name=`echo $name | sed "s/?//g"`
 export value=`echo $value | sed "s/?//g"`
-
-echo $target
 
 . ~/build-scripts/test/configure_log_dir.sh
 
@@ -26,7 +22,6 @@ export repo_dir=$dir/repo.d/
 
 ~/build-scripts/test/create_config.sh
 
-echo $target
 
 if [ $? == 0 ] ; then
 
