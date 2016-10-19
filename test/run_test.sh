@@ -25,10 +25,11 @@ export dir=`pwd`
 export repo_dir=$dir/repo.d/
 
 ~/build-scripts/test/create_config.sh
+res=$?
 
 echo $target
 
-if [ $? == 0 ] ; then
+if [ $res == 0 ] ; then
 
     . ~/build-scripts/test/configure_backend.sh
     if [ x"$named_test" == "x" ] ; then
@@ -50,10 +51,11 @@ if [ $? == 0 ] ; then
     rsync -a LOGS $logs_publish_dir
     chmod a+r $logs_publish_dir/*
 else
+  echo "Failed to create VMs, exiting"
   vagrant destroy -f
   rm ~/vagrant_lock
   exit 1
-fi  
+fi
 
 cd ~/mdbci/$name
 if [ "$do_not_destroy_vm" != "yes" ] ; then
