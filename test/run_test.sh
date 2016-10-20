@@ -30,19 +30,24 @@ res=$?
 echo $target
 
 if [ $res == 0 ] ; then
-
     . ~/build-scripts/test/configure_backend.sh
-    if [ x"$named_test" == "x" ] ; then
-    set -x
-    ./check_backend
-    if [ $? != 0 ]; then
-	echo "Backend broken!"
-	vagrant destroy -f
-	rm ~/vagrant_lock
-	exit 1
+    if [ "$debug_mode" == "debug" ] ; then
+	exit 0
     fi
-    ctest -VV -D Nightly $test_set
-    set +x
+    if [ x"$named_test" == "x" ] ; then
+        set -x
+        ./check_backend
+        if [ $? != 0 ]; then
+	    echo "Backend broken!"
+            if [ "$do_not_destroy_vm" != "yes" ] ; then
+                cd ~/mdbci/$name
+	        vagrant destroy -f
+            fi
+	    rm ~/vagrant_lock
+	    exit 1
+        fi
+        ctest -VV -D Nightly $test_set
+       set +x
     else
 	./$named_test
     fi
@@ -52,7 +57,10 @@ if [ $res == 0 ] ; then
     chmod a+r $logs_publish_dir/*
 else
   echo "Failed to create VMs, exiting"
-  vagrant destroy -f
+  if [ "$do_not_destroy_vm" != "yes" ] ; then
+      cd ~/mdbci/$name
+      vagrant destroy -f
+  fi
   rm ~/vagrant_lock
   exit 1
 fi
