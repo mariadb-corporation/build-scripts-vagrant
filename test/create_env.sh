@@ -4,6 +4,10 @@ dir=`pwd`
 
 export do_not_destroy_vm="yes"
 ~/build-scripts/test/run_test.sh debug
+if [ $? != 0 ] ; then
+	echo "run_test.sh exited with error, exiting"
+	exit 1
+fi
 
 cd ~/mdbci
 # get VM info
