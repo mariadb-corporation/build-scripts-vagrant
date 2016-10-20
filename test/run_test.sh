@@ -47,7 +47,7 @@ if [ $res == 0 ] ; then
 	    exit 1
         fi
         ctest -VV -D Nightly $test_set
-       set +x
+        set +x
     else
 	./$named_test
     fi
@@ -68,4 +68,5 @@ fi
 cd ~/mdbci/$name
 if [ "$do_not_destroy_vm" != "yes" ] ; then
 	vagrant destroy -f
+        rm ~/vagrant_lock
 fi
