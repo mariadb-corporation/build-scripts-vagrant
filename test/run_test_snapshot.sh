@@ -41,6 +41,8 @@ set -x
 		echo "Error creating configuration"
 		exit 1
 	fi 
+        touch $snapshot_lock_file
+        echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
         . ~/build-scripts/test/configure_backend.sh
         export name=$name_save
 	cd ~/mdbci
