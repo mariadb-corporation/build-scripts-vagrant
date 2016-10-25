@@ -107,8 +107,8 @@ cd ../../..
 if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
 then
     # SQLite3
-    sudo yum install -y sqlite sqlite-devel
-    sudo zypper install -y sqlite3 sqlite3-devel
+    sudo yum install -y sqlite sqlite-devel pkgconfig
+    sudo zypper install -y sqlite3 sqlite3-devel pkg-config
 
     # Jansson
     git clone https://github.com/akheron/jansson.git
@@ -144,6 +144,7 @@ fi
 if [ "$build_experimental" ]
 then
     sudo yum -y install lua lua-devel
+    sudo zypper -y install lua lua-devel
 fi
 
 mkdir _build
