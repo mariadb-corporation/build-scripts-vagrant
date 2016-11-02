@@ -5,6 +5,7 @@ set -x
 export box="centos_7_libvirt"
 export product="mariadb"
 export version="10.0"
+export config_name="$box-$product-$version-permanent"
 
 export dir=`pwd`
 
@@ -13,7 +14,7 @@ export dir=`pwd`
 cd ~/mdbci 
 
 # Setting snapshot_lock
-export snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
+export snapshot_lock_file=$HOME/mdbci/$config_name/snapshot_lock
 while [ -f $snapshot_lock_file ]
 do
 	echo "snapshot is locked, waiting ..."
@@ -24,27 +25,35 @@ echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
 
 export repo_dir=$dir/repo.d/
 
-./mdbci snapshot revert --path-to-nodes $name --snapshot-name $snapshot_name
+./mdbci snapshot revert --path-to-nodes $config_name --snapshot-name $snapshot_name
 
 if [ $? != 0 ]; then
+        mkdir -p $HOME/mdbci/$config_name
 	touch $snapshot_lock_file
 	echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
 
 	cd $dir
+set -x
+	export name_save=$name
+	export name=$config_name
 	~/build-scripts/test/create_config.sh
 	if [ $? != 0 ]; then
 		echo "Error creating configuration"
 		exit 1
 	fi 
+        touch $snapshot_lock_file
+        echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
         . ~/build-scripts/test/configure_backend.sh
+        export name=$name_save
 	cd ~/mdbci
 	echo "Creating snapshot from new config"
-	./mdbci snapshot take --path-to-nodes $name --snapshot-name $snapshot_name
+set -x
+	./mdbci snapshot take --path-to-nodes $config_name --snapshot-name $snapshot_name
 fi
 
 cd $dir
 
-. ~/build-scripts/test/set_env_vagrant.sh "$name"
+. ~/build-scripts/test/set_env_vagrant.sh "$config_name"
 
 ~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 
@@ -55,9 +64,9 @@ fi
 
 cd ~/mdbci
 
-./mdbci sudo --command 'yum remove maxscale -y' $name/maxscale
+./mdbci sudo --command 'yum remove maxscale -y' $config_name/maxscale
 
-./mdbci install_product --product maxscale $name/maxscale --repo-dir $repo_dir
+./mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
 
 
 cd $dir
