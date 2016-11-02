@@ -65,9 +65,13 @@ fi
 cd ~/mdbci
 
 ./mdbci sudo --command 'yum remove maxscale -y' $config_name/maxscale
+./mdbci sudo --command 'yum clean all' $config_name/maxscale
 
 ./mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
-
+if [ $? != 0 } ; then
+	echo "Error installing Maxscale"
+	exit 1
+fi
 
 cd $dir
 cmake .
