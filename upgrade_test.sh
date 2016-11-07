@@ -73,7 +73,7 @@ cd ~/mdbci
 
 res=$?
 
-I# get VM info
+# get VM info
 export sshuser=`./mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
 export IP=`./mdbci show network $name/maxscale --silent 2> /dev/null`
 export sshkey=`./mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
