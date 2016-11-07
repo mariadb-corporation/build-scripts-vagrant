@@ -82,7 +82,12 @@ export sshopt="$scpopt $sshuser@$IP"
 
 scp $scpopt ~/build-scripts/maxscale.cnf.minimum $sshuser@$IP:~/
 
-ssh $sshopt 'sudo cp maxscale.cnf.minimum /etc/maxscale.cnf'
+
+if [ x"$cnf_fle" == x ] ; then
+	export cnf_file="maxscale.cnf.minimum"
+fi
+
+ssh $sshopt "\'sudo cp $cnf_file /etc/maxscale.cnf\'"
 ssh $sshopt 'sudo service maxscale start'
 #ssh $sshopt 'sudo /etc/init.d/maxscale start'
 
@@ -100,8 +105,6 @@ echo $maxadmin_out | grep "Started"
 if [ $? != 0 ] ; then
         res=1
 fi
-
-
 
 
 cd ~/mdbci/$name
