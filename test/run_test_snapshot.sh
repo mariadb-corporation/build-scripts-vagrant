@@ -28,6 +28,11 @@ export repo_dir=$dir/repo.d/
 ./mdbci snapshot revert --path-to-nodes $config_name --snapshot-name $snapshot_name
 
 if [ $? != 0 ]; then
+	cd $config_name
+	vagrant destroy -f
+	cd ../scripts/
+	./clean_vms.sh $config_name
+	cd ..
         mkdir -p $HOME/mdbci/$config_name
 	touch $snapshot_lock_file
 	echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
