@@ -80,23 +80,23 @@ export sshkey=`./mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed '
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 
-scp $scpopt ~/build-scripts/maxscale.cnf.minimum $sshuser@$IP:~/
-
-
-if [ x"$cnf_fle" == x ] ; then
-	export cnf_file="maxscale.cnf.minimum"
+if [ x"$cnf_file" == x ] ; then
+        export cnf_file="maxscale.cnf.minimum"
 fi
 
-ssh $sshopt "\'sudo cp $cnf_file /etc/maxscale.cnf\'"
+
+scp $scpopt ~/build-scripts/$cnf_file $sshuser@$IP:~/
+
+ssh $sshopt "sudo cp $cnf_file /etc/maxscale.cnf"
 ssh $sshopt 'sudo service maxscale start'
 #ssh $sshopt 'sudo /etc/init.d/maxscale start'
 
 
-ssh $sshopt 'sudo maxadmin show services'
+ssh $sshopt $maxadmin_command
 if [ $? != 0 ] ; then
 	res=1
 fi
-maxadmin_out=Â`ssh $sshopt 'sudo maxadmin show services'`
+maxadmin_out=Â`ssh $sshopt $maxadmin_command`
 echo $maxadmin_out | grep "CLI"
 if [ $? != 0 ] ; then
         res=1
