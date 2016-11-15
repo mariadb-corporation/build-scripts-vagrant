@@ -87,10 +87,23 @@ fi
 
 scp $scpopt ~/build-scripts/$cnf_file $sshuser@$IP:~/
 
-ssh $sshopt "sudo cp $cnf_file /etc/maxscale.cnf"
-ssh $sshopt 'sudo service maxscale start'
-#ssh $sshopt 'sudo /etc/init.d/maxscale start'
 
+#maxscale_exe=`./mdbci ssh --command 'ls /etc/init.d/maxscale 2> /dev/null | tr -cd "[:print:]"' $name/maxscale  --silent 2> /dev/null`
+#echo $maxscale_exe | grep -i "maxscale"
+./mdbci ssh --command 'service --help' $name/maxscale
+if [ $? == 0 ] ; then
+	maxscale_start_cmd="sudo service maxscale start"
+else
+        ./mdbci ssh --command 'echo \"/usr/bin/maxscale 2> /dev/null &\" > maxscale_start.sh; echo \"disown\" >> maxscale_start.sh; chmod a+x maxscale_start.sh' $name/maxscale --silent
+	maxscale_start_cmd="sudo ./maxscale_start.sh 2> /dev/null &"
+fi
+
+
+
+ssh $sshopt "sudo cp $cnf_file /etc/maxscale.cnf"
+ssh $sshopt "$maxscale_start_cmd" &
+#ssh $sshopt 'sudo /etc/init.d/maxscale start'
+sleep 10
 
 ssh $sshopt $maxadmin_command
 if [ $? != 0 ] ; then
