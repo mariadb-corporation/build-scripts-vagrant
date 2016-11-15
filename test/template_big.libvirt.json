@@ -75,7 +75,7 @@
         "product" : {
                 "name": "###product###",
                 "version": "###version###",
-                "cnf_template" : "server4.cnf",
+                "cnf_template" : "server6.cnf",
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
   },
