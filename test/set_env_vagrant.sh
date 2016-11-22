@@ -96,5 +96,10 @@ export maxscale_access_sudo="sudo "
 export sysbench_dir="$HOME/sysbench_deb7/sysbench/"
 
 export ssl=true
+
+export make_snapshot_command="$HOME/build-scripts/test/make_snapshot.sh $config_name"
+export make_snapshot_command="$HOME/build-scripts/test/revert_snapshot.sh $config_name"
+export use_snapshots=yes
+
 cd $curr_dir
 set +x
