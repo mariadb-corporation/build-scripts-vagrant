@@ -4,6 +4,10 @@ set -x
 
 export work_dir=`pwd`
 
+export old_target=`echo $old_target | sed "s/?//g"`
+export new_target=`echo $new_target | sed "s/?//g"`
+
+
 cd ~/mdbci
 
 provider=`./mdbci show provider $box --silent 2> /dev/null`
