@@ -11,7 +11,8 @@ export ci_url="http://maxscale-jenkins.mariadb.com/ci-repository"
 oldpwd=`pwd`
 echo "Going to switch mdbci branch: [$MDBCI_BRANCH]"
 cd ~/mdbci
-branch_to_switch=$(echo $MDBCI_BRANCH | awk -F "/" '{print $3}')
+#branch_to_switch=$(echo $MDBCI_BRANCH | awk -F "/" '{print $3}')
+branch_to_switch=$MDBCI_BRANCH
 echo "Current mdbci branch  "
 git fetch -a
 git branch | grep '*'
