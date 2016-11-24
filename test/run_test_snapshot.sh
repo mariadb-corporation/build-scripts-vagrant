@@ -2,9 +2,9 @@
 
 set -x
 
-export box="centos_7_libvirt"
-export product="mariadb"
-export version="10.0"
+export box=$box
+export product=$product
+export version=$version
 
 export dir=`pwd`
 
