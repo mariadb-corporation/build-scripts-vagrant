@@ -20,10 +20,6 @@ if [ "$already_running" != "ok" ]; then
 	export vm_setup_script="$platform"_"$platform_version".sh
 	scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
 	ssh $sshopt "sudo ./$vm_setup_script"
-	dir1=`pwd`
-	cd ~/mdbci
-	./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
-	cd $dir1
 fi
 
 ssh $sshopt "sudo rm -rf $work_dir"
@@ -38,7 +34,7 @@ fi
 
 scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
 
-if [ "$Coverity" == "yes" ] ; then
+if [ "$coverity" == "yes" ] ; then
 	echo "Copying Coverity tools to VM"
         scp $scpopt -r  ~/build-scripts/coverity $sshuser@$IP:$work_dir
 fi
@@ -52,16 +48,28 @@ fi
 
 if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local.sh"
+	install_script="install_rpm_local.sh"
 	files="*.rpm"
 	tars="maxscale*.tar.gz"
 else
 	build_script="build_deb_local.sh"
+        install_script="install_deb_local.sh"
 	files="../*.deb"
 	tars="maxscale*.tar.gz"
 fi
 
+if [ "$already_running" != "ok" ] ; then
+	echo "install packages on $image"
+	ssh $sshopt "export alreay_running=$alrady_running; export use_mariadbd=\"$use_mariadbd\"; export build_experimental=\"$build_experimental\"; export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$install_script"
+        dir1=`pwd`
+        cd ~/mdbci
+        ./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
+        cd $dir1
+else
+	echo "already running VM, not installing deps"
+fi
 echo "run build on $image"
-ssh $sshopt "export use_mariadbd=\"$use_mariadbd\"; export build_experimental=\"$build_experimental\"; export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$build_script"
+ssh $sshopt "export alreay_running=$alrady_running; export use_mariadbd=\"$use_mariadbd\"; export build_experimental=\"$build_experimental\"; export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$build_script"
 if [ $? -ne 0 ] ; then
         echo "Error build on $image"
         exit 4
@@ -73,7 +81,7 @@ if [ "$no_repo" != "yes" ] ; then
 	scp $scpopt $sshuser@$IP:$work_dir/$tars $pre_repo_dir/$target/$image
 fi
 
-if [ "$Coverity" == "yes" ] ; then
+if [ "$coverity" == "yes" ] ; then
   scp $scpopt $sshuser@$IP:$work_dir/_build/maxscale.tgz .
 
 curl --form token=DayIHFlOnCrr6Iizd98jVQ \

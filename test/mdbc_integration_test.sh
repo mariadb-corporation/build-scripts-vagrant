@@ -2,9 +2,7 @@
 
 export target="release-1.3.0-debug"
 export smoke="yes"
-export ci_release="ci"
 #export test_set="15,16"
-export maxscale_restart="yes"
 export name="mdbci-test-$box-$product-$version"
 export ci_url="http://maxscale-jenkins.mariadb.com/ci-repository"
 
