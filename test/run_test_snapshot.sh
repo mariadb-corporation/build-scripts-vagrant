@@ -14,7 +14,7 @@ export dir=`pwd`
 cd ~/mdbci 
 
 # Setting snapshot_lock
-export snapshot_lock_file=$HOME/mdbci/$config_name/snapshot_lock
+export snapshot_lock_file=$HOME/mdbci/$config_name_snapshot_lock
 while [ -f $snapshot_lock_file ]
 do
 	echo "snapshot is locked, waiting ..."

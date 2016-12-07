@@ -16,7 +16,7 @@ export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_
 
 if [ "$try_already_running" == "yes" ]; then
 	export name=$box
-	export snapshot_lock_file=$HOME/mdbci/$name/snapshot_lock
+	export snapshot_lock_file=$HOME/mdbci/$name_snapshot_lock
 	while [ -f $snapshot_lock_file ]
 	do
         	echo "snapshot is locked, waiting ..."
