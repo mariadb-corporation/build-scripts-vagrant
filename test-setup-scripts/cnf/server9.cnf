@@ -11,13 +11,12 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-#log-basename=mar
 log-bin=mar-bin
-#binlog-format=row
 binlog-format=STATEMENT
 server_id=9
-#slave_parallel_threads=2
 user=mysql
+## x001
+slave-skip-errors=all
 
 # this is only for embedded server
 [embedded]

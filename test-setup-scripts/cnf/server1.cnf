@@ -11,18 +11,15 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-#log-basename=mar
 log-bin=mar-bin
-#binlog-format=row
-#binlog-format=STATEMENT
 binlog-format=row
 binlog_row_image=full
 server_id=1
-#slave_parallel_threads=2
 user=mysql
 ## x001
 max_long_data_size=1000000000
 innodb_log_file_size=2000000000
+slave-skip-errors=all
 
 # this is only for embedded server
 [embedded]
