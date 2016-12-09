@@ -60,5 +60,5 @@ ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user
 	sleep 15
         scp -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $scr_dir/create_*_user.sql $user@$IP://home/$user/
         ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysql < /home/$user/create_users.sql"
-        ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysqldump --all-databases --add-drop-database --flush-privileges > /var/lib/mysql_backup.sql"
+        ssh -i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$IP "sudo mysqldump --all-databases --add-drop-database --flush-privileges > /home/$user/mysql_backup.sql"
 done
