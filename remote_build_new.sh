@@ -4,6 +4,20 @@
 
 set -x
 
+# The name of the CMake binary tarball
+cmake_tarball="cmake-3.6.3-Linux-x86_64.tar.gz"
+cmake_tarball_path="~/binaries/$cmake_tarball"
+
+# URL where the tarball can be downloaded
+cmake_tarball_url="https://cmake.org/files/v3.6/cmake-3.6.3-Linux-x86_64.tar.gz"
+
+if [ ! -f $cmake_tarball_path ]
+then
+    # We don't have the required binary tarball, download it
+    wget "$cmake_tarball_url" --no-check-certificate
+    mv $cmake_tarball $cmake_tarball_path
+fi
+
 echo "target is $target"
 rm -rf $pre_repo_dir/$target/$image
 mkdir -p $pre_repo_dir/$target/SRC
@@ -17,9 +31,10 @@ echo $platform
 echo $platform_version
 
 if [ "$already_running" != "ok" ]; then
-	export vm_setup_script="$platform"_"$platform_version".sh
-	scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
-	ssh $sshopt "sudo ./$vm_setup_script"
+    export vm_setup_script="$platform"_"$platform_version".sh
+    scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
+    scp $scpopt $cmake_tarball_path $sshuser@$IP:./
+    ssh $sshopt "cmake_tarball=$cmake_tarball sudo ./$vm_setup_script"
 fi
 
 ssh $sshopt "sudo rm -rf $work_dir"
