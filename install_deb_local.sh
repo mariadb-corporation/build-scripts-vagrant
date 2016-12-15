@@ -42,41 +42,38 @@ git checkout v0.7.1
 cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N -DCMAKE_INSTALL_PREFIX=/usr
 sudo make install
 cd ../../
-# Check for Avro client library
-if [[ "$cmake_flags" =~ .*"BUILD_AVRO".* ]]
-then
-     # SQLite3
-     sudo apt-get install -y --force-yes libsqlite3-dev sqlite3
 
-     # Jansson
-     git clone https://github.com/akheron/jansson.git
-     if [ $? != 0 ] ; then
-         echo "Error cloning jansson"
-         exit 1
-     fi
+# SQLite3
+sudo apt-get install -y --force-yes libsqlite3-dev sqlite3
 
-     mkdir -p jansson/build
-     pushd jansson/build
-     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC
-     make
-     sudo make install
-     popd
- 
-     # Avro C API
-     wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
-     if [ $? != 0 ] ; then
-        echo "Error getting avro-c"
-        exit 1
-     fi
-
-     tar -axf avro-c-1.8.0.tar.gz
-     mkdir avro-c-1.8.0/build
-     pushd avro-c-1.8.0/build
-     cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
-     make
-     sudo make install
-     popd
+# Jansson
+git clone https://github.com/akheron/jansson.git
+if [ $? != 0 ] ; then
+    echo "Error cloning jansson"
+    exit 1
 fi
+
+mkdir -p jansson/build
+pushd jansson/build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC
+make
+sudo make install
+popd
+
+# Avro C API
+wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+if [ $? != 0 ] ; then
+    echo "Error getting avro-c"
+    exit 1
+fi
+
+tar -axf avro-c-1.8.0.tar.gz
+mkdir avro-c-1.8.0/build
+pushd avro-c-1.8.0/build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
+make
+sudo make install
+popd
 
 if [ "$use_mariadbd" == "yes" ] ; then
 	wget --retry-connrefused $mariadbd_link
