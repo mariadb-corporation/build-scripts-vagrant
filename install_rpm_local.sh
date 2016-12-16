@@ -91,7 +91,7 @@ cd ../../
 
 mkdir tcl
 cd tcl
-wget http://prdownloads.sourceforge.net/tcl/tcl8.6.5-src.tar.gz
+wget --no-check-certificate http://prdownloads.sourceforge.net/tcl/tcl8.6.5-src.tar.gz
 if [ $? != 0 ] ; then
         echo "Error getting tcl"
         exit 1
