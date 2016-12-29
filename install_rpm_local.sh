@@ -45,7 +45,7 @@ fi
 
 
 if [ $zy != 0 ] ; then
-  sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel cmake libgcc_s1 perl make libtool libopenssl-devel libaio libaio-devel 
+  sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl make libtool libopenssl-devel libaio libaio-devel 
   sudo zypper -n install flex
 #  sudo zypper -n install librabbitmq-devel
   sudo zypper -n install libcurl-devel

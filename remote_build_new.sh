@@ -18,7 +18,9 @@ echo $platform_version
 
 if [ "$already_running" != "ok" ]; then
 	export vm_setup_script="$platform"_"$platform_version".sh
-	scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
+#	scp $scpopt ~/build-scripts/vm_setup_scripts/$vm_setup_script $sshuser@$IP:./
+        scp $scpopt ~/build-scripts/vm_setup_scripts/* $sshuser@$IP:./
+
 	ssh $sshopt "sudo ./$vm_setup_script"
 fi
 
