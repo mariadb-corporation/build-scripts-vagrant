@@ -30,7 +30,7 @@ export repo_dir=$dir/repo.d/
 if [ $? != 0 ]; then
 	cd $config_name
 	vagrant destroy -f
-	cd ../scripts/
+	cd ~/mdbci/scripts/
 	./clean_vms.sh $config_name
 	cd ..
         mkdir -p $HOME/mdbci/$config_name
