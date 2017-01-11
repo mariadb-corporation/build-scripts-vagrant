@@ -48,8 +48,6 @@ if [ $res == 0 ] ; then
     fi
 
     ~/build-scripts/test/copy_logs.sh
-    rsync -a LOGS $logs_publish_dir
-    chmod a+r $logs_publish_dir/*
 else
   echo "Failed to create VMs, exiting"
   if [ "$do_not_destroy_vm" != "yes" ] ; then
