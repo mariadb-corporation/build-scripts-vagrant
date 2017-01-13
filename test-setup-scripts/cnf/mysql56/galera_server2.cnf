@@ -51,7 +51,8 @@ wsrep_cluster_name=skycluster
 # wsrep_cluster_address=gcomm://
 
 # Human-readable node name (non-unique). Hostname by default.
-wsrep_node_name=###NODE-NAME###
+#wsrep_node_name=###NODE-NAME###
+wsrep_node_name=galera001
 
 # INITIAL SETUP
 # Base replication <address|hostname>[:port] of the node.

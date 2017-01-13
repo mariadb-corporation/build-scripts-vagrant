@@ -62,4 +62,5 @@ cd ~/mdbci/$name
 if [ "$do_not_destroy_vm" != "yes" ] ; then
 	vagrant destroy -f
         rm ~/vagrant_lock
+	echo "clean  up done!"
 fi
