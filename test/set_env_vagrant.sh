@@ -82,8 +82,8 @@ do
 			eval 'export $stop_cmd_var="$mysql_exe stop "'
 		fi
 
-		eval 'export "$prefix"_"$num"_start_vm_command="\"cd $mdbci_dir/$config_name;vagrant up node_$num --provider=$provider; cd $curr_dir\""'
-		eval 'export "$prefix"_"$num"_kill_vm_command="\"cd $mdbci_dir/$config_name;vagrant halt node_$num --provider=$provider; cd $curr_dir\""'
+		eval 'export "$prefix"_"$num"_start_vm_command="cd $mdbci_dir/$config_name;vagrant up node_$num --provider=$provider; cd $curr_dir"'
+		eval 'export "$prefix"_"$num"_kill_vm_command="cd $mdbci_dir/$config_name;vagrant halt node_$num --provider=$provider; cd $curr_dir"'
 #		cd ..
 	done
 done
