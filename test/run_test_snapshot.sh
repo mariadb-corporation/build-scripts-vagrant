@@ -83,7 +83,7 @@ cmake .
 make
 
 ./check_backend --restart-galera
-ctest $test_set -VV
+ctest $test_set -VV -D Nightly
 
 ~/build-scripts/test/copy_logs.sh
 
