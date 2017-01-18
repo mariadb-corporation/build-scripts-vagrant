@@ -83,6 +83,14 @@ cmake .
 make
 
 ./check_backend --restart-galera
+
+if [ $? -ne 0 ]
+then
+    rm $snapshot_lock_file
+    echo "Failed to check backends"
+    exit 1
+fi
+
 ctest $test_set -VV -D Nightly
 
 ~/build-scripts/test/copy_logs.sh
