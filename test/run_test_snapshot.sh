@@ -79,7 +79,7 @@ if [ $? != 0 ] ; then
 fi
 
 cd $dir
-cmake .
+cmake . -DBUILDNAME=$JOB_NAME-$BUILD_NUMBER-$target
 make
 
 ./check_backend --restart-galera
