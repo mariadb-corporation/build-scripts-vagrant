@@ -72,6 +72,7 @@ cd ~/mdbci
 ./mdbci sudo --command 'yum remove maxscale -y' $config_name/maxscale
 ./mdbci sudo --command 'yum clean all' $config_name/maxscale
 
+./mdbci setup_repo --product maxscale $config_name/maxscale --repo-dir $repo_dir 
 ./mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
 if [ $? != 0 ] ; then
 	echo "Error installing Maxscale"
