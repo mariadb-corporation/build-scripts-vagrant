@@ -1,41 +1,49 @@
-#!/bin/bash 
+#!/bin/bash
 
-# do the real building work
-# this script is executed on build VM
+# Do the real building work. This script is executed on build VM and
+# requires a working installation of CMake.
 
 set -x
 
 cd $work_dir
 
-sudo yum install -y rpmdevtools git
-sudo yum install -y wget
-sudo yum install -y tcl
-sudo yum install -y libuuid-devel
-sudo yum install -y xz-devel
-sudo zypper -n install rpmdevtools
-sudo zypper -n install git
-sudo zypper -n install wget
-sudo zypper -n install tcl
-sudo zypper -n install libuuid-devel
-sudo zypper -n install xz-devel
+command -v yum
 
+if [ $? -ne 0 ]
+then
+  sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl \
+       make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
+       pcre-devel systemtap-sdt-devel rpmdevtools git wget tcl libuuid-devel \
+       xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel rpm-build
 
-#wget http://pkgs.repoforge.org/flex/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
+  cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
+
+  if [ $? -ne 0 ]
+  then
+      sudo zypper -n install libedit-devel
+  fi
+else
+  sudo yum clean all
+  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel \
+       libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel \
+       libedit-devel libcurl-devel curl-devel systemtap-sdt-devel rpm-sign \
+       gnupg pcre-devel flex rpmdevtools git wget tcl openssl libuuid-devel xz-devel \
+       sqlite sqlite-devel pkgconfig lua lua-devel rpm-build createrepo yum-utils
+
+  cat /etc/redhat-release | grep "release 5"
+  if [ $? -eq 0 ]
+  then
+      sudo yum remove -y libedit-devel libedit
+  fi
+fi
+
+# Flex
 wget http://maxscale-jenkins.mariadb.com/x/flex-2.5.35-0.8.el5.rfb.x86_64.rpm
-#sudo yum install -
-sudo yum install flex-2.5.35-0.8.el5.rfb.x86_64.rpm -y --nogpgcheck 
+sudo yum install flex-2.5.35-0.8.el5.rfb.x86_64.rpm -y --nogpgcheck
 rm flex-2.5.35-0.8.el5.rfb.x86_64*
 . ~/check_arch.sh
 
-yum --version
-if [ $? != 0 ] ; then
-	sudo zypper -n install rpm-build
-	zy=1
-else
-	sudo yum install -y rpm-build createrepo yum-utils
-	zy=0
-fi
-
+# Embedded MariaDB server
 if [ "$use_mariadbd" == "yes" ] ; then
 	rm $mariadbd_file
 	wget  --retry-connrefused $mariadbd_link
@@ -43,59 +51,34 @@ if [ "$use_mariadbd" == "yes" ] ; then
 	cmake_flags+=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/ "
 fi
 
-
-if [ $zy != 0 ] ; then
-  sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl make libtool libopenssl-devel libaio libaio-devel 
-  sudo zypper -n install flex
-#  sudo zypper -n install librabbitmq-devel
-  sudo zypper -n install libcurl-devel
-  sudo zypper -n install pcre-devel
-  cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
-  if [ $? != 0 ] ; then 
-    sudo zypper -n install libedit-devel
-  fi
-
-  sudo zypper -n install systemtap-sdt-devel
-
-else
-  sudo yum clean all 
-  sudo yum install -y --nogpgcheck gcc gcc-c++ ncurses-devel bison glibc-devel libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel
-  sudo yum install -y --nogpgcheck libedit-devel
-  sudo yum install -y --nogpgcheck libcurl-devel
-  sudo yum install -y --nogpgcheck curl-devel
-  sudo yum install -y --nogpgcheck systemtap-sdt-devel
-  sudo yum install -y --nogpgcheck rpm-sign
-  sudo yum install -y --nogpgcheck gnupg
-  sudo yum install -y --nogpgcheck pcre-devel
-  sudo yum install -y --nogpgcheck flex
-# sudo yum install -y libaio 
-
-  cat /etc/redhat-release | grep "release 5"
-  if [[ $? == 0 ]] ; then
-      sudo yum remove -y libedit-devel libedit
-  fi
-fi
-
+# RabbitMQ C client
 mkdir rabbit
 cd rabbit
 git clone https://github.com/alanxz/rabbitmq-c.git
-if [ $? != 0 ] ; then
-        echo "Error cloning rabbitmq-c"
-        exit 1
+
+if [ $? -ne 0 ]
+then
+    echo "Error cloning rabbitmq-c"
+    exit 1
 fi
+
 cd rabbitmq-c
 git checkout v0.7.1
 cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N  -DCMAKE_INSTALL_PREFIX=/usr
 sudo make install
 cd ../../
 
+# TCL
 mkdir tcl
 cd tcl
 wget --no-check-certificate http://prdownloads.sourceforge.net/tcl/tcl8.6.5-src.tar.gz
-if [ $? != 0 ] ; then
-        echo "Error getting tcl"
-        exit 1
+
+if [ $? -ne 0 ]
+then
+    echo "Error getting tcl"
+    exit 1
 fi
+
 tar xzvf tcl8.6.5-src.tar.gz
 cd tcl8.6.5/unix
 ./configure
@@ -103,13 +86,10 @@ sudo make install
 cd ../../..
 
 
-# SQLite3
-sudo yum install -y sqlite sqlite-devel pkgconfig
-sudo zypper install -y sqlite3 sqlite3-devel pkg-config
-
 # Jansson
 git clone https://github.com/akheron/jansson.git
-if [ $? != 0 ] ; then
+if [ $? != 0 ]
+then
     echo "Error cloning jansson"
     exit 1
 fi
@@ -123,7 +103,8 @@ popd
 
 # Avro C API
 wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
-if [ $? != 0 ] ; then
+if [ $? != 0 ]
+then
     echo "Error getting avro-c"
     exit 1
 fi
@@ -135,8 +116,3 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fP
 make
 sudo make install
 popd
-
-# Install Lua packages
-sudo yum -y install lua lua-devel
-sudo zypper -y install lua lua-devel
-
