@@ -67,7 +67,7 @@ export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$dist_sfx"
 mkdir -p $pre_repo_dir/$3/SRC
 echo $sshuser
 ~/build-scripts/remote_build_new.sh
-build_result=$?
+export build_result=$?
 
 shellcheck `find . | grep "\.sh"` | grep -i "POSIX sh"
 if [ $? -eq 0 ] ; then
