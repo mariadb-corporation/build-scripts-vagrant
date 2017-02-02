@@ -37,7 +37,7 @@ else
 	cp "$template_raw" "$HOME/mdbci/$name.json"
 fi
 #set +x
-export galera_version=10.0
+export galera_version=$version
 #echo $version | grep "^10."
 #if [ $? == 0 ] ; then
 #	export galera_version="10.0"

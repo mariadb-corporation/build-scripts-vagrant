@@ -13,9 +13,11 @@ if [ $? -ne 0 ]
 then
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl \
        make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
-       pcre-devel systemtap-sdt-devel rpmdevtools git wget tcl libuuid-devel \
-       xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel rpm-build
-
+       pcre-devel git wget tcl libuuid-devel \
+       xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel 
+  sudo zypper -n install systemtap-sdt-devel
+  sudo zypper -n install rpm-build
+# rpmdevtools
   cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
 
   if [ $? -ne 0 ]
