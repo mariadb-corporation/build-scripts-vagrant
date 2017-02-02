@@ -2,6 +2,10 @@
 
 set -x
 
+if [ $run_upgrade_test == "no" ] ; then
+	exit 0
+fi
+
 export work_dir=`pwd`
 
 export old_target=`echo $old_target | sed "s/?//g"`
