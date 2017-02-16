@@ -1,6 +1,6 @@
 #! /bin/bash
 
-$web_prefix=$(echo $path_prefix | sed 's|/home/vagrant/repository/||g')
+web_prefix=$(echo $path_prefix | sed 's|/home/vagrant/repository/||g')
 
 if [ "$image_type" == "RPM" ] ; then
         build_info_path="$web_prefix/$platform/$platform_version/$arch/build_info"

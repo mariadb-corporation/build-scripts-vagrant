@@ -11,7 +11,6 @@ if [ "$image_type" == "RPM" ] ; then
         ln -s $platform_version "$platform_version"Server
 
         echo "copying done"
-        ./generate_build_info_path.sh
 else
         arch=`ssh $sshopt "dpkg --print-architecture"`
         rm -rf $path_prefix/$platform_family/dists/$platform_version/main/binary-"$arch"
@@ -19,6 +18,6 @@ else
         mkdir -p $path_prefix/$platform_family/
         cp -r ~/repo/$repo_name/$box/* $path_prefix/$platform_family/
 	env > $path_prefix/$platform_family/dists/$platform_version/main/binary-"$arch"/build_info
-        ./generate_build_info_path.sh
 fi
 
+$HOME/build-scripts/copy_repos/generate_build_info_path.sh
