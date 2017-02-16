@@ -3,21 +3,23 @@
 # Do the real building work. This script is executed on build VM and
 # requires a working installation of CMake.
 
-set -x
-
 cd $work_dir
 
+# Check if CMake needs to be installed
+command -v cmake || install_cmake="cmake"
+
 command -v yum
+
+set -x
 
 if [ $? -ne 0 ]
 then
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl \
        make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
        pcre-devel git wget tcl libuuid-devel \
-       xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel 
-  sudo zypper -n install systemtap-sdt-devel
-  sudo zypper -n install rpm-build
-# rpmdevtools
+       xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel \
+       systemtap-sdt-devel rpm-build $install_cmake
+
   cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
 
   if [ $? -ne 0 ]
@@ -30,7 +32,7 @@ else
        libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel \
        libedit-devel libcurl-devel curl-devel systemtap-sdt-devel rpm-sign \
        gnupg pcre-devel flex rpmdevtools git wget tcl openssl libuuid-devel xz-devel \
-       sqlite sqlite-devel pkgconfig lua lua-devel rpm-build createrepo yum-utils
+       sqlite sqlite-devel pkgconfig lua lua-devel rpm-build createrepo yum-utils $install_cmake
 
   cat /etc/redhat-release | grep "release 5"
   if [ $? -eq 0 ]
