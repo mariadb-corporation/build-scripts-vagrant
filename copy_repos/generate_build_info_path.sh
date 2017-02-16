@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 web_prefix=$(echo $path_prefix | sed 's|/home/vagrant/repository/||g')
 
 if [ "$image_type" == "RPM" ] ; then
