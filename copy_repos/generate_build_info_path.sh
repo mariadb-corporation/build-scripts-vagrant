@@ -2,7 +2,7 @@
 
 set -x
 
-web_prefix=$(echo $path_prefix | sed 's|$HOME/repository/||g')
+web_prefix=$(echo $path_prefix | sed "s|$HOME/repository/||g")
 
 if [ "$image_type" == "RPM" ] ; then
         export build_info_path="$web_prefix/$platform/$platform_version/$arch/build_info"
