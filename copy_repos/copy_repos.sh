@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. $HOME/build-scripts/copy_repos/generate_build_info_path.sh
-
 if [ "$image_type" == "RPM" ] ; then
         export arch=`ssh $sshopt "arch"`
         . $HOME/build-scripts/copy_repos/generate_build_info_path.sh
