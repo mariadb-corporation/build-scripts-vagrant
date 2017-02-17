@@ -1,9 +1,9 @@
 #!/bin/bash
 
-. $HOME/build-scripts/copy_repos/generate_build_info_path.sh
-
 if [ "$image_type" == "RPM" ] ; then
-        arch=`ssh $sshopt "arch"`
+        export arch=`ssh $sshopt "arch"`
+        . $HOME/build-scripts/copy_repos/generate_build_info_path.sh
+
         rm -rf $path_prefix/$platform/$platform_version/$arch/
         mkdir -p $path_prefix/$platform/$platform_version/$arch/
         cp -r ~/repo/$repo_name/$box/* $path_prefix/$platform/$platform_version/$arch/
@@ -14,7 +14,8 @@ if [ "$image_type" == "RPM" ] ; then
 
         echo "copying done"
 else
-        arch=`ssh $sshopt "dpkg --print-architecture"`
+        export arch=`ssh $sshopt "dpkg --print-architecture"`
+        . $HOME/build-scripts/copy_repos/generate_build_info_path.sh
         rm -rf $path_prefix/$platform_family/dists/$platform_version/main/binary-"$arch"
         rm -rf $path_prefix/$platform_family/dists/$platform_version/main/binary-i386
         mkdir -p $path_prefix/$platform_family/

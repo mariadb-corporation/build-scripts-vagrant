@@ -10,4 +10,4 @@ else
         export build_info_path="$web_prefix/$platform_family/dists/$platform_version/main/binary-$arch/build_info"
 fi
 
-echo "BUILD_PATH_INFO=$build_info_path" > $WORKSPACE/build_info_env_var_$BUILD_ID
+echo "BUILD_PATH_INFO=$web_prefix" > $WORKSPACE/build_info_env_var_$BUILD_ID
