@@ -10,8 +10,6 @@ command -v cmake || install_cmake="cmake"
 
 command -v yum
 
-set -x
-
 if [ $? -ne 0 ]
 then
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl \
