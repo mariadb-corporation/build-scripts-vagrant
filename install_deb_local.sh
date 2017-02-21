@@ -3,26 +3,21 @@
 # do the real building work
 # this script is executed on build VM
 
-set -x
-
 cd $work_dir
+
+# Check if CMake needs to be installed
+command -v cmake || install_cmake="cmake"
 
 . ~/check_arch.sh
 
-sudo apt-get update
-sudo apt-get install -y dpkg-dev git
+set -x
 
-#sudo apt-get install -y --force-yes cmake
-sudo apt-get install -y --force-yes gcc g++ ncurses-dev bison build-essential libssl-dev libaio-dev perl make libtool 
-#sudo apt-get install -y --force-yes librabbitmq-dev
-sudo apt-get install -y --force-yes libcurl4-openssl-dev
-sudo apt-get install -y --force-yes libpcre3-dev
-sudo apt-get install -y --force-yes flex
-#sudo apt-get install -y --force-yes flex
-sudo apt-get install -y --force-yes tcl
-sudo apt-get install -y --force-yes libeditline-dev
-sudo apt-get install -y --force-yes uuid-dev
-sudo apt-get install -y --force-yes liblzma-dev
+sudo apt-get update
+
+sudo apt-get install -y --force-yes dpkg-dev git gcc g++ ncurses-dev bison \
+     build-essential libssl-dev libaio-dev perl make libtool libcurl4-openssl-dev \
+     libpcre3-dev flex tcl libeditline-dev uuid-dev liblzma-dev libsqlite3-dev \
+     sqlite3 liblua5.1 liblua5.1-dev
 
 if [ $remove_strip == "yes" ] ; then
         sudo rm -rf /usr/bin/strip
@@ -42,9 +37,6 @@ git checkout v0.7.1
 cmake .  -DCMAKE_C_FLAGS=-fPIC -DBUILD_SHARED_LIBS=N -DCMAKE_INSTALL_PREFIX=/usr
 sudo make install
 cd ../../
-
-# SQLite3
-sudo apt-get install -y --force-yes libsqlite3-dev sqlite3
 
 # Jansson
 git clone https://github.com/akheron/jansson.git
@@ -80,7 +72,3 @@ if [ "$use_mariadbd" == "yes" ] ; then
 	sudo tar xzvf $mariadbd_file -C /usr/ --strip-components=1
 	cmake_flags +=" -DERRMSG=/usr/share/english/errmsg.sys -DMYSQL_EMBEDDED_LIBRARIES=/usr/lib/"
 fi
-
-# Install Lua packages
-sudo apt-get -y install liblua5.1 liblua5.1-dev
-
