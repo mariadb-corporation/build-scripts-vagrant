@@ -59,10 +59,26 @@ else
 	files="../*.deb"
 	tars="maxscale*.tar.gz"
 fi
+if [ "$already_running" != "ok" ] ; then
+	export already_running="false"
+fi
+export remote_build_cmd="export already_running=\"$already_running\"; \
+	export use_mariadbd=\"$use_mariadbd\"; \
+	export build_experimental=\"$build_experimental\"; \
+	export cmake_flags=\"$cmake_flags\"; \
+	export work_dir=\"$work_dir\"; \
+	export remove_strip=\"$remove_strip\"; \
+	export platform=\"$platform\"; \
+	export platform_version=\"$platform_version\"; \
+	export source=\"$source\"; \
+	export value=\"$value\"; \
+	export BUILD_TAG=\"$BUILD_TAG\"; \
+	"
+
 
 if [ "$already_running" != "ok" ] ; then
 	echo "install packages on $image"
-	ssh $sshopt "export alreay_running=$alrady_running; export use_mariadbd=\"$use_mariadbd\"; export build_experimental=\"$build_experimental\"; export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$install_script"
+	ssh $sshopt "$remote_build_cmd ./$install_script"
         dir1=`pwd`
         cd ~/mdbci
         ./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
@@ -71,7 +87,7 @@ else
 	echo "already running VM, not installing deps"
 fi
 echo "run build on $image"
-ssh $sshopt "export alreay_running=$alrady_running; export use_mariadbd=\"$use_mariadbd\"; export build_experimental=\"$build_experimental\"; export cmake_flags=\"$cmake_flags\"; export work_dir=\"$work_dir\"; export remove_strip=$remove_strip; export embedded_ver=$embedded_ver; export platform=$platform; export platform_version=$platform_version; ./$build_script"
+ssh $sshopt "$remote_build_cmd ./$build_script"
 if [ $? -ne 0 ] ; then
         echo "Error build on $image"
         exit 4
