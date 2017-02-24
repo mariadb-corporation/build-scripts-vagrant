@@ -9,6 +9,7 @@ export config_name="$box-$product-$version-permanent"
 
 export dir=`pwd`
 
+. ~/build-scripts/test/configure_testset.sh
 . ~/build-scripts/test/configure_log_dir.sh
 
 cd ~/mdbci 
