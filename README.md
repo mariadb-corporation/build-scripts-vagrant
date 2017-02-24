@@ -60,7 +60,8 @@ Following variables have to be defined before executing run_test.sh
 |$ci_url|URL of repostory web site, Maxscale will be installed from $ci_url/$target/mariadb-maxscale/
 |$do_not_destroy_vm|if 'yes' build VM won't be destroyed after the build. NOTE: do not forget to destroy it manually|
 |$smoke|if 'yes' all tests are executed in 'quick' mode (less iterations, skip heavy operations)|
-|$test_set|definition of set of tests to run in ctest notation (ctest -I option value)|
+|$test_set|definition of set of tests to run in ctest notation|
+|test_set_labels|list of ctest labels. If it is not define 'test_set' will be used as a plain string|
 
 ## Test environment operations
 
