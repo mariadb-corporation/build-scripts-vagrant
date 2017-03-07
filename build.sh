@@ -76,7 +76,7 @@ if [ $? -eq 0 ] ; then
 fi
 export repo_name=$target
 export repo_path=${repo_path:-$HOME/repository}
-if [ $product_name == "" ] ; then
+if [ "$product_name" == "" ] ; then
 	export path_prefix="$repo_path/$repo_name/mariadb-maxscale/"
 else
 	export path_prefix="$repo_path/$repo_name/mariadb-$product_name/"

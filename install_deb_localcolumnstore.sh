@@ -24,3 +24,13 @@ if [ $remove_strip == "yes" ] ; then
 fi 
 
 
+cd /usr/
+
+sudo wget http://max-tst-01.mariadb.com/ci-repository/boost_1_55_0.tar.gz
+sudo tar zxvf boost_1_55_0.tar.gz
+sudo cd boost_1_55_0
+sudo ./bootstrap.sh --with-libraries=atomic,date_time,exception,filesystem,iostreams,locale,program_options,regex,signals,system,test,thread,timer,log --prefix=/usr
+sudo ./b2 install
+
+sudo ldconfig
+

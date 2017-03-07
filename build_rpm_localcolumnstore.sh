@@ -13,7 +13,7 @@ mkdir _build
 #sudo chmod -R a-w .
 #sudo chmod u+w _build
 cd _build
-cmake ..  $cmake_flags 
+cmake ..  $cmake_flags -DRPM=Y
 if [ -d ../coverity ] ; then
   tar xzvf ../coverity/cov-analysis-linux64-7.7.0.4.tar.gz
   export PATH=$PATH:`pwd`/cov-analysis-linux64-7.7.0.4/bin/
