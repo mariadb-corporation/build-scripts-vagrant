@@ -2,7 +2,7 @@
 
 export version="10.1"
 export product="mariadb"
-export box="centos_6_docker"
+export box="centos_7_docker"
 export do_not_destroy_vm="yes"
 export big="no"
 export ci_url="http://max-tst-01.mariadb.com/ci-repository/"
