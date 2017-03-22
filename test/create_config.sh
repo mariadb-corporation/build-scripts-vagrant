@@ -55,6 +55,12 @@ sed -i "s/###target###/$target/g" ~/mdbci/$name.json
 if [ "$product" == "mysql" ] ; then
 	sed -i "s|/cnf|/cnf/mysql56|g" ~/mdbci/$name.json
 fi
+
+if [ "$vm_memory" != "" ] ; then
+        sed -i "s|\"2048\"|\"$vm_memory\"|g" ~/mdbci/$name.json
+fi
+
+
 set +x
 cd ~/mdbci/
 mkdir -p $name
