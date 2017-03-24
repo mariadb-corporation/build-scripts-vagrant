@@ -52,7 +52,7 @@ if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local$product_name.sh"
 	install_script="install_rpm_local$product_name.sh"
 	files="*.rpm"
-        if [ $product_name == "" ] ; then
+        if [ "$product_name" == "" ] ; then
 		tars="maxscale*.tar.gz"
 	else
 		tars="$product_name*.tag.gz"
@@ -61,7 +61,7 @@ else
 	build_script="build_deb_local$product_name.sh"
         install_script="install_deb_local$product_name.sh"
 	files="../*.deb"
-        if [ $product_name == "" ] ; then
+        if [ "$product_name" == "" ] ; then
 		tars="maxscale*.tar.gz"
 	else
 		tars="$product_name*.tag.gz"

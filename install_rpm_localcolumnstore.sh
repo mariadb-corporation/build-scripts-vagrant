@@ -12,12 +12,13 @@ command -v yum
 
 if [ $? -ne 0 ]
 then
-  sudo zypper -n install gcc-c++ libxml2-devel cmake git automake flex autoconf rpm-build krb5-devel $install_cmake
+  sudo zypper -n install libxml2-devel cmake git automake flex autoconf rpm-build krb5-devel $install_cmake
   sudo zypper -n install gcc gcc-c++ ncurses-devel bison glibc-devel libgcc_s1 perl \
        make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
        pcre-devel git wget tcl libuuid-devel \
        xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel \
-       rpm-build $install_cmake
+       $install_cmake
+   sudo zypper -n install rpm-build
 else
   sudo yum clean all
   sudo yum groupinstall -y --nogpgcheck "Development Tools"
