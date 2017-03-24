@@ -37,6 +37,12 @@ export dir=`pwd`
 export repo_dir=$dir/repo.d/
 
 ~/build-scripts/test/create_config.sh
+if [ $? != 0 ] ; then
+	echo "VM creation failed"
+	exit 1
+fi
+
 . ~/build-scripts/test/configure_backend.sh
 cd ~/mdbci
 ./mdbci snapshot take --path-to-nodes $name --snapshot-name clean
+cd $dir
