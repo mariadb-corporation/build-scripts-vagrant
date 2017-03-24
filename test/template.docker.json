@@ -3,7 +3,7 @@
   "node_000" :
   {
         "hostname" : "node000",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
 	"product" : {
       		"name": "###product###",
@@ -17,7 +17,7 @@
   "node_001" :
   {
         "hostname" : "node001",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "###product###",
@@ -30,7 +30,7 @@
   "node_002" :
   {
         "hostname" : "node002",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "###product###",
@@ -43,7 +43,7 @@
   "node_003" :
   {
         "hostname" : "node003",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "###product###",
@@ -56,7 +56,7 @@
   "galera_000" :
   {
         "hostname" : "galera000",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "galera",
@@ -69,7 +69,7 @@
   "galera_001" :
   {
         "hostname" : "galera001",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "galera",
@@ -82,7 +82,7 @@
   "galera_002" :
   {
         "hostname" : "galera002",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "galera",
@@ -95,7 +95,7 @@
   "galera_003" :
   {
         "hostname" : "galera003",
-        "box" : "centos_7_docker",
+        "box" : "###box###",
         "memory_size" : "1024",
         "product" : {
                 "name": "galera",
