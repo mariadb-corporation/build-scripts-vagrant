@@ -12,4 +12,4 @@ export repo_password=""
 export logs_dir="$HOME/LOGS"
 export vm_memory="512"
 
-. ~/build-scripts/test/create_local_config.sh
+. ~/build-scripts/test/create_local_config.sh $*
