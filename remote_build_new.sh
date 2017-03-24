@@ -52,12 +52,20 @@ if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local.sh"
 	install_script="install_rpm_local.sh"
 	files="*.rpm"
-	tars="maxscale*.tar.gz"
+        if [ "$product_name" == "" ] ; then
+		tars="maxscale*.tar.gz"
+	else
+		tars="$product_name*.tag.gz"
+	fi
 else
 	build_script="build_deb_local.sh"
         install_script="install_deb_local.sh"
 	files="../*.deb"
-	tars="maxscale*.tar.gz"
+        if [ "$product_name" == "" ] ; then
+		tars="maxscale*.tar.gz"
+	else
+		tars="$product_name*.tag.gz"
+	fi
 fi
 if [ "$already_running" != "ok" ] ; then
 	export already_running="false"

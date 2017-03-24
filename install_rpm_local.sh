@@ -16,8 +16,8 @@ then
        make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
        pcre-devel git wget tcl libuuid-devel \
        xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel \
-       rpm-build $install_cmake
-
+       $install_cmake
+  sudo zypper -n install rpm-build
   cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
 
   if [ $? -ne 0 ]
