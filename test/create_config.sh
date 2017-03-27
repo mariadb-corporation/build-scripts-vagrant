@@ -68,7 +68,7 @@ cd $name
 vagrant destroy -f
 cd ..
 set -x
-./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
+./mdbci --ipv6 --override --template $name.json --repo-dir $repo_dir generate $name
 set +x
 while [ -f ~/vagrant_lock ]
 do
@@ -80,7 +80,7 @@ echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
 
 echo "running vagrant up $provider"
 
-./mdbci up $name --attempts 3
+./mdbci up --ipv6 $name --attempts 3
 if [ $? != 0 ]; then
 	echo "Error creating configuration"
 	exit 1

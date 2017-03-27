@@ -22,8 +22,8 @@ export maxscale_log_dir="/var/log/maxscale/"
 cd $mdbci_dir
 
 # Number of nodes
-export galera_N=`cat "$config_name"_network_config | grep galera | grep network | wc -l`
-export node_N=`cat "$config_name"_network_config | grep node | grep network | wc -l`
+export galera_N=`cat "$config_name"_network_config | grep galera | grep network | grep -v network6 | wc -l`
+export node_N=`cat "$config_name"_network_config | grep node | grep network | grep -v network6 | wc -l`
 
 # IP Of MaxScale machine
 sed "s/^/export /g" "$config_name"_network_config > "$curr_dir"/"$config_name"_network_config_export
@@ -103,3 +103,4 @@ export revert_snapshot_command="$HOME/build-scripts/test/revert_snapshot.sh $con
 
 cd $curr_dir
 set +x
+#export use_ipv6=yes
