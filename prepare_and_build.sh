@@ -15,7 +15,7 @@ export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silen
 export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
 
 if [ "$try_already_running" == "yes" ]; then
-	export name=$box
+	export name=$box$product_name
 	export snapshot_lock_file=$HOME/mdbci/${name}_snapshot_lock
 	while [ -f $snapshot_lock_file ]
 	do
@@ -24,7 +24,7 @@ if [ "$try_already_running" == "yes" ]; then
 	done
 
 	echo $JOB_NAME-$BUILD_NUMBER > $snapshot_lock_file
-	./mdbci snapshot revert --path-to-nodes $box --snapshot-name clean
+	./mdbci snapshot revert --path-to-nodes $name --snapshot-name clean
 	if [ $? == 0 ]; then
 		export already_running="ok"
 	fi
