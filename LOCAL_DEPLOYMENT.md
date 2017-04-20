@@ -91,3 +91,22 @@ If needed, more snapshots can be created:
 cd ~/mdbci
 ./mdbci snapshot  take --path-to-nodes <name> --snapshot-name <snapshot_name>
 ```
+## Accessing VMs
+
+```bash
+cd ~/mdbci/<name>
+vagrant ssh <vm_name>
+```
+where <vm_name> can be 'maxscale', 'node_XXX' or 'galera_XXX'.
+
+```bash
+. ~/build-scripts/test/set_env_vagrant.sh <name>
+ssh -i $<vm_name>_keyfile $<vm_name>_whoami@$<vm_name>_network
+```
+
+examples:
+```bash
+ssh -i $node_002_keyfile $node_002_whoami@$node_002_network
+
+ssh -i $maxscale_keyfile $maxscale_whoami@$maxscale_network
+```
