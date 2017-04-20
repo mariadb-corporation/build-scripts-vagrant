@@ -110,3 +110,38 @@ ssh -i $node_002_keyfile $node_002_whoami@$node_002_network
 
 ssh -i $maxscale_keyfile $maxscale_whoami@$maxscale_network
 ```
+
+### Own VM configuration template
+
+By default scripts use 
+~/build-scripts/test/template.libvirt.json 
+and 
+~/build-scripts/test/template.docker.json 
+
+These templates can be used as examples to create your own templates.
+
+To use own template:
+
+put your template file to ~/build-scripts/test/templates/
+
+and define 'template_name' variable
+```bash
+export template_name=<your_template_filename>
+. ~/build-scripts/test/create_local_config_libvirt.sh <target> <name>
+```
+
+## Troubleshooting
+
+### vagrant is locked, waiting ...
+```bash
+rm ~/vagrant_lock
+```
+### Random VM creation failures
+
+Plese check the amount of free memory and amount of running VMs
+
+```bash
+virsh list
+docker ps
+```
+and remove all VMs and containers you do not need
