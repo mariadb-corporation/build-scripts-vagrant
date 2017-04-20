@@ -115,15 +115,18 @@ sleep 10
 
 ssh $sshopt $maxadmin_command
 if [ $? != 0 ] ; then
+	echo "Maxadmin executing error"
 	res=1
 fi
-maxadmin_out=Â`ssh $sshopt $maxadmin_command`
+maxadmin_out=`ssh $sshopt $maxadmin_command`
 echo $maxadmin_out | grep "CLI"
 if [ $? != 0 ] ; then
+	echo "CLI service is not found in maxadmin output"
         res=1
 fi
 echo $maxadmin_out | grep "Started"
 if [ $? != 0 ] ; then
+	echo "'Started' is not found in the CLI service description"
         res=1
 fi
 
