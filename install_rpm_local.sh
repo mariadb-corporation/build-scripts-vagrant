@@ -16,7 +16,7 @@ then
        make libtool libopenssl-devel libaio libaio-devel flex libcurl-devel \
        pcre-devel git wget tcl libuuid-devel \
        xz-devel sqlite3 sqlite3-devel pkg-config lua lua-devel \
-       $install_cmake
+       libmicrohttpd$install_cmake
   sudo zypper -n install rpm-build
   cat /etc/*-release | grep "SUSE Linux Enterprise Server 11"
 
@@ -30,7 +30,7 @@ else
        libgcc perl make libtool openssl-devel libaio libaio-devel libedit-devel \
        libedit-devel libcurl-devel curl-devel systemtap-sdt-devel rpm-sign \
        gnupg pcre-devel flex rpmdevtools git wget tcl openssl libuuid-devel xz-devel \
-       sqlite sqlite-devel pkgconfig lua lua-devel rpm-build createrepo yum-utils $install_cmake
+       sqlite sqlite-devel pkgconfig lua lua-devel rpm-build createrepo yum-utils libmicrohttpd $install_cmake
 
   cat /etc/redhat-release | grep "release 5"
   if [ $? -eq 0 ]
