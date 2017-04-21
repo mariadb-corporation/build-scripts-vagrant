@@ -138,11 +138,6 @@ export template_name=<your_template_filename>
 rm ~/vagrant_lock
 ```
 
-### snapshot is locked, waiting ...
-
-```bash
-rm $HOME/mdbci/<config_name>_snapshot_lock
-```
 
 ### Random VM creation failures
 
