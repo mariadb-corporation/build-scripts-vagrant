@@ -133,9 +133,17 @@ export template_name=<your_template_filename>
 ## Troubleshooting
 
 ### vagrant is locked, waiting ...
+
 ```bash
 rm ~/vagrant_lock
 ```
+
+### snapshot is locked, waiting ...
+
+```bash
+rm $HOME/mdbci/<config_name>_snapshot_lock
+```
+
 ### Random VM creation failures
 
 Plese check the amount of free memory and amount of running VMs
