@@ -4,7 +4,7 @@ export target="release-1.3.0-debug"
 export smoke="yes"
 #export test_set="15,16"
 export name="mdbci-test-$box-$product-$version"
-export ci_url="http://maxscale-jenkins.mariadb.com/ci-repository"
+export ci_url="http://max-tst-01.mariadb.com/ci-repository"
 
 oldpwd=`pwd`
 echo "Going to switch mdbci branch: [$MDBCI_BRANCH]"
