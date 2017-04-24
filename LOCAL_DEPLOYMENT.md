@@ -132,6 +132,13 @@ export template_name=<your_template_filename>
 
 ## Troubleshooting
 
+### More info about libvirt and vagrant-libvirt plugin
+
+https://help.ubuntu.com/lts/serverguide/libvirt.html 
+
+https://github.com/vagrant-libvirt/vagrant-libvirt#installation
+
+
 ### vagrant is locked, waiting ...
 
 ```bash
@@ -148,3 +155,17 @@ virsh list
 docker ps
 ```
 and remove all VMs and containers you do not need
+
+### Wrong time on host server
+
+If server time is wrong it can cause random problems. Please do time sync: use ntp or
+```bash
+sudo date -s "$(curl -s --head http://google.com | grep ^Date: | sed 's/Date: //g')" 
+```
+
+### Info from OSLL wiki
+
+#### Libvirt DNS resolving problem quick fix
+
+https://dev.osll.ru/projects/mdbci/wiki/Libvirt_DNS_resolving_problem_quick_fix
+
