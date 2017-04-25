@@ -8,7 +8,7 @@ if [ $? != 0 ] ; then
 	echo "run_test.sh exited with error, exiting"
 	exit 1
 fi
-
+. ~/build-scripts/test/set_env_vagrant.sh $name
 cd ~/mdbci
 # get VM info
 export sshuser=`./mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
@@ -27,4 +27,10 @@ cd $dir
 ~/build-scripts/build.sh
 res=$?
 ~/build-scripts/test/configure_core.sh
+cd ~/mdbci
+./mdbci snapshot  take --path-to-nodes $name --snapshot-name clean
+if [ $? != 0 ] ; then
+	echo "Snapshot creation failed!"
+fi
+cd $dir
 exit $res
