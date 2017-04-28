@@ -53,7 +53,7 @@ sudo make install
 popd
 
 # Avro C API
-wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.0/c/avro-c-1.8.0.tar.gz
+wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.1/c/avro-c-1.8.1.tar.gz
 if [ $? != 0 ] ; then
     echo "Error getting avro-c"
     exit 1
