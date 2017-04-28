@@ -83,17 +83,25 @@ export remote_build_cmd="export already_running=\"$already_running\"; \
 	export BUILD_TAG=\"$BUILD_TAG\"; \
 	"
 
-
-if [ "$already_running" != "ok" ] ; then
+if [ "$already_running" != "ok" ]
+then
 	echo "install packages on $image"
 	ssh $sshopt "$remote_build_cmd ./$install_script"
-        dir1=`pwd`
-        cd ~/mdbci
-        ./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
-        cd $dir1
+    installres=$?
+
+    if [ $installres -ne 0 ]
+    then
+        exit $installres
+    fi
+
+    dir1=`pwd`
+    cd ~/mdbci
+    ./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
+    cd $dir1
 else
 	echo "already running VM, not installing deps"
 fi
+
 echo "run build on $image"
 ssh $sshopt "$remote_build_cmd ./$build_script"
 if [ $? -ne 0 ] ; then
