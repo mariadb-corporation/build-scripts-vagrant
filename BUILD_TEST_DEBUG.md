@@ -142,7 +142,10 @@ The name of _maxscale-system-test_ repository branch to be used in the test run.
 
 **slave_name**
 Host server to for VMs and _maxscale-system-test_ execution
-|master|max-tst-01.mariadb.com|
+
+|Name|Server|
+|-------|:---------------------| 
+|master |max-tst-01.mariadb.com|
 |maxtst2|max-tst-02.mariadb.com|
 |maxtst3|max-tst-03.mariadb.com|
 
@@ -152,6 +155,9 @@ https://cmake.org/cmake/help/v3.7/manual/ctest.1.html
 for details.
 
 Most common cases:
+
+|Arguments|Description|
+|-------------|:--------------------------------------------------| 
 |-I 1,5,,45,77| Execute tests from 1 to 5 and tests 45 and 77|
 |-L HEAVY|Execute all tests with 'HEAVY' label|
 |-LE UNSTABLE|Execute all tests except tests with 'UNSTABLE' label|
