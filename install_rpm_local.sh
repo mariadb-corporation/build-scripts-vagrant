@@ -112,9 +112,9 @@ then
     exit 1
 fi
 
-tar -axf avro-c-1.8.0.tar.gz
-mkdir avro-c-1.8.0/build
-pushd avro-c-1.8.0/build
+tar -axf avro-c-1.8.1.tar.gz
+mkdir avro-c-1.8.1/build
+pushd avro-c-1.8.1/build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
 make
 sudo make install
