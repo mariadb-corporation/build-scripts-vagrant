@@ -30,7 +30,7 @@ if [ $res == 0 ] ; then
     if [ "$debug_mode" == "debug" ] ; then
 	exit 0
     fi
-    cd ~/mdbci/$name
+    cd ~/mdbci/
     ./mdbci snapshot take --path-to-nodes $name --snapshot-name clean
     cd $dir
     if [ x"$named_test" == "x" ] ; then
