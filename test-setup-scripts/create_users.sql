@@ -1,0 +1,20 @@
+CREATE USER skysql@'%' IDENTIFIED BY 'skysql';
+CREATE USER skysql@'localhost' IDENTIFIED BY 'skysql';
+GRANT ALL PRIVILEGES ON *.* TO skysql@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO skysql@'localhost' WITH GRANT OPTION;
+
+CREATE USER maxuser@'%' IDENTIFIED BY 'maxpwd';
+CREATE USER maxuser@'localhost' IDENTIFIED BY 'maxpwd';
+GRANT ALL PRIVILEGES ON *.* TO maxuser@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO maxuser@'localhost' WITH GRANT OPTION;
+
+CREATE USER maxskysql@'%' IDENTIFIED BY 'skysql';
+CREATE USER maxskysql@'localhost' IDENTIFIED BY 'skysql';
+GRANT ALL PRIVILEGES ON *.* TO maxskysql@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO maxskysql@'localhost' WITH GRANT OPTION;
+
+CREATE USER repl@'%' IDENTIFIED BY 'repl';
+GRANT REPLICATION SLAVE ON *.* TO repl@'%';
+
+FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS test;
