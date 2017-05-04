@@ -19,11 +19,8 @@ if [ $? == 0 ] ; then
 fi
 
 echo "target: $target"
-echo "value:  $value"
 export target=`echo $target | sed "s/?//g"`
-export value=`echo $value | sed "s/?//g"`
 echo "target: $target"
-echo "value:  $value"
 
 commitID=`git log | head -1 | sed "s/commit //"`
 echo "commitID $commitID"
