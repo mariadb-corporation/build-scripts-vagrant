@@ -95,6 +95,7 @@ fi
 
 scp $scpopt ~/build-scripts/$cnf_file $sshuser@$IP:~/
 
+. ~/build-scripts/test/configure_log_dir.sh
 
 #maxscale_exe=`./mdbci ssh --command 'ls /etc/init.d/maxscale 2> /dev/null | tr -cd "[:print:]"' $name/maxscale  --silent 2> /dev/null`
 #echo $maxscale_exe | grep -i "maxscale"
@@ -130,6 +131,9 @@ if [ $? != 0 ] ; then
         res=1
 fi
 
+mkdir -p $logs_publish_dir
+scp $scpopt $sshuser@$IP:/var/log/maxscale/* $logs_publish_dir
+chmod a+r $logs_publish_dir/*
 
 cd ~/mdbci/$name
 if [ "x$do_not_destroy_vm" != "xyes" ] ; then
