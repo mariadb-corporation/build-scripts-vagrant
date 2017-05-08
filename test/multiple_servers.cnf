@@ -62,59 +62,6 @@ socket          = /var/run/mysqld/mysqld4.sock
 port            = 3304
 datadir         = /data/mysql/mysql4
 
-[mysqld5]
-log-bin=mar-bin
-binlog-format=row
-#max_long_data_size=1000000000
-#innodb_log_file_size=2000000000
-slave-skip-errors=all
-server_id=5
-user            = mysql
-pid-file        = /var/run/mysqld/mysqld5.pid
-socket          = /var/run/mysqld/mysqld5.sock
-port            = 3305
-datadir         = /data/mysql/mysql5
- 
-[mysqld6]
-log-bin=mar-bin
-binlog-format=row
-#max_long_data_size=1000000000
-#innodb_log_file_size=2000000000
-slave-skip-errors=all
-server_id=6
-user            = mysql
-pid-file        = /var/run/mysqld/mysqld6.pid
-socket          = /var/run/mysqld/mysqld6.sock
-port            = 3306
-datadir         = /data/mysql/mysql6
-
-[mysqld7]
-log-bin=mar-bin
-binlog-format=row
-#max_long_data_size=1000000000
-#innodb_log_file_size=2000000000
-slave-skip-errors=all
-server_id=7
-user            = mysql
-pid-file        = /var/run/mysqld/mysqld7.pid
-socket          = /var/run/mysqld/mysqld7.sock
-port            = 3307
-datadir         = /data/mysql/mysql7
- 
-[mysqld8]
-log-bin=mar-bin
-binlog-format=row
-#max_long_data_size=1000000000
-#innodb_log_file_size=2000000000
-slave-skip-errors=all
-server_id=8
-user            = mysql
-pid-file        = /var/run/mysqld/mysqld8.pid
-socket          = /var/run/mysqld/mysqld8.sock
-port            = 3308
-datadir         = /data/mysql/mysql8
-
-
 # this is only for embedded server
 [embedded]
 

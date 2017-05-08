@@ -1,6 +1,6 @@
 set -x
 
-servers=8;
+servers=4;
 dir=`pwd`
 
 cp ~/build-scripts/test/multiple_servers.cnf $dir
