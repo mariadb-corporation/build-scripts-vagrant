@@ -52,7 +52,8 @@ do
                 eval 'export "$prefix"_"$num"_hostname="$prefix""$num"'
                 eval 'export "$prefix"_"$num"_whoami="$username"'
                 eval 'export "$prefix"_"$num"_keyfile="$HOME"/.ssh/id_rsa'
-
+                j=`expr $i + 1`
+                eval 'export "$prefix"_"$num"_socket="/var/run/mysqld/mysqld$j.sock'
 
                 mariadbport=`expr $i + 3301`
 		eval 'export "$prefix"_"$num"_port="$mariadbport"'

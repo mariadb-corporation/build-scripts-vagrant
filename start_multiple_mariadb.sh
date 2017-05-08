@@ -22,7 +22,7 @@ sudo mysqld_multi  --defaults-file=$dir/multiple_servers.cnf  start --no-log --v
 
 running_servers=0
 while [ $running_servers != $servers ] ; do
-   running_servers=`mysqld_multi --defaults-file=/home/turenko/m/multiple_servers.cnf report | grep "is running" | wc -l`
+   running_servers=`mysqld_multi --defaults-file=$dir/multiple_servers.cnf report | grep "is running" | wc -l`
 done
 
 
