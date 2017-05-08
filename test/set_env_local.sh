@@ -69,7 +69,7 @@ do
 done
 
 cd $mdbci_dir
-export maxscale_access_user=$maxscale_whoami
+export maxscale_access_user=`whoami`
 export maxscale_access_sudo="sudo "
 
 # Sysbench directory (should be sysbench >= 0.5)
