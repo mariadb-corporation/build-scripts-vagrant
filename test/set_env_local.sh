@@ -14,6 +14,7 @@ export maxdir="/usr/bin/"
 export maxdir_bin="/usr/bin/"
 export maxscale_cnf="/etc/maxscale.cnf"
 export maxscale_log_dir="/var/log/maxscale/"
+export maxscale_sshkey=$maxscale_keyfile
 
 cd $mdbci_dir
 
