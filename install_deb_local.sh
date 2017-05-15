@@ -53,15 +53,15 @@ sudo make install
 popd
 
 # Avro C API
-wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.1/c/avro-c-1.8.1.tar.gz
+wget http://mirror.netinch.com/pub/apache/avro/avro-1.8.2/c/avro-c-1.8.2.tar.gz
 if [ $? != 0 ] ; then
     echo "Error getting avro-c"
     exit 1
 fi
 
-tar -axf avro-c-1.8.1.tar.gz
-mkdir avro-c-1.8.1/build
-pushd avro-c-1.8.1/build
+tar -axf avro-c-1.8.2.tar.gz
+mkdir avro-c-1.8.2/build
+pushd avro-c-1.8.2/build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC
 make
 sudo make install
