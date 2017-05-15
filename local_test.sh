@@ -87,7 +87,7 @@ ssh $sshopt "cd ~/maxscale-system-test/local_tests/; ./install_rpm_local.sh; ./s
 echo "building tests"
 ssh $sshopt "cd ~/maxscale-system-test; cmake .; make"
 echo "running tests"
-ssh $sshopt "cd ~/maxscale-system-test; . ./local_tests/set_env_local.sh; ctest -L REPL_BACKEND -LE BREAKS_REPL -VV"
+ssh $sshopt "cd ~/maxscale-system-test; . ./local_tests/set_env_local.sh; ctest -L REPL_BACKEND -VV"
 
 
 mkdir -p $logs_publish_dir
