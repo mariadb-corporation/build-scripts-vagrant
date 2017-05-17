@@ -19,38 +19,8 @@ if [ $? == 0 ] ; then
 fi
 
 echo "target: $target"
-echo "value:  $value"
 export target=`echo $target | sed "s/?//g"`
-export value=`echo $value | sed "s/?//g"`
 echo "target: $target"
-echo "value:  $value"
-
-if [ "$source" == "TAG" ] ; then
-	git reset --hard $value
-	if [ $? -ne 0 ] ; then
-                echo "Error reset to tag"
-                exit 12
-        fi
-
-fi
-
-if [ "$source" == "BRANCH" ] ; then
-	git branch $value origin/$value
-        git checkout $value
-	git pull
-       	if [ $? -ne 0 ] ; then
-		echo "Error checkout branch $branch"
-                exit 12
-        fi
-fi
-
-if [ "$source" == "COMMIT" ] ; then
-	git reset --hard $value
-        if [ $? -ne 0 ] ; then
-       	        echo "Error resetting tree to the commit $value"
-               	exit 12
-        fi
-fi
 
 commitID=`git log | head -1 | sed "s/commit //"`
 echo "commitID $commitID"
