@@ -9,7 +9,7 @@ rm -rf $pre_repo_dir/$target/$image
 mkdir -p $pre_repo_dir/$target/SRC
 mkdir -p $pre_repo_dir/$target/$image
 
-export work_dir="workspace"
+export work_dir="MaxScale"
 export orig_image=$image
 
 echo $sshuser
@@ -38,12 +38,12 @@ scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
 
 if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local.sh"
-	install_script="install_deps.sh"
+	install_script="install_build_deps.sh"
 	files="*.rpm"
 	tars="maxscale*.tar.gz"
 else
 	build_script="build_deb_local.sh"
-        install_script="install_deps.sh"
+        install_script="install_build_deps.sh"
 	files="../*.deb"
 	tars="maxscale*.tar.gz"
 fi
@@ -63,8 +63,8 @@ export remote_build_cmd="export already_running=\"$already_running\"; \
 
 if [ "$already_running" != "ok" ]
 then
-	echo "install packages on $image"
-	ssh $sshopt "$remote_build_cmd ./MaxScale/BUILD/$install_script"
+    echo "install packages on $image"
+    ssh $sshopt "$remote_build_cmd ./MaxScale/BUILD/$install_script"
     installres=$?
 
     if [ $installres -ne 0 ]
