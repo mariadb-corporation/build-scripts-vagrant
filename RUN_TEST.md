@@ -8,10 +8,7 @@ Installed [MDBCI](https://github.com/OSLL/mdbci) (with dependencies, see
 (https://github.com/mariadb-corporation/mdbci-repository-config#mdbci-repository-config),
 [build-scripts](https://github.com/mariadb-corporation/build-scripts-vagrant)
 
-Componets should be iin following directories:
-
-[mdbci-repository-config](https://github.com/mariadb-corporation/mdbci-repository-config)
-should be in ~/mdbci-repository-config/
+Componets should be in the following directories:
 
 [build-scripts](https://github.com/mariadb-corporation/build-scripts-vagrant) - in ~/build-scripts/
 
