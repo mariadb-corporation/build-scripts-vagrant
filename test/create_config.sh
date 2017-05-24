@@ -1,9 +1,9 @@
 #!/bin/bash
 set -x
 cd $dir
-~/mdbci-repository-config/generate_all.sh repo.d
+~/mdbci/repository-config/generate_all.sh repo.d
 if [ "$debug_mode" != "debug" ] ; then
-	~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
+	~/mdbci/repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 fi
 
 export repo_dir=$dir/repo.d/
