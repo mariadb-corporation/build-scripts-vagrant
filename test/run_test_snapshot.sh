@@ -61,7 +61,7 @@ cd $dir
 
 . ~/build-scripts/test/set_env_vagrant.sh "$config_name"
 
-~/mdbci-repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
+~/mdbci/repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 
 if [ -n "$repo_user" ] ; then
         sed -i "s|http://|http://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
