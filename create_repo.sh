@@ -50,8 +50,17 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
 	cp dists/$dist_name/main/$arch/Release dists/$dist_name/Release
 #	cp dists/$dist_name/main/$arch/Packages.gz dists/$dist_name
 	apt-ftparchive release dists/$dist_name/ >> dists/$dist_name/Release
+        if [ $? != 0 ] ; then
+                echo "Repo creation failed!"
+                exit 1
+        fi
+
 
 	gpg -abs -o  dists/$dist_name/Release.gpg dists/$dist_name/Release 
+	if [ $? != 0 ] ; then
+		echo "Package signing failed!"
+		exit 1
+	fi
 else
 # RPM-based system
 	sudo yum install -y createrepo
@@ -60,12 +69,23 @@ else
 	echo "%_signature gpg" >> ~/.rpmmacros
 	echo "%_gpg_name  MariaDBManager" >>  ~/.rpmmacros
 	rpm --resign $sourcedir/*.rpm
+        if [ $? != 0 ] ; then
+                echo "Package signing failed!"
+                exit 1
+        fi
 	gpg --output repomd.xml.key --sign $sourcedir/repodata/repomd.xml
 	cp $sourcedir/* $destdir/
 	pushd ${destdir} >/dev/null 2>&1
 	    createrepo -d -s sha .
+	        if [ $? != 0 ] ; then
+        	        echo "Repo creation failed!"
+                	exit 1
+	        fi	
+
 	popd >/dev/null 2>&1
 	gpg -a --detach-sign $destdir/repodata/repomd.xml
-#	cp repomd.xml.key $destdir/repodata/
-	
+        if [ $? != 0 ] ; then
+                echo "Package signing failed!"
+                exit 1
+        fi
 fi

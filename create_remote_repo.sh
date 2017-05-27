@@ -24,6 +24,10 @@ echo $distro_name
 
 echo "executing create_repo.sh on $IP"
 ssh $sshopt "export platform=$platform; export platform_version=$platform_version; ./create_repo.sh dest/ src/"
+if [ $? != 0 ] ; then
+	echo "Repo creation failed!"
+	exit 1
+fi
 
 echo "cleaning ~/repo/$target/$image/"
 rm -rf ~/repo/$target/$image/*
