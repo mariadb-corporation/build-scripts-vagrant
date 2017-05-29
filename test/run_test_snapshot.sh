@@ -7,6 +7,7 @@ export product=$product
 export version=$version
 export config_name="$box-$product-$version-permanent"
 
+cd maxscale-system-test
 export dir=`pwd`
 
 . ~/build-scripts/test/configure_testset.sh
