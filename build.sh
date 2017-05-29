@@ -29,8 +29,6 @@ if [ "$5" != "" ] ; then
   cd $5
 fi
 
-#sed -i "s/MAXSCALE_VERSION_PATCH \"0\"/MAXSCALE_VERSION_PATCH \"1.22\"/" cmake/macros.cmake
-
 dist_sfx="$platform"."$platform_version"
 export cmake_flags="$cmake_flags  -DPACKAGE=Y -DDISTRIB_SUFFIX=$dist_sfx"
 
