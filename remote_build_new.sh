@@ -17,7 +17,7 @@ if [ "$product_name" == "" ] ; then
 fi
 
 if [ ! -d "BUILD" ] ; then
-	cp -r ~/build-scripts/$product/BUILD .
+	cp -r ~/build-scripts/build/$product/BUILD .
 fi
 
 echo $sshuser
