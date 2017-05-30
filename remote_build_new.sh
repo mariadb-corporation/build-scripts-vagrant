@@ -28,13 +28,11 @@ ssh $sshopt "sudo rm -rf $work_dir"
 echo "copying stuff to $image machine"
 ssh $sshopt "mkdir -p $work_dir"
 
-scp $scpopt -r ./* $sshuser@$IP:$work_dir/ 
+rsync -avz  --progress --delete -e "ssh $scpopt" ./* $sshuser@$IP:$work_dir/ 
 if [ $? -ne 0 ] ; then
         echo "Error copying stuff to $image machine"
         exit 2
 fi
-
-scp $scpopt -r ./.git $sshuser@$IP:$work_dir/
 
 export install_script="install_build_deps.sh"
 
