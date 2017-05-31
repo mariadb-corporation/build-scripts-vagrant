@@ -1,28 +1,18 @@
-#!/bin/bash 
+#!/bin/bash
 
 # do the real building work
 # this script is executed on build VM
 
 set -x
 
-cd $work_dir
+cd ./MaxScale
 
-. ~/check_arch.sh
 
 mkdir _build
-#sudo chmod -R a-w .
-#sudo chmod u+w _build
 cd _build
-cmake ..  $cmake_flags 
+cmake ..  $cmake_flags
 export LD_LIBRARY_PATH=$PWD/log_manager:$PWD/query_classifier
-if [ -d ../coverity ] ; then
-        tar xzvf ../coverity/coverity_tool.tgz
-        export PATH=$PATH:`pwd`/cov-analysis-linux64-7.6.0/bin/
-        cov-build --dir cov-int make
-        tar czvf maxscale.tgz cov-int
-else
-        make
-fi
+make
 
 export LD_LIBRARY_PATH=$(for i in `find $PWD/ -name '*.so*'`; do echo $(dirname $i); done|sort|uniq|xargs|sed -e 's/[[:space:]]/:/g')
 make package
@@ -36,7 +26,7 @@ sudo rm ../CMakeCache.txt
 sudo rm CMakeCache.txt
 
 echo "Building tarball..."
-cmake .. $cmake_flags -DTARBALL=Y 
+cmake .. $cmake_flags -DTARBALL=Y
 sudo make package
 
 
@@ -79,7 +69,7 @@ if [ "$build_experimental" == "yes" ] ; then
 fi
 
 if [ "$BUILD_RABBITMQ" == "yes" ] ; then
-  cmake ../rabbitmq_consumer/  $cmake_flags 
+  cmake ../rabbitmq_consumer/  $cmake_flags
   sudo make package
   res=$?
   if [ $res != 0 ] ; then
@@ -90,5 +80,5 @@ if [ "$BUILD_RABBITMQ" == "yes" ] ; then
   cp _build/*.deb .
   cp *.deb ..
 fi
-
+sudo dpkg -i ../maxscale*.dev
 set +x

@@ -1,4 +1,5 @@
 set -x
+cd maxscale-system-test
 dir=`pwd`
 #. ~/build-scripts/test/get_provider
 cd ~/mdbci/$name

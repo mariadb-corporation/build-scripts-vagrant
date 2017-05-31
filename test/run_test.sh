@@ -11,6 +11,8 @@ export value=`echo $value | sed "s/?//g"`
 . ~/build-scripts/test/configure_testset.sh
 . ~/build-scripts/test/configure_log_dir.sh
 
+cd maxscale-system-test
+
 echo $1
 export debug_mode=$1
 if [ "$debug_mode" != "debug" ] ; then
