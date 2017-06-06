@@ -13,7 +13,7 @@ export dir=`pwd`
 . ~/build-scripts/test/configure_testset.sh
 . ~/build-scripts/test/configure_log_dir.sh
 
-cd ~/mdbci 
+#cd ~/mdbci 
 
 # Setting snapshot_lock
 export snapshot_lock_file=$HOME/mdbci/${config_name}_snapshot_lock
@@ -27,12 +27,12 @@ echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
 
 export repo_dir=$dir/repo.d/
 
-./mdbci snapshot revert --path-to-nodes $config_name --snapshot-name $snapshot_name
+$HOME/mdbci/mdbci snapshot revert --path-to-nodes $config_name --snapshot-name $snapshot_name
 
 if [ $? != 0 ]; then
 	cd $config_name
 	vagrant destroy -f
-	cd ~/mdbci/scripts/
+	##cd ~/mdbci/scripts/
 	./clean_vms.sh $config_name
 	cd ..
         mkdir -p $HOME/mdbci/$config_name
@@ -52,10 +52,10 @@ set -x
         echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
         . ~/build-scripts/test/configure_backend.sh
         export name=$name_save
-	cd ~/mdbci
+	#cd ~/mdbci
 	echo "Creating snapshot from new config"
 set -x
-	./mdbci snapshot take --path-to-nodes $config_name --snapshot-name $snapshot_name
+	$HOME/mdbci/mdbci snapshot take --path-to-nodes $config_name --snapshot-name $snapshot_name
 fi
 
 cd $dir
@@ -69,13 +69,13 @@ if [ -n "$repo_user" ] ; then
         sed -i "s|https://|https://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
 fi
 
-cd ~/mdbci
+#cd ~/mdbci
 
-./mdbci sudo --command 'yum remove maxscale -y' $config_name/maxscale
-./mdbci sudo --command 'yum clean all' $config_name/maxscale
+$HOME/mdbci/mdbci sudo --command 'yum remove maxscale -y' $config_name/maxscale
+$HOME/mdbci/mdbci sudo --command 'yum clean all' $config_name/maxscale
 
-./mdbci setup_repo --product maxscale $config_name/maxscale --repo-dir $repo_dir 
-./mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
+$HOME/mdbci/mdbci setup_repo --product maxscale $config_name/maxscale --repo-dir $repo_dir 
+$HOME/mdbci/mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
 if [ $? != 0 ] ; then
 	echo "Error installing Maxscale"
 	exit 1

@@ -8,7 +8,7 @@ export ci_url="http://max-tst-01.mariadb.com/ci-repository"
 
 oldpwd=`pwd`
 echo "Going to switch mdbci branch: [$MDBCI_BRANCH]"
-cd ~/mdbci
+#cd ~/mdbci
 #branch_to_switch=$(echo $MDBCI_BRANCH | awk -F "/" '{print $3}')
 branch_to_switch=$MDBCI_BRANCH
 echo "Current mdbci branch  "
@@ -25,7 +25,7 @@ ln -s ~/conf/aws-config.yml
 ln -s ~/conf/maxscale.pem
 
 cd $oldpwd
-cd ~/mdbci-boxes/
+#cd ~/mdbci-boxes/
 git pull
 cp -r ~/mdbci-boxes/BOXES ~/mdbci/
 cp -r ~/mdbci-boxes/KEYS ~/mdbci/

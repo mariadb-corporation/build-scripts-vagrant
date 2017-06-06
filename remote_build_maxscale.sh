@@ -74,8 +74,8 @@ then
     fi
 
     dir1=`pwd`
-    cd ~/mdbci
-    ./mdbci snapshot take --path-to-nodes $box --snapshot-name clean
+    #cd ~/mdbci
+    $HOME/mdbci/mdbci snapshot take --path-to-nodes $box --snapshot-name clean
     cd $dir1
 else
 	echo "already running VM, not installing deps"

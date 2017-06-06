@@ -2,7 +2,7 @@ set -x
 cd maxscale-system-test
 dir=`pwd`
 #. ~/build-scripts/test/get_provider
-cd ~/mdbci/$name
+cd $name
 #vagrant up
 cd ..
 . ~/build-scripts/test/set_env_vagrant.sh "$name"

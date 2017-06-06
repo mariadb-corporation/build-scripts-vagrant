@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x
 cd $dir
+export MDBCI_VM_PATH=$HOME/vms; mkdir -p $MDBCI_VM_PATH
 ~/mdbci/repository-config/generate_all.sh repo.d
 if [ "$debug_mode" != "debug" ] ; then
 	~/mdbci/repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
@@ -15,12 +16,11 @@ fi
 
 echo "box: $box"
 echo "template: $template"
-cd ~/mdbci/
 
 if [ "$box" == "predefined_template" ] ; then
-	cp ~/build-scripts/test/templates/$template_name.json ~/mdbci/$name.json
+	cp ~/build-scripts/test/templates/$template_name.json $MDBCI_VM_PATH/$name.json
 else
-	provider=`./mdbci show provider $box --silent 2> /dev/null`
+	provider=`$HOME/mdbci/mdbci show provider $box --silent 2> /dev/null`
 #	set -x
 	template_raw="$HOME/build-scripts/test/debugtemplate.$provider.json"
 	if [ "$debug_mode" != "debug" ] ; then
@@ -34,7 +34,7 @@ else
         	        template_raw="$HOME/build-scripts/test/template_big.$provider.json"
 		fi
 	fi
-	cp "$template_raw" "$HOME/mdbci/$name.json"
+	cp "$template_raw" "$MDBCI_VM_PATH/$name.json"
 fi
 #set +x
 export galera_version=$version
@@ -47,28 +47,28 @@ export galera_version=$version
 #        export galera_version="10.1"
 #fi
 set -x
-sed -i "s/###galera_version###/$galera_version/g" ~/mdbci/$name.json
-sed -i "s/###version###/$version/g" ~/mdbci/$name.json
-sed -i "s/###product###/$product/g" ~/mdbci/$name.json
-sed -i "s/###box###/$box/g" ~/mdbci/$name.json
-sed -i "s/###target###/$target/g" ~/mdbci/$name.json
+sed -i "s/###galera_version###/$galera_version/g" $MDBCI_VM_PATH/$name.json
+sed -i "s/###version###/$version/g" $MDBCI_VM_PATH/$name.json
+sed -i "s/###product###/$product/g" $MDBCI_VM_PATH/$name.json
+sed -i "s/###box###/$box/g" $MDBCI_VM_PATH/$name.json
+sed -i "s/###target###/$target/g" $MDBCI_VM_PATH/$name.json
 if [ "$product" == "mysql" ] ; then
-	sed -i "s|/cnf|/cnf/mysql56|g" ~/mdbci/$name.json
+	sed -i "s|/cnf|/cnf/mysql56|g" $MDBCI_VM_PATH/$name.json
 fi
 
 if [ "$vm_memory" != "" ] ; then
-        sed -i "s|\"2048\"|\"$vm_memory\"|g" ~/mdbci/$name.json
+        sed -i "s|\"2048\"|\"$vm_memory\"|g" $MDBCI_VM_PATH/$name.json
 fi
 
 
 set +x
-cd ~/mdbci/
-mkdir -p $name
-cd $name
+##cd ~/mdbci/
+mkdir -p $MDBCI_VM_PATH/$name
+cd $MDBCI_VM_PATH/$name
 vagrant destroy -f
-cd ..
+cd $dir
 set -x
-./mdbci --override --template $name.json --repo-dir $repo_dir generate $name
+$HOME/mdbci/mdbci --override --template  $MDBCI_VM_PATH/$name.json --repo-dir $repo_dir generate $name
 set +x
 while [ -f ~/vagrant_lock ]
 do
@@ -80,11 +80,11 @@ echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
 
 echo "running vagrant up $provider"
 
-./mdbci up $name --attempts 3
+$HOME/mdbci/mdbci up $name --attempts 3
 if [ $? != 0 ]; then
 	echo "Error creating configuration"
 	exit 1
 fi
 
 cp ~/build-scripts/team_keys .
-./mdbci  public_keys --key team_keys $name
+$HOME/mdbci/mdbci  public_keys --key team_keys $name
