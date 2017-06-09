@@ -73,11 +73,11 @@ export sshopt="$scpopt $sshuser@$IP"
 
 rm ~/vagrant_lock
 
-# rinning build
+# running build
 cd $work_dir
 ~/build-scripts/build.sh
 res=$?
-cd $name
+cd $MDBCI_VM_PATH/$name
 if [ "$try_already_running" == "yes" ] ; then
 	rm $snapshot_lock_file
 fi
