@@ -135,5 +135,5 @@ if [ "x$do_not_destroy_vm" != "xyes" ] ; then
 	vagrant destroy -f
 	cd $work_dir
 fi
-kill $pid_to_kil
+kill $pid_to_kill
 exit $res
