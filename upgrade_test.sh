@@ -111,6 +111,7 @@ fi
 
 ssh $sshopt "sudo cp $cnf_file /etc/maxscale.cnf"
 ssh $sshopt "$maxscale_start_cmd" &
+pid_to_kill=$!
 #ssh $sshopt 'sudo /etc/init.d/maxscale start'
 sleep 10
 
@@ -139,4 +140,5 @@ cd ~/mdbci/$name
 if [ "x$do_not_destroy_vm" != "xyes" ] ; then
 	vagrant destroy -f
 fi
+kill $pid_to_kil
 exit $res
