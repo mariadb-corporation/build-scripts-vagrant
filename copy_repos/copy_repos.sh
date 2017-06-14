@@ -1,5 +1,6 @@
 #!/bin/bash
 
+dir=`pwd`
 if [ "$image_type" == "RPM" ] ; then
         export arch=`ssh $sshopt "arch"`
         . $HOME/build-scripts/copy_repos/generate_build_info_path.sh
@@ -22,4 +23,4 @@ else
         cp -r ~/repo/$repo_name/$box/* $path_prefix/$platform_family/
         env > $build_info_path
 fi
-
+cd $dir
