@@ -15,9 +15,9 @@ export new_target=`echo $new_target | sed "s/?//g"`
 provider=`$HOME/mdbci/mdbci show provider $box --silent 2> /dev/null`
 name=$box-$JOB_NAME-$BUILD_NUMBER
 name=`echo $name | sed "s|/|-|g"`
-cp ~/build-scripts/install.$provider.json $name.json
+cp ~/build-scripts/install.$provider.json $MDBCI_VM_PATH/$name.json
 
-sed -i "s/###box###/$box/g" $name.json
+sed -i "s/###box###/$box/g" $MDBCI_VM_PATH/$name.json
 
 while [ -f ~/vagrant_lock ]
 do
