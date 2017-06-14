@@ -52,7 +52,9 @@ if [ "$already_running" != "ok" ]; then
 	fi
 
 	# starting VM for build
+	echo "Generating build VM template"
 	$HOME/mdbci/mdbci --override --template $MDBCI_VM_PATH/$name.json generate $name
+	echo "starting VM for build"
 	$HOME/mdbci/mdbci up --attempts=1 $name
 	if [ $? != 0 ] ; then
 		echo "Error starting VM"
@@ -60,20 +62,23 @@ if [ "$already_running" != "ok" ]; then
 		rm ~/vagrant_lock
 		exit 1
 	fi
+	echo "copying public keys to VM"
 	cp  ~/build-scripts/team_keys .
 	$HOME/mdbci/mdbci public_keys --key team_keys --silent $name
 fi
-export sshuser=`$HOME/mdbci/mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
 
-# get VM info
+echo "Get VM info"
+export sshuser=`$HOME/mdbci/mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
 export IP=`$HOME/mdbci/mdbci show network $name/build --silent 2> /dev/null`
 export sshkey=`$HOME/mdbci/mdbci show keyfile $name/build --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 
+echo "Release Vagrant lock"
 rm ~/vagrant_lock
 
 # running build
+echo "starting build"
 cd $work_dir
 ~/build-scripts/build.sh
 res=$?
