@@ -7,7 +7,7 @@ is the main tool for providing build and test services for Maxscale,
 but note that it _cannot_ be accessed directly (see further down).
 
 A set of virtual machines (VMs) is in use for all building and testing.
-VMs are controlled by [Vagrant](https://www.vagrantup.com/)
+The VMs are controlled by [Vagrant](https://www.vagrantup.com/)
 and [MDBCI](https://github.com/OSLL/mdbci/).
 
 3 types of VMs are supported:
@@ -17,7 +17,8 @@ and [MDBCI](https://github.com/OSLL/mdbci/).
 
 All Jenkins jobs are in
 [Jenkins job Builder](https://docs.openstack.org/infra/jenkins-job-builder/)
-YAML format. See https://github.com/mariadb-corporation/maxscale-jenkins-jobs
+YAML format and are available
+[here](https://github.com/mariadb-corporation/maxscale-jenkins-jobs).
 
 VMs for every build or test run are created from clean Vagrant box.
 
@@ -26,15 +27,15 @@ To speed up regular builds and tests there are a set of constantly running VMs:
 * Test VMs set _centos\_7\_libvirt-mariadb-10.0-permanent_
 
 Build and test Jenkins jobs generate e-mails with results report.
-Test run logs are store on host server http://max-tst-01.mariadb.com/LOGS/
+In addition, test run logs are stored [here](http://max-tst-01.mariadb.com/LOGS/).
 
 ## Accessing _max-tst-01_
 
 Jenkins running on _max-tst-01_ can only be accessed from localhost. In order
-to be able to access it from your computer, an ssh tunnel needs to be setup
+to be able to access it from your computer, an ssh tunnel needs to be setup.
 
-First ensure that your public key is available on _max-tst-01_
-Then setup the ssh tunnel:
+* Ensure that your public key is available on _max-tst-01_.
+* Then setup the ssh tunnel:
 ```
 $ ssh -f -N -L 8089:127.0.0.1:8089 vagrant@max-tst-01.mariadb.com
 ```
@@ -45,32 +46,40 @@ In the following it is assumed that the above has been done.
 
 ## Build
 
-[Build](http://localhost:8089/job/build/) Jenkins job builds Maxscale
-and creates binary repository for one Linux distribution.
+* [Build](http://localhost:8089/job/build/) builds Maxscale
+  and creates a binary repository for one Linux distribution.
 
-[Build_all](http://localhost:8089/job/build_all/) Jenkins job builds
-Maxscale and creates binary repository for all supported Linux
-distributions.
+* [Build_all](http://localhost:8089/job/build_all/) builds
+  Maxscale and creates binary repository for _all_ supported Linux
+  distributions.
 
 The list of supported distributions (Vagrant boxes) is
 [here](https://github.com/mariadb-corporation/maxscale-jenkins-jobs/blob/master/maxscale_jobs/include/boxes.yaml).
 
-### Main 'Build' and 'Build_all' jobs parameters
+### Main _Build_ and _Build_all_ jobs parameters
 
-#### source
+To start a build, click on _Build with Parameters_ to the left in
+the Jenkins panel.
+
+#### scm_source
 The place in Maxscale source code.
 * for branch - put branch name here
 * for commit ID - put Git Commit ID here
 * for tag - put `refs/tags/<tagName>` here
 
-#### target
-Then name of binary repository. Binaries will go to:
-`http://max-tst-01.mariadb.com/ci-repository/<target>/mariadb-maxscale/<distribution_name>/<version>`
-
 #### box
 The name of Vagrant box to create VM.
 Box name consists of the name of distribution, distribution version and the name of VM provider.
 Whole list of supported boxes can be found [here](https://github.com/mariadb-corporation/maxscale-jenkins-jobs/blob/master/maxscale_jobs/include/boxes_all.yaml)
+
+#### target
+Then name of binary repository. Ensure that the name is reasonably
+unique so that there can be no unintended overwrites. If you are
+building a personal branch, then using the same value for _target_
+as is the value for _scm_source_ should be fine.
+
+Binaries will go to:
+`http://max-tst-01.mariadb.com/ci-repository/<target>/mariadb-maxscale/<distribution_name>/<version>`
 
 #### cmake_flags
 
@@ -86,14 +95,14 @@ Release build:
 
 Build scripts automatically add all other necessary flags (e.g. -DPACKAGE=Y)
 
-#### run_upgrade_test
-If `yes` upgrade test will be executed after build.
+#### do_not_destroy_vm
 
-Upgrade test is executed on the separate VM. First, old version of Maxsale is installed
-(parameter **old_target**), then upgrade to recently built version is executed, then
-Maxscale is started with minimum configuration
-(only CLI service is configured, no backend at all)
-and _maxadmin_ tool is executed to check that Maxscale is running and available.
+If `yes`, then the VM will not be destroyed after the build. Choose that **if** you,
+for some specific reason (e.g. debugging), intend to log into the VM later.
+
+#### repo_path
+
+The location for binary repositories on _max-tst-01_. Usually no need to change.
 
 #### try_alrady_running
 If `yes` constantly running VM will be used for build instead of bringing clean
@@ -105,6 +114,18 @@ script is modified to do it) before the build it is necessary to destroy
 constantly running VM - in this case a new VM will be created and all stuff
 will be installed.
 
+#### run_upgrade_test
+
+If `yes` upgrade test will be executed after build.
+
+Upgrade test is executed on a separate VM.
+
+* First, old version of Maxsale is installed (parameter **old_target**),
+* then upgrade to recently built version is executed,
+* then Maxscale is started with minimum configuration (only CLI service is
+  configured, no backend at all), and
+* finally, _maxadmin_ is executed to check that Maxscale is running and available.
+
 ### Regular automatic builds
 
 File `~/jobs_branches/build_all_branches.list` on _max-tst-02.mariadb.com contains
@@ -115,18 +136,26 @@ Regular builds are executed with _run\_upgrade\_test=yes_
 
 ## Test execution
 
-### Run_test Jenkins job
+* [run_test](http://localhost:8089/view/test/job/run_test/) creates a set of
+  VMs: 1 VM for Maxscale, 4 VMs for Master/Slave setup and VMs for Galera cluster.
 
-This job creates a set of VMs: 1 VM for Maxscale, 4 VMs for Master/Slave setup and
-4 VMs for Galera cluster.
+### Main _Run_test_ parameters
 
-### Main Run_test parameters
+Before this job can be run, a
+[build](#build)
+job must have been executed first.
 
 #### target
-The name of Maxscale binary repository. To create this repository please use **Build** job
+The name of Maxscale binary repository.
+
+The value used here, should be the same as the value used in [target](#target).
 
 #### box
-The name of Vagrant box to create VM. Same as **box** in **Build** job.
+The name of Vagrant box to create VM.
+
+The value used here, must be the same as the value used in
+[box](#box)
+when the used **target** was built.
 
 #### product
 MariaDB or MySQL to be installed to all backend machines.
@@ -143,19 +172,24 @@ It can be used for debugging. **Do not forget to destroy** VMs after debugging
 is finished.
 
 #### name
-The name of test run.
-VMs names will be <name>_maxscale, <name>_node_000, ..., <name>_node_003
-<name>_galera_000, ..., <name>_galera_003
-This **name** can be used to access VMs:
+The name of test run. The names of the VMs will be:
+
+* `<name>_maxscale`,
+* `<name>_node_000`, ..., `<name>_node_003` and
+* `<name>_galera_000`, ..., `<name>_galera_003`-
+
+The **name** can be used to access VMs:
 
 ```bash
 . ~/build-scripts/test/set_env_vagrant.sh <name>
 ssh -i $<vm_name>_keyfile $<vm_name>_whoami@$<vm_name>_network
 ```
-where <vm_name> can be 'maxscale', 'node_XXX' or 'galera_XXX'.
+where `<vm_name>` can be 'maxscale', 'node_XXX' or 'galera_XXX'.
 
 #### test_branch
-The name of _maxscale-system-test_ repository branch to be used in the test run.
+The name of _MaxScale_ repository branch to be used in the test run.
+
+It is usually the same as the one used in [scm_source](#scm_source).
 
 #### slave_name
 Host server to for VMs and _maxscale-system-test_ execution
@@ -189,7 +223,7 @@ the 'clean' state.
 
 The name of running VMs set should be:
 
-_<box>-<product>-<version>-permanent_
+`<box>-<product>-<version>-permanent`
 
 If there is no VMs set with such name it will be created automatically.
 
