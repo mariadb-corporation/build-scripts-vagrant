@@ -28,12 +28,11 @@ Following variables have to be defined before executing prepare_and_build.sh
 
 |Variable|Meaning|
 |--------|--------|
+|$MDBCI_VM_PATH|Path to duirectory to store VM info and Vagrant files (by default $HOME/vms)|
 |$box|name of MDBCI box (see [MDBCI docs](https://github.com/OSLL/mdbci#terminology))|
 |$target|name of repository to put result of build|
-|$source|BRANCH, TAG or COMMIT|
-|$values|name of branch, tag of connit ID|
+|$scm_source|reference to the place in Maxscale source GIT repo|
 |$cmake_flags|additional cmake flags|
-|$Coverity|if 'yes' build will be done via coverity-build and results will be submitted to scan.coverity.com|
 |$do_not_destroy_vm|if 'yes' build VM won't be destroyed after the build. NOTE: do not forget destroy it manually|
 |$no_repo|if 'yes' repository won't be built|
 
@@ -67,7 +66,7 @@ Following variables have to be defined before executing run_test.sh
 
 ### Accessing nodes
 <pre>
-cd ~/mdbci/$name/
+cd $MDBCI_VM_PATH/$name/
 vagrant ssh $node_name
 </pre>
 
@@ -75,20 +74,18 @@ where $node_name - 'maxscale', 'node0', ..., 'node3', ..., 'nodeN', 'galera0', .
 
 ### Getting IP address and access keys
 <pre>
-cd ~/mdbci/
-./mdbci show network $name
-./mdbci show network $name/$node_name
-./mdbci show keyfile $name/$node_name
+~/mdbci/mdbci show network $name
+~/mdbci/mdbci show network $name/$node_name
+~/mdbci/mdbci show keyfile $name/$node_name
 </pre>
 
 ### Destroying environemnt
 <pre>
-cd ~/mdbci/$name/
+cd $MDBCI_VM_PATH/$name/
 vagrant destroy -f
 </pre>
 
 ### Set variables by [test/set_env_vagrant.sh](test/set_env_vagrant.sh)
 <pre>
-cd ~/mdbci/
 . ../build-scripts/test/set_env_vagrant.sh $name
 </pre>

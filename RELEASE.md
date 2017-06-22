@@ -6,7 +6,7 @@ Create tag 'maxscale-x.x.x' and push this tag to the repository.
 
 ## 2. Build and upgrade test
 
-[Build_all]/http://max-tst-01.mariadb.com:8089/job/build_all/) Jenkins job should be used to build 
+[Build_all]/http://127.0.0.1:8089/job/build_all/) Jenkins job should be used to build 
 repositories.
 
 Usually two run are needed: release and debug builds.

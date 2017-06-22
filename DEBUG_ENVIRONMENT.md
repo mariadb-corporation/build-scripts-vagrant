@@ -1,10 +1,16 @@
 # Debug environment
 
+## Create ssh tunnel to Jenkins server
+
+```bash
+ssh -f -N -L 8089:127.0.0.1:8089 vagrant@max-tst-01.mariadb.com
+```
+
 ## Create environment for debugging
 
 To create virtual machines for debugging please 
 use Jenkins job 'create_env'
-http://max-tst-01.mariadb.com:8089/view/env/job/create_env/build
+http://127.0.0.1:8089/view/env/job/create_env/build
 
 This Jenkins job creates backend VMs
 (4 Master/Slave and 4 Galera) and
@@ -16,7 +22,7 @@ Maxscale source Git.
 
 Source is located in:
 ```
-~/workspace/
+~/MaxScale/
 ```
 
 ## Environmental variables setup
@@ -47,7 +53,16 @@ scp -i $maxscale_sshkey $maxscale_whoami@maxscale_network:/home/$maxscale_whoami
 
 ## Executing tests
 
-Clone and build https://github.com/mariadb-corporation/maxscale-system-test
+Clone https://github.com/mariadb-corporation/maxscale
+
+and build tests
+
+```bash
+cd MaxScale/maxscale-system/test
+cmake .
+make
+```
+
 
 and then run 
 
@@ -68,18 +83,17 @@ in order (_check_backend_ also fixes broken replication or Galera)
 
 ## Restoring broken setup
 
-Just use http://max-tst-01.mariadb.com:8089/view/snapshot/job/restore_snapshot/build
+Just use http://127.0.0.1:8089/view/snapshot/job/restore_snapshot/build
 
 Manual snapshot reverting:
 
 ```bash
-cd ~/mdbci
-./mdbci snapshot  revert --path-to-nodes debug_env --snapshot-name clean
+~/mdbci/mdbci snapshot  revert --path-to-nodes debug_env --snapshot-name clean
 ```
 
 ## Destroying 
 
-Use http://max-tst-01.mariadb.com:8089/view/axilary/job/destroy/build
+Use http://127.0.0.1:8089/view/axilary/job/destroy/build
 with _name=debug_env_
 
 or _clean_vms.sh_ script
