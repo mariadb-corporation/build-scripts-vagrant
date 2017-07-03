@@ -181,7 +181,7 @@ release notes.
 $ git checkout x.y.z
 $ # Update release date in .../MaxScale-x.y.z-Release-Notes.md
 $ git add .../MaxScale-x.y.z-Release-Notes.md
-$ git commit
+$ git commit -m "Update release date"
 $ git push origin x.y.z
 ```
 
