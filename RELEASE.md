@@ -152,7 +152,7 @@ Once the packages have been made available for download, create
 the final tag
 ```
 $ git checkout maxscale-x.y.z-ttN
-$ git tag -a maxscale-x.y.z
+$ git tag -a -m "Tag for MaxScale x.y.z" maxscale-x.y.z
 $ git push --tags origin
 ```
 and remove the tentative tag(s)
