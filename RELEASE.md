@@ -1,36 +1,63 @@
 # Release process
 
-## 1. Create tag
+## 1. Tag
 
-Create tag 'maxscale-x.x.x' and push this tag to the repository.
+Release builds are always made using a tag. However, the used
+tag is a _tentative_ tag, to ensure that there never is a need
+to _move_ any tag, should the release have to be modified after
+it has been tagged. All that is needed is to create a new
+tentative tag.
+
+The source for release `x.y.z` is tagged with `maxscale-x.y.z-ttN`
+where `N` is 1 for the first attempt and incremented in case the
+`x.y.z` source still needs to be modified and the release rebuilt.
+
+The final tag `maxscale-x.y.z` is created _after_ the packages have
+been published and we are certain they will not be rebuilt, without
+also the version number being changed.
+
+So, ensure that the `maxscale-x.y.z-ttN` has been created and pushed
+to the repository.
+
+**NOTE** The tentative suffix - `-ttN` - is **only** used when
+specifying the tag for the build, it must **not** be present in
+any other names or paths.
 
 ## 2. Build and upgrade test
 
-[Build_all]/http://127.0.0.1:8089/job/build_all/) Jenkins job should be used to build 
-repositories.
+The Jenkins
+[Build_all](http://localhost:8089/job/build_all/)
+job should be used for building the packages.
 
-Usually two run are needed: release and debug builds.
-
-
-Parameters to define (other parameters by default):
-
-**source**
+Note that the above will not work unless you have set up an
+ssh tunnel to Jenkins:
 ```
-refs/tags/maxscale-x.x.x
+$ ssh -f -N -L 8089:127.0.0.1:8089 vagrant@max-tst-01.mariadb.com
 ```
 
-**target**
+Usually two runs are done: one for _release_ and one for _debug_ packages.
+
+### Parameters to define
+
+Use defaults for all other parameters.
+
+#### source
+```
+refs/tags/maxscale-x.y.z-ttN
+```
+
+#### target
 Debug build:
 ```
-maxscale-x.x.x-debug
+maxscale-x.y.z-debug
 ```
 
 Release build:
 ```
-maxscale-x.x.x-release
+maxscale-x.y.z-release
 ```
 
-**cmake_flags**
+#### cmake_flags
 
 Debug build:
 ```
@@ -42,41 +69,40 @@ Release build:
 -DBUILD_TESTS=N -DBUILD_MMMON=Y -DBUILD_CDC=Y
 ```
 
-**run_upgrade_test**
+#### run_upgrade_test
 
 ```
 yes
 ```
 
-**old_target**
+#### old_target
 
-Name of some existing Maxscale repository 
+Name of some existing Maxscale repository
 (please check http://max-tst-01.mariadb.com/ci-repository/
 before build).
 
 ```
-maxscale-y.y.y-release
+maxscale-x'.y'.z'-release
 ```
 
 ### Options for 1.4.x build
 
-For 1.4.x default values of following parameters should changed:
+For `1.4` builds the default values of the following parameters
+should be changed:
 
-**use_mariadbd**
+#### use_mariadbd
 
 ```
 yes
 ```
 
-
-**cnf_file**
+#### cnf_file
 
 ```
 maxscale.cnf.minimum.1.4.4
 ```
 
-**maxadmin_command**
-
+#### maxadmin_command
 
 ```
 maxadmin -pmariadb show services
@@ -84,18 +110,18 @@ maxadmin -pmariadb show services
 
 ## 3. Copying to code.mariadb.com
 
-ssh code.mariadb.com with your LDAP credentials.
+ssh to `code.mariadb.com` with your LDAP credentials.
 
 Create directories and copy repositories files:
 
 ```bash
 cd  /home/mariadb-repos/mariadb-maxscale/
-mkdir x.x.x
-mkdir x.x.x-debug
-cd x.x.x
-rsync -avz  --progress --delete -e ssh  vagrant@max-tst-01.mariadb.com:/home/vagrant/repository/maxscale-x.x.x-release/mariadb-maxscale/ .
-cd ../x.x.x-debug
-rsync -avz  --progress --delete -e ssh  vagrant@max-tst-01.mariadb.com:/home/vagrant/repository/maxscale-x.x.x-debug/mariadb-maxscale/ .
+mkdir x.y.z
+mkdir x.y.z-debug
+cd x.y.z
+rsync -avz  --progress --delete -e ssh vagrant@max-tst-01.mariadb.com:/home/vagrant/repository/maxscale-x.y.z-release/mariadb-maxscale/ .
+cd ../x.y.z-debug
+rsync -avz  --progress --delete -e ssh vagrant@max-tst-01.mariadb.com:/home/vagrant/repository/maxscale-x.y.z-debug/mariadb-maxscale/ .
 ```
 
 ## 4. Email webops-requests@mariadb.com
@@ -105,9 +131,93 @@ Email example:
 ```
 Hello,
 
-Please publish Maxscale x.x.x binaries on web page. Repos are on code.mariadb.com /home/mariadb-repos/mariadb-maxscale/x.x.x
-symlink 'x.x' should be set to 'x.x.x'
-symlink 'latest' [should|should NOT] be set to 'x.x.x'
+Please publish Maxscale x.y.z binaries on web page.
+Repos are on code.mariadb.com /home/mariadb-repos/mariadb-maxscale/x.y.z
 
-Also please make sure that debug binaries are not visible from https://mariadb.com/my_portal/download/maxscale
+symlink 'x.y' should be set to 'x.y.z'
+symlink 'latest' [should|should NOT] be set to 'x.y.z'
+
+Also please make sure that debug binaries are not visible from
+https://mariadb.com/my_portal/download/maxscale
+```
+
+**NOTE** Sometimes - especially at _big_ releases when the exact release
+date is fixed in advance - the following steps 5, 6 and 7 are done right
+after the packages have been uploaded, to ensure that the steps 4 and 8
+can be done at the same time.
+
+## 5. Create the final tag
+
+Once the packages have been made available for download, create
+the final tag
+```
+$ git checkout maxscale-x.y.z-ttN
+$ git tag -a -m "Tag for MaxScale x.y.z" maxscale-x.y.z
+$ git push --tags origin
+```
+and remove the tentative tag(s)
+```
+$ git tag -d maxscale-x.y.z-ttN
+$ git push origin :refs/tags/maxscale-x.y.z-ttN
+```
+
+## 6. Create the branch
+
+Release `x.y.z` is typically developed in the branch `x.y`.
+Once `x.y.z` has been released, the branch `x.y.z` also needs
+to be created.
+```
+$ git checkout maxscale-x.y.z
+$ git checkout -b x.y.z
+$ git push origin x.y.z
+```
+
+## 7. Update the release date
+
+Once the branch `x.y.z` has been created and the actual release
+date of the release is known, update the release date in the
+release notes.
+```
+$ git checkout x.y.z
+$ # Update release date in .../MaxScale-x.y.z-Release-Notes.md
+$ git add .../MaxScale-x.y.z-Release-Notes.md
+$ git commit -m "Update release date"
+$ git push origin x.y.z
+```
+
+**NOTE** The `maxscale-x.y.z` tag is **not** moved. That is, the
+release date is _not_ available in the documentation marked with
+the tag `maxscale-x.y.z` but _is_ available in the branch marked
+with `x.y.z`.
+
+Merge `x.y.z` to `x.y`.
+```
+$ git checkout x.y
+$ git merge x.y.z
+```
+
+At this point, the last commits on branches `x.y` and `x.y.z`
+should be the same and the commit should be the one containing the
+update of the release date. Further, that commit should be the only
+difference between the branches and the tag `maxscale-x.y.z`.
+**Check that indeed is the case**.
+
+## 8. Update documentation
+
+Email webops-requests@mariadb.com with a mail containing the
+following
+```
+subject: Please update MaxScale x.y knowledge base
+body:
+---
+Hi,
+
+Please update https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-XY/
+
+from https://github.com/mariadb-corporation/MaxScale/tree/x.y.z/Documentation
+
+using the "new" algorithm that does not honor single line-breaks.
+
+Br,
+  Your Name
 ```
