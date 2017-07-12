@@ -1,5 +1,4 @@
 {
-  "cookbook_path" : "../recipes/cookbooks/",
   "maxscale" :
   {
         "hostname" : "maxscale",

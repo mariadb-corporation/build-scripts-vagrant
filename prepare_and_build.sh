@@ -3,20 +3,21 @@
 set -x
 
 export work_dir=`pwd`
+export MDBCI_VM_PATH=$HOME/vms; mkdir -p $MDBCI_VM_PATH
 export target=`echo $target | sed "s/ //g"`
 
-cd ~/mdbci
+#cd ~/mdbci
 
-export provider=`./mdbci show provider $box --silent 2> /dev/null`
+export provider=`$HOME/mdbci/mdbci show provider $box --silent 2> /dev/null`
 export name="$box-$JOB_NAME-$BUILD_NUMBER"
 export name=`echo $name | sed "s|/|-|g"`
 
-export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
-export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
+export platform=`$HOME/mdbci/mdbci show boxinfo --box-name=$box --field='platform' --silent`
+export platform_version=`$HOME/mdbci/mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
 
 if [ "$try_already_running" == "yes" ]; then
 	export name=$box$product_name
-	export snapshot_lock_file=$HOME/mdbci/${name}_snapshot_lock
+	export snapshot_lock_file=$MDBCI_VM_PATH/${name}_snapshot_lock
 	while [ -f $snapshot_lock_file ]
 	do
         	echo "snapshot is locked, waiting ..."
@@ -24,7 +25,7 @@ if [ "$try_already_running" == "yes" ]; then
 	done
 
 	echo $JOB_NAME-$BUILD_NUMBER > $snapshot_lock_file
-	./mdbci snapshot revert --path-to-nodes $name --snapshot-name clean
+	$HOME/mdbci/mdbci snapshot revert --path-to-nodes $name --snapshot-name clean
 	if [ $? == 0 ]; then
 		export already_running="ok"
 	fi
@@ -32,9 +33,9 @@ fi
 
 if [ "$already_running" != "ok" ]; then
 
-	cp ~/build-scripts/build.$provider.json.template ~/mdbci/$name.json
+	cp ~/build-scripts/build.$provider.json.template $MDBCI_VM_PATH/$name.json
 
-	sed -i "s/###box###/$box/g" ~/mdbci/$name.json
+	sed -i "s/###box###/$box/g" $MDBCI_VM_PATH/$name.json
 
 	while [ -f ~/vagrant_lock ]
 	do
@@ -51,32 +52,37 @@ if [ "$already_running" != "ok" ]; then
 	fi
 
 	# starting VM for build
-	./mdbci --override --template $name.json generate $name
-	./mdbci up --attempts=1 $name
+	echo "Generating build VM template"
+	$HOME/mdbci/mdbci --override --template $MDBCI_VM_PATH/$name.json generate $name
+	echo "starting VM for build"
+	$HOME/mdbci/mdbci up --attempts=1 $name
 	if [ $? != 0 ] ; then
 		echo "Error starting VM"
 		vagrant destroy -f
 		rm ~/vagrant_lock
 		exit 1
 	fi
+	echo "copying public keys to VM"
 	cp  ~/build-scripts/team_keys .
-	./mdbci public_keys --key team_keys --silent $name
+	$HOME/mdbci/mdbci public_keys --key team_keys --silent $name
 fi
-export sshuser=`./mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
 
-# get VM info
-export IP=`./mdbci show network $name/build --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile $name/build --silent 2> /dev/null | sed 's/"//g'`
+echo "Get VM info"
+export sshuser=`$HOME/mdbci/mdbci ssh --command 'whoami' --silent $name/build 2> /dev/null`
+export IP=`$HOME/mdbci/mdbci show network $name/build --silent 2> /dev/null`
+export sshkey=`$HOME/mdbci/mdbci show keyfile $name/build --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 
+echo "Release Vagrant lock"
 rm ~/vagrant_lock
 
-# rinning build
+# running build
+echo "starting build"
 cd $work_dir
 ~/build-scripts/build.sh
 res=$?
-cd ~/mdbci/$name
+cd $MDBCI_VM_PATH/$name
 if [ "$try_already_running" == "yes" ] ; then
 	rm $snapshot_lock_file
 fi

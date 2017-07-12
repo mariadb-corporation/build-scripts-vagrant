@@ -51,7 +51,15 @@ Examples of parameters definition can be found in the following scripts:
 
 ## Execute test
 
-Clone and compile https://github.com/mariadb-corporation/maxscale-system-test
+Clone and compile https://github.com/mariadb-corporation/MaxScale
+
+Build tests:
+
+```bash
+cd Maxscale/maxscale-system-test
+cmake .
+make
+```
 
 if environmental variables are not set:
 
@@ -80,8 +88,7 @@ create_local_config.sh script takes one snapshot of recently created set of VMs.
 If VMs are damaged during testing process it is easy to restore them:
 
 ```bash
-cd ~/mdbci
-./mdbci snapshot  revert --path-to-nodes <name> --snapshot-name clean
+~/mdbci/mdbci snapshot  revert --path-to-nodes <name> --snapshot-name clean
 ```
 
 If needed, more snapshots can be created:

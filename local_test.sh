@@ -6,14 +6,14 @@ export work_dir=`pwd`
 
 export old_target=`echo $old_target | sed "s/?//g"`
 
-cd ~/mdbci
+#cd ~/mdbci
 
-provider=`./mdbci show provider $box --silent 2> /dev/null`
+provider=`$HOME/mdbci/mdbci show provider $box --silent 2> /dev/null`
 name=$box-$JOB_NAME-$BUILD_NUMBER
 name=`echo $name | sed "s|/|-|g"`
-cp ~/build-scripts/install.$provider.json ~/mdbci/$name.json
+cp ~/build-scripts/install.$provider.json $name.json
 
-sed -i "s/###box###/$box/g" ~/mdbci/$name.json
+sed -i "s/###box###/$box/g" $name.json
 
 while [ -f ~/vagrant_lock ]
 do
@@ -23,7 +23,7 @@ touch ~/vagrant_lock
 echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
 
 # destroying existing box
-cd ~/mdbci
+#cd ~/mdbci
 if [ -d "install_$box" ]; then
 	cd $name
 	vagrant destroy -f
@@ -38,13 +38,13 @@ if [ -n "$repo_user" ] ; then
         sed -i "s|https://|https://$repo_user:$repo_password@|" repo.d/maxscale/*.json
 fi
 
-cd ~/mdbci
+#cd ~/mdbci
 
 # starting VM for build
-./mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
-./mdbci up $name --attempts=1
+$HOME/mdbci/mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
+$HOME/mdbci/mdbci up $name --attempts=1
 if [ $? != 0 ] ; then
-	./mdbci ssh --command "ls" $name
+	$HOME/mdbci/mdbci ssh --command "ls" $name
         if [ $? != 0 ] ; then
 		echo "Error starting VM"
 		cd $name
@@ -61,17 +61,17 @@ rm ~/vagrant_lock
 
 cd $work_dir
 
-cd ~/mdbci
+#cd ~/mdbci
 
 #install MariaDB
-./mdbci setup_repo --product $product --product-version $version $name/maxscale
-./mdbci install_product --product $product $version $name/maxscale
+$HOME/mdbci/mdbci setup_repo --product $product --product-version $version $name/maxscale
+$HOME/mdbci/mdbci install_product --product $product $version $name/maxscale
 
 
 # get VM info
-export sshuser=`./mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
-export IP=`./mdbci show network $name/maxscale --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
+export sshuser=`$HOME/mdbci/mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
+export IP=`$HOME/mdbci/mdbci show network $name/maxscale --silent 2> /dev/null`
+export sshkey=`$HOME/mdbci/mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=120 "
 export sshopt="$scpopt $sshuser@$IP"
 
@@ -94,7 +94,7 @@ mkdir -p $logs_publish_dir
 scp $scpopt -r $sshuser@$IP:~/maxscale-system-test/LOGS $logs_publish_dir
 chmod a+r $logs_publish_dir/*
 
-cd ~/mdbci/$name
+cd $name
 if [ "x$do_not_destroy_vm" != "xyes" ] ; then
 	vagrant destroy -f
 fi

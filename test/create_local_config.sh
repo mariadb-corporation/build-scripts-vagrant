@@ -29,7 +29,7 @@ if [ $? != 0 ] ; then
 	echo "VM creation failed"
 else
 	. ~/build-scripts/test/configure_backend.sh
-	cd ~/mdbci
-	./mdbci snapshot take --path-to-nodes $name --snapshot-name clean
+	#cd ~/mdbci
+	$HOME/mdbci/mdbci snapshot take --path-to-nodes $name --snapshot-name clean
 	cd $dir
 fi

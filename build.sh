@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -x
-
+export MDBCI_VM_PATH=$HOME/vms; mkdir -p $MDBCI_VM_PATH
 export image=$box
 export target=`echo $target | tr -cd "[:print:]" `
 export pre_repo_dir="$HOME/pre-repo/"

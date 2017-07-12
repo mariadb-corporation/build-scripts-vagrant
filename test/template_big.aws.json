@@ -1,6 +1,4 @@
 {
-  "cookbook_path" : "../recipes/cookbooks/",
-  "aws_config" : "../aws-config.yml",
   "node_000" :
   {
         "hostname" : "node000",

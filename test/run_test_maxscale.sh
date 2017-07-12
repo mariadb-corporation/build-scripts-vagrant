@@ -24,11 +24,11 @@ if [ "$local_backend" != "yes"  ] ; then
 		exit 1
 	fi
 else
-	cd ~/mdbci
-	provider=`./mdbci show provider $box --silent 2> /dev/null`
-	cp ~/build-scripts/install.$provider.json ~/mdbci/$name.json
+	#cd ~/mdbci
+	provider=`$HOME/mdbci/mdbci show provider $box --silent 2> /dev/null`
+	cp ~/build-scripts/install.$provider.json $MDBCI_VM_PATH/$name.json
 
-	sed -i "s/###box###/$box/g" ~/mdbci/$name.json
+	sed -i "s/###box###/$box/g" $MDBCI_VM_PATH/$name.json
 
 	while [ -f ~/vagrant_lock ]
 	do
@@ -38,14 +38,12 @@ else
 	echo $JOB_NAME-$BUILD_NUMBER >> ~/vagrant_lock
 
 	# destroying existing box
-	cd ~/mdbci
 	if [ -d "install_$box" ]; then
-        	cd $name
+        	cd $MDBCI_VM_PATH/$name
 	        vagrant destroy -f
-        	cd ..
+        	cd $dir
 	fi
 
-	cd $dir
 	~/mdbci/repository-config/generate_all.sh repo.d
 	~/mdbci/repository-config/maxscale-ci.sh $target repo.d $ci_url_suffix
 	if [ -n "$repo_user" ] ; then
@@ -53,18 +51,16 @@ else
 	        sed -i "s|https://|https://$repo_user:$repo_password@|" repo.d/maxscale/*.json
 	fi
 
-	cd ~/mdbci
-
 	# starting VM for build
-	./mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
-	./mdbci up $name --attempts=1
+	$HOME/mdbci/mdbci --override --template $name.json --repo-dir $work_dir/repo.d generate $name 
+	$HOME/mdbci/mdbci up $name --attempts=1
 	if [ $? != 0 ] ; then
-        	./mdbci ssh --command "ls" $name
 	        if [ $? != 0 ] ; then
         	        echo "Error starting VM"
-                	cd $name
 	                if [ "x$do_not_destroy_vm" != "xyes" ] ; then
-        	                vagrant destroy -f
+				cd $MDBCI_VM_PATH/$name
+				vagrant destroy -f
+				cd $dir
                 	fi
 	                rm ~/vagrant_lock
         	        exit 1
@@ -75,19 +71,19 @@ else
 fi
 
 . ~/build-scripts/test/set_env_vagrant.sh $name
-cd ~/mdbci
+#cd ~/mdbci
 # get VM info
-export sshuser=`./mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
-export IP=`./mdbci show network $name/maxscale --silent 2> /dev/null`
-export sshkey=`./mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
+export sshuser=`$HOME/mdbci/mdbci ssh --command 'whoami' --silent $name/maxscale 2> /dev/null`
+export IP=`$HOME/mdbci/mdbci show network $name/maxscale --silent 2> /dev/null`
+export sshkey=`$HOME/mdbci/mdbci show keyfile $name/maxscale --silent 2> /dev/null | sed 's/"//g'`
 export scpopt="-i $sshkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 export sshopt="$scpopt $sshuser@$IP"
 
 #export no_repo="yes"
 export remove_strip="yes"
 
-export platform=`./mdbci show boxinfo --box-name=$box --field='platform' --silent`
-export platform_version=`./mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
+export platform=`$HOME/mdbci/mdbci show boxinfo --box-name=$box --field='platform' --silent`
+export platform_version=`$HOME/mdbci/mdbci show boxinfo --box-name=$box --field='platform_version' --silent`
 
 cd $dir
 ~/build-scripts/build_maxscale.sh
@@ -97,8 +93,8 @@ if [ $res != 0 ] ; then
 	exit 1
 fi
 ~/build-scripts/test/configure_core.sh
-cd ~/mdbci
-./mdbci snapshot  take --path-to-nodes $name --snapshot-name clean
+#cd ~/mdbci
+$HOME/mdbci/mdbci snapshot  take --path-to-nodes $name --snapshot-name clean
 if [ $? != 0 ] ; then
 	echo "Snapshot creation failed!"
 fi
@@ -120,8 +116,8 @@ if [ $local_backend == "yes" ] ; then
 	scp $scpopt -r $sshuser@$IP:~/maxscale-system-test/LOGS $logs_publish_dir
 	chmod a+r $logs_publish_dir/*
 else
-    cd ~/mdbci/
-    #./mdbci snapshot take --path-to-nodes $name --snapshot-name clean
+    ##cd ~/mdbci/
+    #$HOME/mdbci/mdbci snapshot take --path-to-nodes $name --snapshot-name clean
     cd $dir/maxscale-system-test/
     cmake .
     make
@@ -131,8 +127,9 @@ else
         if [ $? != 0 ]; then
             echo "Backend broken!"
             if [ "$do_not_destroy_vm" != "yes" ] ; then
-                cd ~/mdbci/$name
+                cd $MDBCI_VM_PATH/$name
                 vagrant destroy -f
+		cd $dir
             fi
             rm ~/vagrant_lock
             exit 1
