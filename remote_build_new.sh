@@ -39,11 +39,11 @@ export install_script="install_build_deps.sh"
 if [ "$image_type" == "RPM" ] ; then
 	build_script="build_rpm_local.sh"
 	files="*.rpm"
-	tars="$product_name*.tag.gz"
+	tars="$product_name*.tar.gz"
 else
 	build_script="build_deb_local.sh"
 	files="../*.deb"
-	tars="$product_name*.tag.gz"
+	tars="$product_name*.tar.gz"
 fi
 
 if [ "$already_running" != "ok" ] ; then
