@@ -21,8 +21,8 @@ export galera_N=`cat "$MDBCI_VM_PATH/$config_name"_network_config | grep galera 
 export node_N=`cat "$MDBCI_VM_PATH/$config_name"_network_config | grep node | grep network | wc -l`
 
 # IP Of MaxScale machine
-sed "s/^/export /g" "$MDBCI_VM_PATH/$config_name"_network_config > "$curr_dir"/"$config_name"_network_config_export
-source "$curr_dir"/"$config_name"_network_config_export
+sed "s/^/export /g" "$MDBCI_VM_PATH/$config_name"_network_config > "/tmp/$config_name"_network_config_export
+source "/tmp/$config_name"_network_config_export
 
 export maxscale_IP=$maxscale_network
 export maxscale_sshkey=$maxscale_keyfile
@@ -39,6 +39,8 @@ export maxscale_user="skysql"
 export maxscale_password="skysql"
 
 export maxadmin_password="mariadb"
+
+cd $HOME/mdbci/
 
 for prefix in "node" "galera"
 do
@@ -95,4 +97,5 @@ export take_snapshot_command="$HOME/build-scripts/test/take_snapshot.sh $config_
 export revert_snapshot_command="$HOME/build-scripts/test/revert_snapshot.sh $config_name"
 #export use_snapshots=yes
 
+cd $curr_dir
 set +x
