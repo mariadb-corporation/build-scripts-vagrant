@@ -1,5 +1,12 @@
 # Release process
 
+## Pre-release Checklist
+
+* Update release notes with all fixed bugs
+* Update the link to the latest release notes in Documentation-Contents.md
+* Add link to release notes and document major changes in Changelog.md
+* Add link to release notes in the Upgrading guide 
+
 ## 1. Tag
 
 Release builds are always made using a tag. However, the used
