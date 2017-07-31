@@ -212,7 +212,7 @@ difference between the branches and the tag `maxscale-x.y.z`.
 ## 8. Update documentation
 
 Email webops-requests@mariadb.com with a mail containing the
-following
+following.
 ```
 subject: Please update MaxScale x.y knowledge base
 body:
@@ -227,4 +227,39 @@ using the "new" algorithm that does not honor single line-breaks.
 
 Br,
   Your Name
+```
+## 9. Send release email to mailing list
+
+Email maxscale@googlegroups.com with a mail containing the following.
+```
+subject: MariaDB MaxScale x.y.z available for download
+body:
+---
+Hi,
+
+We are happy to announce that MariaDB MaxScale x.y.z GA is now available for download. This is a bugfix release.
+
+The Jira list of fixed issues can be found here(ADD LINK HERE).
+
+* [MXS-XYZ] BUG FIX DESCRIPTION HERE
+
+Binaries:
+https://mariadb.com/downloads/maxscale
+https://mariadb.com/my_portal/download
+
+Documentation:
+LINK TO KB DOCUMENTATION HERE
+
+Release notes:
+LINK TO RELEASE NOTES HERE
+
+Source code:
+LINK TO maxscale-x.y.z TAG HERE
+
+Please report any issues on Jira:
+https://jira.mariadb.org/projects/MXS/issues
+
+On behalf of the entire MaxScale team,
+
+YOUR NAME HERE
 ```
