@@ -53,5 +53,5 @@
                 "cnf_template" : "server2.cnf",
                 "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
         }
-  },
+  }
 }
