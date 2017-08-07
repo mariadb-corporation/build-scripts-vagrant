@@ -1,0 +1,57 @@
+{
+  "maxscale_1" :
+  {
+        "hostname" : "maxscale_1",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "maxscale"
+        }
+  },
+
+  "maxscale_2" :
+  {
+        "hostname" : "maxscale_2",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "maxscale"
+        }
+  },
+
+  "maxscale_3" :
+  {
+        "hostname" : "maxscale_3",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "maxscale"
+        }
+  },
+
+  "master" :
+  {
+        "hostname" : "master",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mariadb",
+                "version": "10.1",
+                "cnf_template" : "server1.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+
+  "slave" :
+  {
+        "hostname" : "slave",
+        "box" : "centos_7_libvirt",
+        "memory_size" : "2048",
+        "product" : {
+                "name": "mariadb",
+                "version": "10.1",
+                "cnf_template" : "server2.cnf",
+                "cnf_template_path": "~/build-scripts/test-setup-scripts/cnf"
+        }
+  },
+}
