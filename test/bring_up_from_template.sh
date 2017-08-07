@@ -21,7 +21,7 @@ if [ -n "$repo_user" ] ; then
         sed -i "s|https://|https://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
 fi
 
-cp "$HOME/build-scripts/test/$template.json"  "$MDBCI_VM_PATH/$name.json"
+cp "$HOME/build-scripts/test/templates/$template.json"  "$MDBCI_VM_PATH/$name.json"
 
 $HOME/mdbci/mdbci --override --template  $MDBCI_VM_PATH/$name.json --repo-dir $repo_dir generate $name
 
