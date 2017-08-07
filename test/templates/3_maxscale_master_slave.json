@@ -1,7 +1,7 @@
 {
   "maxscale_1" :
   {
-        "hostname" : "maxscale_1",
+        "hostname" : "maxscale1",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -11,7 +11,7 @@
 
   "maxscale_2" :
   {
-        "hostname" : "maxscale_2",
+        "hostname" : "maxscale2",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
@@ -21,7 +21,7 @@
 
   "maxscale_3" :
   {
-        "hostname" : "maxscale_3",
+        "hostname" : "maxscale3",
         "box" : "centos_7_libvirt",
         "memory_size" : "2048",
         "product" : {
