@@ -3,13 +3,13 @@
 ## Prepare MDBCI environment
 
 Libvirt, Docker and Vagrant with a set of plugins are needed for MDBCI. All packages can be installed by script 
-https://github.com/OSLL/mdbci/blob/integration/scripts/install_mdbci_dependencies.sh 
+https://github.com/mariadb-corporation/mdbci/blob/integration/scripts/install_mdbci_dependencies.sh 
 (Debian-based Linux distributions)
 or 
-https://github.com/OSLL/mdbci/blob/integration/scripts/install_mdbci_dependencies_yum.sh
+https://github.com/mariadb-corporation/mdbci/blob/integration/scripts/install_mdbci_dependencies_yum.sh
 (RPM-based Linux distributions)
 
-See https://github.com/OSLL/mdbci/blob/integration/PREAPARATION_FOR_MDBCI.md for detailed instructions.
+See https://github.com/mariadb-corporation/mdbci/blob/integration/PREAPARATION_FOR_MDBCI.md for detailed instructions.
 
 ## Creating VMs for local tests
 
