@@ -72,12 +72,6 @@ wsrep_slave_threads=1
 # and parallel applying operation)
 wsrep_certify_nonPK=1
 
-# Maximum number of rows in write set
-wsrep_max_ws_rows=131072
-
-# Maximum size of write set
-wsrep_max_ws_size=1073741824
-
 # Debug level logging (1 = enabled)
 wsrep_debug=1
 
@@ -94,7 +88,7 @@ wsrep_auto_increment_control=1
 wsrep_drupal_282555_workaround=0
 
 # Enable "strictly synchronous" semantics for read operations
-wsrep_causal_reads=0
+wsrep_causal_reads=1
 
 # Command to call when node status or cluster membership changes.
 # Will be passed all or some of the following options:
