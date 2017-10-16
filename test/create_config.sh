@@ -9,6 +9,11 @@ fi
 
 export repo_dir=$dir/repo.d/
 
+if [ -n "$repo_key" ] ; then
+	sed -i "s|.*repo_key.*|   \"repo_key\": \t\t\"$repo_key\",|" $dir/repo.d/maxscale/**
+fi
+
+
 if [ -n "$repo_user" ] ; then
 	sed -i "s|http://|http://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json
         sed -i "s|https://|https://$repo_user:$repo_password@|" $repo_dir/maxscale/*.json

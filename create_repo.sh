@@ -55,7 +55,6 @@ if [ $z_res -eq 127 ] && [ $y_res -eq 127 ] ; then
                 exit 1
         fi
 
-
 	gpg -abs -o  dists/$dist_name/Release.gpg dists/$dist_name/Release 
 	if [ $? != 0 ] ; then
 		echo "Package signing failed!"
@@ -67,7 +66,8 @@ else
 	sudo zypper -n remove patterns-openSUSE-minimal_base-conflicts
 	sudo zypper -n install createrepo
 	echo "%_signature gpg" >> ~/.rpmmacros
-	echo "%_gpg_name  MariaDBManager" >>  ~/.rpmmacros
+        echo "%_gpg_name  MariaDB Maxscale" >>  ~/.rpmmacros
+#	echo "%_gpg_name  MariaDBManager" >>  ~/.rpmmacros
 	rpm --resign $sourcedir/*.rpm
         if [ $? != 0 ] ; then
                 echo "Package signing failed!"
