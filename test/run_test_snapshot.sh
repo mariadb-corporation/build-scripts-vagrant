@@ -29,11 +29,14 @@ function checkExitStatus {
 
 # Setting snapshot_lock
 export snapshot_lock_file=$HOME/vms/${config_name}_snapshot_lock
+if [ -f $snapshot_lock_file ]; then
+    echo "Snapshot is locked, waiting ..."
+fi
 while [ -f $snapshot_lock_file ]
 do
-	echo "snapshot is locked, waiting ..."
 	sleep 5
 done
+
 touch $snapshot_lock_file
 echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
 
