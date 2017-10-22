@@ -28,7 +28,7 @@ function checkExitStatus {
 }
 
 # Setting snapshot_lock
-export snapshot_lock_file=$HOME/mdbci/${config_name}_snapshot_lock
+export snapshot_lock_file=$HOME/vms/${config_name}_snapshot_lock
 while [ -f $snapshot_lock_file ]
 do
 	echo "snapshot is locked, waiting ..."
