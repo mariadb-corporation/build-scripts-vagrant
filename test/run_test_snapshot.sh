@@ -15,6 +15,18 @@ export dir=`pwd`
 
 #cd ~/mdbci 
 
+function checkExitStatus {
+    returnCode=$1
+    errorMessage=$2
+    lockFilePath=$3
+    if [ "$returnCode" != 0 ]; then
+        echo "$errorMesage"
+        rm $lockFilePath
+        echo "Snapshot lock file was deleted due to an error"
+        exit 1
+    fi     
+}
+
 # Setting snapshot_lock
 export snapshot_lock_file=$HOME/mdbci/${config_name}_snapshot_lock
 while [ -f $snapshot_lock_file ]
@@ -35,23 +47,15 @@ if [ $? != 0 ]; then
 	##cd ~/mdbci/scripts/
 	./clean_vms.sh $config_name
 	cd ..
-        mkdir -p $HOME/mdbci/$config_name
-	touch $snapshot_lock_file
-	echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
-
+    mkdir -p $HOME/mdbci/$config_name
 	cd $dir
 set -x
 	export name_save=$name
 	export name=$config_name
 	~/build-scripts/test/create_config.sh
-	if [ $? != 0 ]; then
-		echo "Error creating configuration"
-		exit 1
-	fi 
-        touch $snapshot_lock_file
-        echo $JOB_NAME-$BUILD_NUMBER >> $snapshot_lock_file
-        . ~/build-scripts/test/configure_backend.sh
-        export name=$name_save
+    checkExitStatus $? "Error creating configuration" $snapshot_lock_file
+    . ~/build-scripts/test/configure_backend.sh
+    export name=$name_save
 	#cd ~/mdbci
 	echo "Creating snapshot from new config"
 set -x
@@ -76,10 +80,8 @@ $HOME/mdbci/mdbci sudo --command 'yum clean all' $config_name/maxscale
 
 $HOME/mdbci/mdbci setup_repo --product maxscale $config_name/maxscale --repo-dir $repo_dir 
 $HOME/mdbci/mdbci install_product --product maxscale $config_name/maxscale --repo-dir $repo_dir
-if [ $? != 0 ] ; then
-	echo "Error installing Maxscale"
-	exit 1
-fi
+
+checkExitStatus $? "Error installing Maxscale" $snapshot_lock_file
 
 cd $dir
 cmake . -DBUILDNAME=$JOB_NAME-$BUILD_NUMBER-$target
@@ -87,12 +89,7 @@ make
 
 ./check_backend --restart-galera
 
-if [ $? -ne 0 ]
-then
-    rm $snapshot_lock_file
-    echo "Failed to check backends"
-    exit 1
-fi
+checkExitStatus $? "Failed to check backends" $snapshot_lock_file
 
 ctest $test_set -VV -D Nightly
 
