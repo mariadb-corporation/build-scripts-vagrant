@@ -2,46 +2,50 @@
 
 ## Prepare MDBCI environment
 
-_Libvirt_, _Docker_ and _Vagrant_, with a set of plugins, are needed for MDBCI.
+_Libvirt_, _Docker_ and _Vagrant_, with a set of plugins, are needed
+for MDBCI.
 
-Please follow the instructions [here](https://github.com/mariadb-corporation/mdbci/blob/integration/PREPARATION_FOR_MDBCI.md).
+Please follow the instructions
+[here](https://github.com/mariadb-corporation/mdbci/blob/integration/PREPARATION_FOR_MDBCI.md).
 
 ## Creating VMs for local tests
 
-[test/create_local_config.sh](test/create_local_config.sh) script creates a set of virtual machines
-(1 maxscale VM, 4 Master/Slave and 4 Galera).
+The [test/create_local_config.sh](test/create_local_config.sh) script creates
+a set of virtual machines: 1 maxscale VM, 4 Master/Slave and 4 Galera.
 
-Direct execution of create_local_config.sh requires manuall paramters setting. 
-It is easiler to ese create_local_config_libvirt.sh and create_local_config_docker.sh
+Direct execution of `create_local_config.sh` requires that a number of
+environment variables are set, before invoking the script. It is easiler
+to use
+[test/create_local_config_libvirt.sh](test/create_local_config_libvirt.sh)
+and
+[test/create_local_config_docker.sh](test/create_local_config_docker.sh).
 
 Script usage:
 
 ```bash
-. ~/build-scripts/test/create_local_config.sh <target> <name>
+. ~/build-scripts/test/create_local_config.sh [target] [name]
 ```
 where
 
-target - Maxscale binary repository name
+* target - Maxscale binary repository name. A directory under [http://max-tst-01.mariadb.com/ci-repository](http://max-tst-01.mariadb.com/ci-repository). If not provided, `develop` will be used as default.
+* name - Name of virtual machines set; any string will do. If not provided, `local_test` will be used as default.
 
-name - name of virtual machines set
+Note: '.' before command allows script to load all environmental variables
+(needed for 'maxscale-system-test').
 
-Note: '.' before command allows script to load all environmental variables (needed for 'maxscale-system-test').
-
-
-All other parameters have to be defined as environmental variables before executing the script.
-
-Examples of parameters definition can be found in the following scripts:
-
-[test/create_local_config_libvirt.sh](test/create_local_config_libvirt.sh)
-
-[test/create_local_config_docker.sh](test/create_local_config_docker.sh)
+All other parameters have to be defined as environmental variables before
+executing the script. Please check
+[create_local_config_libvirt.sh](test/create_local_config_libvirt.sh)
+and
+[create_local_config_docker.sh](test/create_local_config_docker.sh)
+for what is needed.
 
 ```bash
-. ~/build-scripts/test/create_local_config_libvirt.sh <target> <name>
+. ~/build-scripts/test/create_local_config_libvirt.sh [target] [name]
 ```
 
 ```bash
-. ~/build-scripts/test/create_local_config_docker.sh <target> <name>
+. ~/build-scripts/test/create_local_config_docker.sh [target] [name]
 ```
 
 ## Execute test
