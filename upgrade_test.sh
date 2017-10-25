@@ -38,7 +38,7 @@ fi
 ~/mdbci/repository-config/maxscale-ci.sh $old_target repo.d $ci_url_suffix
 rm -rf repo.d/maxscale-release
 if [ -n "$repo_key" ] ; then
-        sed -i "s|.*repo_key.*|   \"repo_key\": \t\t\"$repo_key\",|" $dir/repo.d/maxscale/**
+        sed -i "s|.*repo_key.*|   \"repo_key\": \t\t\"$repo_key\",|" $dir/repo.d/maxscale/*
 fi
 
 if [ -n "$repo_user" ] ; then
@@ -70,7 +70,7 @@ rm -rf repo.d
 ~/mdbci/repository-config/maxscale-ci.sh $new_target repo.d $ci_url_suffix
 rm -rf repo.d/maxscale-release
 if [ -n "$repo_key" ] ; then
-        sed -i "s|.*repo_key.*|   \"repo_key\": \t\t\"$repo_key\",|" $dir/repo.d/maxscale/**
+        sed -i "s|.*repo_key.*|   \"repo_key\": \t\t\"$repo_key\",|" $dir/repo.d/maxscale/*
 fi
 
 if [ -n "$repo_user" ] ; then
