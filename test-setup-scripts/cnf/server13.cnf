@@ -11,6 +11,7 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
+log-slave-updates
 log-bin=mar-bin
 binlog-format=STATEMENT
 server_id=13
