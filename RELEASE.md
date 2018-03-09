@@ -135,6 +135,8 @@ rsync -avz  --progress --delete -e ssh vagrant@max-tst-01.mariadb.com:/home/vagr
 
 Email example:
 
+Subject: `MaxScale x.y.z release`
+
 ```
 Hello,
 
@@ -147,6 +149,7 @@ symlink 'latest' [should|should NOT] be set to 'x.y.z'
 Also please make sure that debug binaries are not visible from
 https://mariadb.com/my_portal/download/maxscale
 ```
+Replace `x.y.z` with the correct version.
 
 **NOTE** Sometimes - especially at _big_ releases when the exact release
 date is fixed in advance - the following steps 5, 6 and 7 are done right
