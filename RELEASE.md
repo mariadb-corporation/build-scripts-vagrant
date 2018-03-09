@@ -46,7 +46,7 @@ $ ssh -f -N -L 8089:127.0.0.1:8089 vagrant@max-tst-01.mariadb.com
 
 #### `scm_source`
 
-This is the tag where the release is built.
+This is the tag that is used to build the release.
 
 ```
 refs/tags/maxscale-x.y.z-ttN
