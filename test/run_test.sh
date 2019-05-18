@@ -46,7 +46,9 @@ if [ $res == 0 ] ; then
 	    rm ~/vagrant_lock
 	    exit 1
         fi
-        ctest -VV -D Nightly $test_set
+        ctest -D NightlyStart
+        ctest -VV -D NightlyTest $test_set
+        ctest -D NightlySubmit
         set +x
     else
 	./$named_test
